@@ -14,6 +14,58 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/main.css">
+
+	<!-- FIXED: Replaced standard background scroll style layout with unified responsive Bootstrap Carousel setup -->
+	<style>
+		.banner-home {
+			position: relative;
+			overflow: hidden;
+			padding: 0 !important;
+		}
+
+		.carousel-item {
+			min-height: 550px;
+			background-size: cover;
+			background-position: center;
+			padding: 180px 0 120px 0;
+		}
+
+		.carousel-item-1 {
+			background-image: url('images/services-bg.jpg');
+		}
+
+		.carousel-item-2 {
+			background-image: url('images/section-4-bg.jpg');
+		}
+
+		.carousel-item-3 {
+			background-image: url('images/blog-1.jpg');
+		}
+
+		.carousel-caption-custom {
+			position: relative;
+			z-index: 3;
+			color: #fff;
+		}
+
+		.banner-home .gradient {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(to right, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 100%);
+			z-index: 2;
+		}
+
+		.carousel-control-prev, .carousel-control-next {
+			z-index: 4;
+		}
+
+		.carousel-indicators {
+			z-index: 4;
+		}
+	</style>
 </head>
 
 <body>
@@ -21,12 +73,10 @@
 	<header class="top">
 		<div id="mySidenav" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a class="active" href="index">Home</a>
-			<a href="about">About Yogi</a>
-			<!--<a href="services.html">Classes & Initiation</a>
-			<a href="products.html">Teachings</a>
-			<a href="rates.html">Rates</a>
-			<a href="blog-page.html">Spiritual Blog</a>-->
+			<a class="active" href="index.html">Home</a>
+			<a href="about.html">About Yogi</a>
+			<a href="register.html">Become a Member</a>
+			<a href="scan.html">Class Entry (Scanner)</a>
 		</div>
 		<!-- Nav section Start -->
 		<nav id="navbar">
@@ -34,7 +84,6 @@
 			<div class="container">
 				<!--Row Start-->
 				<div class="row">
-					<!-- FIXED: Adjusted grid structure to 6 and 6 for cleaner spacing and perfect flex alignments -->
 					<div class="col-lg-6 col-md-6 col-12 align-self-center left-side">
 						<p>Awaken Inner Light, Realize the Truth <span>Call: +91 63804 19470</span></p>
 					</div>
@@ -61,26 +110,57 @@
 		<img class="border-img" src="images/border.png" width="100%" alt="">
 	</header>
 	<!-- Header section Ended-->
-	<!-- Banner section Start -->
-	<section class="banner-home">
-		<!-- Gradient -->
-		<div class="gradient"></div>
-		<!-- container Start-->
-		<div class="container">
-			<!--Row Start-->
-			<div class="row">
-				<div class="col-sm-12">
+	<!-- FIXED: Dynamic Native Bootstrap Carousel Slider Section Integration Setup -->
+	<section id="homeBannerSlider" class="carousel slide banner-home" data-ride="carousel" data-interval="5000">
+		<ol class="carousel-indicators">
+			<li data-target="#homeBannerSlider" data-slide-to="0" class="active"></li>
+			<li data-target="#homeBannerSlider" data-slide-to="1"></li>
+			<li data-target="#homeBannerSlider" data-slide-to="2"></li>
+		</ol>
+		<div class="carousel-inner">
+			<!-- Slide 1 -->
+			<div class="carousel-item carousel-item-1 active">
+				<div class="gradient"></div>
+				<div class="container carousel-caption-custom">
 					<h1 data-aos="fade-left">Aga Oli Meignana Yogam</h1>
 					<h2 data-aos="fade-left" data-aos-delay="100">The Secret Wisdom of the Siddhars for Eternal Transformation</h2>
 					<p data-aos="fade-left" data-aos-delay="200"><i class="fa fa-clock-o" aria-hidden="true"></i><span>Inquiries Open: 9:00 AM - 1:30 PM</span></p>
 					<p data-aos="fade-left" data-aos-delay="300"><i class="fa fa-phone-square" aria-hidden="true"></i><span>Call: +91 63804 19470, +91 73972 83252</span></p>
 					<p data-aos="fade-left" data-aos-delay="400"><i class="fa fa-envelope" aria-hidden="true"></i><span>info@athimagayogi.com</span></p>
-					<a data-aos="fade-left" data-aos-delay="500" class="btn btn-success" href="about.html" role="button">Our Story</a>
+					<a data-aos="fade-left" data-aos-delay="500" class="btn btn-success" href="register.html" role="button">Join Foundation</a>
 				</div>
 			</div>
-			<!--Row Ended-->
+			<!-- Slide 2 -->
+			<div class="carousel-item carousel-item-2">
+				<div class="gradient"></div>
+				<div class="container carousel-caption-custom">
+					<h1>Vasi Yoga Initiation</h1>
+					<h2>Learn the Secret Art of Breath Science from Gurunathar</h2>
+					<p><i class="fa fa-envelope" aria-hidden="true"></i><span>info@athimagayogi.com</span></p>
+					<p><i class="fa fa-map-marker" aria-hidden="true"></i><span>Arcot, Tamil Nadu, India</span></p>
+					<a class="btn btn-primary" href="register.html" role="button">Register Now</a>
+				</div>
+			</div>
+			<!-- Slide 3 -->
+			<div class="carousel-item carousel-item-3">
+				<div class="gradient"></div>
+				<div class="container carousel-caption-custom">
+					<h1>Disease-Free Body & Mind</h1>
+					<h2>Experience Permanent Happiness and Core Biological Vitality Alignment</h2>
+					<p><i class="fa fa-check-circle" aria-hidden="true"></i><span>Free Admission for Registered Seekers</span></p>
+					<a class="btn btn-warning" href="register.html" role="button">Become a Member</a>
+				</div>
+			</div>
 		</div>
-		<!-- container Ended-->
+		<!-- Slider Slide Nav Controls Controls -->
+		<a class="carousel-control-prev" href="#homeBannerSlider" role="button" data-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="carousel-control-next" href="#homeBannerSlider" role="button" data-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
 	</section>
 	<!-- Banner section Ended -->
 	<!-- About section start-->
@@ -394,7 +474,6 @@
 	<script src="js/animate.js"></script>
 	<script src="js/custom.js"></script>
 
-	<!-- FIXED: Added explicit toggle functions to handle UI state updates on clicks dynamically -->
 	<script>
 		function openNav() {
 			var sideNav = document.getElementById("mySidenav");

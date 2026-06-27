@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Class Attendance QR Terminal</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+
+	<!-- Optical Frame Engine Injection Library -->
+	<script src="https://unpkg.com/html5-qrcode"></script>
+
+	<style>
+		body {
+			background: #1e2229;
+			color: #fff;
+			font-family: 'Montserrat', sans-serif;
+			padding-top: 60px;
+		}
+
+		.terminal-card {
+			background: #2b313e;
+			border: none;
+			border-radius: 12px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+		}
+
+		#reader {
+			width: 100%;
+			max-width: 480px;
+			margin: auto;
+			background: #fff;
+			border-radius: 8px;
+			overflow: hidden;
+		}
+
+		#scannerMessage {
+			font-weight: 600;
+			padding: 15px;
+			border-radius: 6px;
+		}
+
+		.status-waiting {
+			background: #3a4255;
+			color: #f1c40f;
+		}
+
+		.status-processing {
+			background: #2980b9;
+			color: #fff;
+		}
+
+		.status-success {
+			background: #27ae60;
+			color: #fff;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="text-center mb-5">
+			<a href="index.html" class="btn btn-outline-light btn-sm mb-3"><i class="fa fa-home"></i> Operational Core Home</a>
+			<h1 class="font-weight-bold text-warning"><i class="fa fa-camera"></i> Attendance Optical Terminal</h1>
+			<p class="text-muted">Live checkpoint mapping dynamic credential records directly to centralized Excel storage sheets</p>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="col-md-8 text-center">
+				<div class="card terminal-card p-4">
+					<div class="mb-4">
+						<div id="reader"></div>
+					</div>
+
+					<div id="scannerMessage" class="status-waiting mb-3">
+						<i class="fa fa-info-circle"></i> Terminal Uninitialized. Ready to lock device optics lens tracking arrays.
+					</div>
+
+					<div>
+						<button class="btn btn-warning btn-lg px-5" onclick="startScannerEngine()"><i class="fa fa-power-off"></i> Initialize Camera Array</button>
+					</div>
+				</div>
+
+				<div class="mt-4 card p-3 bg-secondary text-left text-light small">
+					<strong>Checkpoint Directives:</strong> Ensure high contrast visibility profiles during operations. Scanned identity matches instantly cascade logs into the system tracking array schema pipeline.
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+		let html5QrcodeScanner;
+
+		function startScannerEngine() {
+			const msgBox = document.getElementById("scannerMessage");
+			msgBox.className = "status-processing mb-3";
+			msgBox.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Requesting local media capture hardware matrix validation locks...";
+
+			html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 12, qrbox: 260 });
+			html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+		}
+
+		function onScanSuccess(decodedText, decodedResult) {
+			const msgBox = document.getElementById("scannerMessage");
+			msgBox.className = "status-processing mb-3";
+			msgBox.innerHTML = `<i class='fa fa-refresh fa-spin'></i> Token ID matched: <strong>${decodedText}</strong>. Sending operational updates directly to spreadsheet systems...`;
+
+			fetch(GOOGLE_APPS_SCRIPT_URL, {
+				method: "POST",
+				mode: "no-cors",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ action: "markAttendance", memberId: decodedText })
+			}).then(() => {
+				msgBox.className = "status-success mb-3";
+				msgBox.innerHTML = `<i class='fa fa-check-circle'></i> Verification Cleared! Entry record logged cleanly for ID: ${decodedText}`;
+
+				// Optional pause to display status feedback cleanly before restarting scanner loop elements
+				setTimeout(() => {
+					html5QrcodeScanner.clear();
+					startScannerEngine();
+				}, 4000);
+			}).catch(err => {
+				msgBox.className = "btn-danger p-2 rounded mb-3";
+				msgBox.innerText = "External database server network operation execution dropped.";
+			});
+		}
+
+		function onScanFailure(error) {
+			// Failures drop silently through baseline scan scanning loops
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Foundation Registration Portal</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/main.css">
+
+	<!-- QR Engine Code Injection -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+	<style>
+		body {
+			background: #f8f9fa;
+			font-family: 'Montserrat', sans-serif;
+			padding-top: 50px;
+		}
+
+		.form-box {
+			background: #fff;
+			padding: 40px;
+			border-radius: 12px;
+			box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+		}
+
+		.qr-wrapper {
+			background: #fff;
+			padding: 30px;
+			border-radius: 12px;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+			display: inline-block;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container my-5">
+		<div class="text-center mb-4">
+			<a href="index.html" class="btn btn-outline-secondary btn-sm mb-3"><i class="fa fa-arrow-left"></i> Back to Home</a>
+			<h2 class="font-weight-bold text-dark">Foundation Membership Generation</h2>
+			<p class="text-muted">Register to create your dynamic entry credential record mapping to cloud systems</p>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="col-lg-6 col-md-8 mb-4">
+				<div class="form-box">
+					<h4 class="mb-4 font-weight-bold text-success"><i class="fa fa-user-plus"></i> Personal Particulars</h4>
+					<form id="registrationForm" onsubmit="handleRegistration(event)">
+						<div class="form-group"><label>Full Name</label><input type="text" id="regName" class="form-control" placeholder="Name Token" required /></div>
+						<div class="form-group"><label>Mobile Number</label><input type="tel" id="regMobile" class="form-control" placeholder="Primary Contact" required /></div>
+						<div class="form-group"><label>Age</label><input type="number" id="regAge" class="form-control" placeholder="Biological Years" required /></div>
+						<div class="form-group"><label>State</label><input type="text" id="regState" class="form-control" placeholder="State/Region" required /></div>
+						<div class="form-group"><label>District</label><input type="text" id="regDistrict" class="form-control" placeholder="District Branch" required /></div>
+
+						<div class="alert alert-warning py-2 small my-3">
+							<strong>Verification Requirement:</strong> Platform processing maps automated tracking via standard WhatsApp operations interface.
+						</div>
+						<button type="submit" class="btn btn-success btn-block btn-lg">Generate Unique Membership Card</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="col-lg-5 col-md-8 text-center">
+				<div id="qrOutputWrapper" style="display:none;">
+					<div class="qr-wrapper">
+						<h4 id="generatedMemberName" class="text-dark font-weight-bold mb-2"></h4>
+						<p id="generatedMemberId" class="text-success font-weight-bold h5 mb-3"></p>
+						<div id="qrcode" class="d-flex justify-content-center mb-4"></div>
+						<div class="alert alert-info small text-left mb-3">
+							<i class="fa fa-info-circle"></i> <strong>Important:</strong> Please save or screenshot this QR image block. This credential boundary executes security scanning operations at every individual class checkpoint.
+						</div>
+						<a id="whatsappPayBtn" href="#" target="_blank" class="btn btn-outline-success btn-block"><i class="fa fa-whatsapp"></i> Submit Receipt to Bot Verification</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+
+		function handleRegistration(event) {
+			event.preventDefault();
+
+			const name = document.getElementById("regName").value;
+			const mobile = document.getElementById("regMobile").value;
+			const age = document.getElementById("regAge").value;
+			const state = document.getElementById("regState").value;
+			const district = document.getElementById("regDistrict").value;
+
+			const payload = {
+				action: "registerMember",
+				name: name,
+				mobile: mobile,
+				age: age,
+				state: state,
+				district: district
+			};
+
+			document.getElementById("qrOutputWrapper").style.display = "block";
+			document.getElementById("generatedMemberName").innerText = name;
+			document.getElementById("generatedMemberId").innerText = "Syncing with Cloud Registry...";
+			document.getElementById("qrcode").innerHTML = "";
+
+			fetch(GOOGLE_APPS_SCRIPT_URL, {
+				method: "POST",
+				mode: "no-cors",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload)
+			}).then(() => {
+				const simulatedId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
+				document.getElementById("generatedMemberId").innerText = simulatedId;
+
+				new QRCode(document.getElementById("qrcode"), {
+					text: simulatedId,
+					width: 200,
+					height: 200
+				});
+
+				const textMessage = encodeURIComponent(`Hello System Admin, I completed my membership registration pipeline details.\nName: ${name}\nMobile: ${mobile}\nAssigned Key ID: ${simulatedId}\nPlease execute payment status verification logic routines.`);
+				document.getElementById("whatsappPayBtn").href = `https://wa.me/916380419470?text=${textMessage}`;
+			}).catch(err => {
+				console.error(err);
+				document.getElementById("generatedMemberId").innerText = "API Connectivity Timeout Error.";
+			});
+		}
+	</script>
+</body>
+</html>
