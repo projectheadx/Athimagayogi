@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -6,9 +5,9 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Aga Oli Meignana Yogam - Foundation Portal">
+	<meta name="description" content="Aga Oli Meignana Yogam - Learn Siddhars secret yoga for inner light and spiritual transformation.">
 	<meta name="author" content="Athimagayogi">
-	<title>Aga Oli Meignana Yogam | Platform Portal</title>
+	<title>Aga Oli Meignana Yogam | Athimagayogi</title>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800|Old+Standard+TT:400,400i,700" rel="stylesheet">
@@ -16,61 +15,55 @@
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/main.css">
 
-	<!-- QR Engine Code Injection Injection Libraries -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-	<script src="https://unpkg.com/html5-qrcode"></script>
-
+	<!-- FIXED: Replaced standard background scroll style layout with unified responsive Bootstrap Carousel setup -->
 	<style>
 		.banner-home {
-			height: auto;
-			padding: 180px 0 100px 0;
+			position: relative;
+			overflow: hidden;
+			padding: 0 !important;
 		}
 
-		.section-padding {
-			padding: 80px 0;
+		.carousel-item {
+			min-height: 550px;
+			background-size: cover;
+			background-position: center;
+			padding: 180px 0 120px 0;
 		}
 
-		.gallery-img {
+		.carousel-item-1 {
+			background-image: url('images/services-bg.jpg');
+		}
+
+		.carousel-item-2 {
+			background-image: url('images/section-4-bg.jpg');
+		}
+
+		.carousel-item-3 {
+			background-image: url('images/blog-1.jpg');
+		}
+
+		.carousel-caption-custom {
+			position: relative;
+			z-index: 3;
+			color: #fff;
+		}
+
+		.banner-home .gradient {
+			position: absolute;
+			top: 0;
+			left: 0;
 			width: 100%;
-			height: 250px;
-			object-fit: cover;
-			border-radius: 8px;
-			margin-bottom: 20px;
-			transition: 0.3s;
+			height: 100%;
+			background: linear-gradient(to right, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 100%);
+			z-index: 2;
 		}
 
-			.gallery-img:hover {
-				transform: scale(1.03);
-			}
-
-		.product-card {
-			border: 1px solid #ddd;
-			padding: 20px;
-			border-radius: 8px;
-			text-align: center;
-			margin-bottom: 30px;
-			background: #fff;
+		.carousel-control-prev, .carousel-control-next {
+			z-index: 4;
 		}
 
-			.product-card img {
-				max-width: 100%;
-				height: 200px;
-				object-fit: contain;
-			}
-
-		#reader {
-			width: 100%;
-			max-width: 500px;
-			margin: auto;
-			background: white;
-		}
-
-		.qr-wrapper {
-			background: #fff;
-			padding: 30px;
-			border-radius: 8px;
-			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-			display: inline-block;
+		.carousel-indicators {
+			z-index: 4;
 		}
 	</style>
 </head>
@@ -80,20 +73,16 @@
 	<header class="top">
 		<div id="mySidenav" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a class="active" href="#home" onclick="closeNav()">Home</a>
-			<a href="#events" onclick="closeNav()">Upcoming Camps</a>
-			<a href="#vasi-yogam" onclick="closeNav()">Vasi Yogam Programs</a>
-			<a href="#membership" onclick="closeNav()">Become a Member</a>
-			<a href="#scanner" onclick="closeNav()">Class Entry (Scanner)</a>
-			<a href="#gallery" onclick="closeNav()">Spiritual Gallery</a>
-			<a href="#videos" onclick="closeNav()">Satsang Videos</a>
-			<a href="#shop" onclick="closeNav()">Online Store</a>
-			<a href="#about-gurunathar" onclick="closeNav()">About Gurunathar</a>
-			<a href="#foundation-plan" onclick="closeNav()">Foundation Blueprint</a>
+			<a class="active" href="index.html">Home</a>
+			<a href="about.html">About Yogi</a>
+			<a href="register.html">Become a Member</a>
+			<a href="scan.html">Class Entry (Scanner)</a>
 		</div>
-
+		<!-- Nav section Start -->
 		<nav id="navbar">
+			<!-- container Start-->
 			<div class="container">
+				<!--Row Start-->
 				<div class="row">
 					<div class="col-lg-6 col-md-6 col-12 align-self-center left-side">
 						<p>Awaken Inner Light, Realize the Truth <span>Call: +91 63804 19470</span></p>
@@ -106,385 +95,398 @@
 							<i class="fa fa-youtube" aria-hidden="true"></i>
 						</div>
 						<div class="social-icons square mb-0">
+							<!-- Page Content -->
 							<div id="page-content-wrapper">
 								<span class="slide-menu" style="cursor: pointer;" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></span>
 							</div>
 						</div>
 					</div>
 				</div>
+				<!--Row Ended-->
 			</div>
+			<!-- container Ended-->
 		</nav>
+		<!-- Nav section Ended -->
 		<img class="border-img" src="images/border.png" width="100%" alt="">
 	</header>
-
-	<!-- 1. Top Banner Segment -->
-	<section id="home" class="banner-home">
-		<div class="gradient"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12 text-center text-lg-left">
+	<!-- Header section Ended-->
+	<!-- FIXED: Dynamic Native Bootstrap Carousel Slider Section Integration Setup -->
+	<section id="homeBannerSlider" class="carousel slide banner-home" data-ride="carousel" data-interval="5000">
+		<ol class="carousel-indicators">
+			<li data-target="#homeBannerSlider" data-slide-to="0" class="active"></li>
+			<li data-target="#homeBannerSlider" data-slide-to="1"></li>
+			<li data-target="#homeBannerSlider" data-slide-to="2"></li>
+		</ol>
+		<div class="carousel-inner">
+			<!-- Slide 1 -->
+			<div class="carousel-item carousel-item-1 active">
+				<div class="gradient"></div>
+				<div class="container carousel-caption-custom">
 					<h1 data-aos="fade-left">Aga Oli Meignana Yogam</h1>
-					<h2>The Authentic Tamil Siddhar Science of Lifeforce Activation</h2>
-					<p><i class="fa fa-map-marker"></i> Main Center: Arcot, Vellore Main Road, Tamil Nadu, India</p>
-					<a class="btn btn-success btn-lg mt-3" href="#membership">Join Foundation / Register Now</a>
-					<a class="btn btn-primary btn-lg mt-3 ml-lg-3" href="#scanner"><i class="fa fa-qrcode"></i> Scan Class Attendance</a>
+					<h2 data-aos="fade-left" data-aos-delay="100">The Secret Wisdom of the Siddhars for Eternal Transformation</h2>
+					<p data-aos="fade-left" data-aos-delay="200"><i class="fa fa-clock-o" aria-hidden="true"></i><span>Inquiries Open: 9:00 AM - 1:30 PM</span></p>
+					<p data-aos="fade-left" data-aos-delay="300"><i class="fa fa-phone-square" aria-hidden="true"></i><span>Call: +91 63804 19470, +91 73972 83252</span></p>
+					<p data-aos="fade-left" data-aos-delay="400"><i class="fa fa-envelope" aria-hidden="true"></i><span>info@athimagayogi.com</span></p>
+					<a data-aos="fade-left" data-aos-delay="500" class="btn btn-success" href="register.html" role="button">Join Foundation</a>
+				</div>
+			</div>
+			<!-- Slide 2 -->
+			<div class="carousel-item carousel-item-2">
+				<div class="gradient"></div>
+				<div class="container carousel-caption-custom">
+					<h1>Vasi Yoga Initiation</h1>
+					<h2>Learn the Secret Art of Breath Science from Gurunathar</h2>
+					<p><i class="fa fa-envelope" aria-hidden="true"></i><span>info@athimagayogi.com</span></p>
+					<p><i class="fa fa-map-marker" aria-hidden="true"></i><span>Arcot, Tamil Nadu, India</span></p>
+					<a class="btn btn-primary" href="register.html" role="button">Register Now</a>
+				</div>
+			</div>
+			<!-- Slide 3 -->
+			<div class="carousel-item carousel-item-3">
+				<div class="gradient"></div>
+				<div class="container carousel-caption-custom">
+					<h1>Disease-Free Body & Mind</h1>
+					<h2>Experience Permanent Happiness and Core Biological Vitality Alignment</h2>
+					<p><i class="fa fa-check-circle" aria-hidden="true"></i><span>Free Admission for Registered Seekers</span></p>
+					<a class="btn btn-warning" href="register.html" role="button">Become a Member</a>
 				</div>
 			</div>
 		</div>
+		<!-- Slider Slide Nav Controls Controls -->
+		<a class="carousel-control-prev" href="#homeBannerSlider" role="button" data-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="carousel-control-next" href="#homeBannerSlider" role="button" data-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
 	</section>
-
-	<!-- Upcoming Events Section -->
-	<section id="events" class="section-padding bg-light">
+	<!-- Banner section Ended -->
+	<!-- About section start-->
+	<section class="about">
+		<!-- container Start-->
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12 heading text-center mb-5">
-					<h2>Upcoming Intensive Programs</h2>
-					<h3>Register early to reserve your structured seats</h3>
+				<div class="col-md-12 col-12 heading">
+					<img src="images/leaf.png" alt="">
+					<h2>Yoga as a Lifestyle: Body, Mind & Soul</h2>
+					<h3>Divine insights from Thavasilar Thiru Athimagayogi</h3>
 				</div>
-				<div class="col-md-4">
-					<div class="card mb-4 shadow-sm">
-						<div class="card-body">
-							<span class="badge badge-success mb-2">Next Camp</span>
-							<h5 class="card-title">Arcot Intensive Diksha</h5>
-							<p class="card-text">Direct initiation into Adhara Mudras and Panchakshara deep configurations.</p>
-							<p class="text-muted"><i class="fa fa-calendar"></i> Location: Kanesa Vijayalakshmi Marriage Hall</p>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-12 col-12 box-1" data-aos="fade-right" data-aos-duration="400">
+					<div class="circle">
+						<div class="gradient"></div>
+						<div class="circle__inner">
+							<div class="circle__wrapper">
+								<div class="circle__content">
+									<h4><a href="products.html">Get Clear <span>Mind</span></a></h4>
+									<p><a href="products.html">Still your restless thoughts, manage stress effectively, and awaken your consciousness to realize true peace through internal focus.</a></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
-					<div class="card mb-4 shadow-sm">
-						<div class="card-body">
-							<span class="badge badge-primary mb-2">Trichy Retreatment</span>
-							<h5 class="card-title">Siddhar Secret Yoga Camp</h5>
-							<p class="card-text">Deep structural alignments to quiet internal noise and build vital clarity metrics.</p>
-							<p class="text-muted"><i class="fa fa-calendar"></i> Comprehensive Framework Workshops</p>
+				<div class="col-md-4 col-sm-12 col-12 box-2" data-aos="fade-up" data-aos-duration="400">
+					<div class="circle">
+						<div class="gradient"></div>
+						<div class="circle__inner">
+							<div class="circle__wrapper">
+								<div class="circle__content">
+									<h4><a href="products.html">Increase <span>Wealth</span></a></h4>
+									<p><a href="products.html">Achieve a disease-free body and permanent happiness. True prosperity begins with structural wellness and physical abundance.</a></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
-					<div class="card mb-4 shadow-sm">
-						<div class="card-body">
-							<span class="badge badge-info mb-2">Chennai Satsang</span>
-							<h5 class="card-title">Meignana Porul Classes</h5>
-							<p class="card-text">Public breakdown of absolute truth declarations hidden inside Tamil literature verses.</p>
-							<p class="text-muted"><i class="fa fa-calendar"></i> Periodic Public Gathering Blocks</p>
+				<div class="col-md-4 col-sm-12 col-12 box-3" data-aos="fade-left" data-aos-duration="400">
+					<div class="circle">
+						<div class="gradient"></div>
+						<div class="circle__inner">
+							<div class="circle__wrapper">
+								<div class="circle__content">
+									<h4><a href="products.html">Grow <span>Vitality</span></a></h4>
+									<p><a href="products.html">Master the science of breath activation (Vasi Yoga) to slow down biological aging, recharge life force, and extend true longevity.</a></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- container Ended-->
 	</section>
-
-	<!-- 9. About Vassi Yogam Programs Section -->
-	<section id="vasi-yogam" class="section-padding">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 heading text-center mb-5">
-					<h2>Vasi Yogam Science Programs</h2>
-					<h3>Structured curriculum targeting baseline physical transformations</h3>
+	<!-- About section Ended-->
+	<!-- Services section start-->
+	<section class="services">
+		<!-- container-fluid Start-->
+		<div class="container-fluid">
+			<div class="row" data-aos="fade-up" data-aos-duration="400">
+				<div class="col-md-3">
+					<figure>
+						<img src="images/services-bg.jpg" alt="Yoga Session">
+					</figure>
+					<div class="gradient"></div>
 				</div>
-				<div class="col-md-6">
-					<h4><i class="fa fa-leaf text-success"></i> Vasi Nesi Swasi Foundations</h4>
-					<p>Systematic internal monitoring configurations that re-route organic respiratory dynamics. Helps calm nervous tracking pathways and activates permanent clarity.</p>
-				</div>
-				<div class="col-md-6">
-					<h4><i class="fa fa-shield text-success"></i> Bio-Energetic Disease Immunity</h4>
-					<p>Targeted execution of deep traditional mudras designed to flush absolute vascular blockages and maximize longevity parameters organically.</p>
+				<div class="col-md-9 right-part">
+					<div class="row">
+						<div class="col-md-12">
+							<h2>The Ultimate Yoga for Inner Realization</h2>
+							<h3>Siddhars' rare secret practices open to all men and women</h3>
+							<p>Control the wandering mind and experience the boundless supreme divine power inside you. Learn how to transform the roaring sea of thoughts into a profound ocean of silence.</p>
+						</div>
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-xl-4 col-lg-6 col-md-6 col-12 contant-part-1">
+									<ul>
+										<li><i class="fa fa-envira" aria-hidden="true"></i><span><a href="services.html">Aga Oli (Inner Light) Awakening</a></span></li>
+										<li><i class="fa fa-envira" aria-hidden="true"></i><span><a href="services.html">Meignana Porul Upadesam</a></span></li>
+										<li><i class="fa fa-envira" aria-hidden="true"></i><span><a href="services.html">Vasi Yoga Diksha Initiation</a></span></li>
+										<li><i class="fa fa-envira" aria-hidden="true"></i><span><a href="services.html">Siddhar Breathwork Science</a></span></li>
+									</ul>
+								</div>
+								<div class="col-xl-4 col-lg-6 col-md-6 col-12 contant-part-2">
+									<ul>
+										<li><i class="fa fa-envira" aria-hidden="true"></i><span><a href="services.html">Adhara Mudras Practice</a></span></li>
+										<li><i class="fa fa-envira" aria-hidden="true"></i><span><a href="services.html">Panchakshara Secrets Explained</a></span></li>
+										<li><i class="fa fa-envira" aria-hidden="true"></i><span><a href="services.html">Pancha Bhoota Attunement</a></span></li>
+										<li><i class="fa fa-envira" aria-hidden="true"></i><span><a href="services.html">Disease-Free Body & Longevity</a></span></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+		<!-- container-fluid Ended-->
 	</section>
-
-	<!-- 12. Membership Registration Section with Sheets Connectivity -->
-	<section id="membership" class="section-padding bg-light">
+	<!-- Services section Ended-->
+	<!-- Section-4 section start-->
+	<section class="section-4">
+		<!-- container-fluid Start-->
+		<div class="container-fluid">
+			<div class="row" data-aos="fade-up" data-aos-duration="400">
+				<div class="col-md-9 right-part">
+					<div class="row">
+						<div class="col-md-12 heading">
+							<h2>Control Body, Mind and Senses!</h2>
+							<h3>"Love is everything - see all living earthly beings as your own soul"</h3>
+						</div>
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-3 col-6">
+									<figure><img src="images/services-bg.jpg" alt="Meditation"></figure>
+								</div>
+								<div class="col-md-3 col-6">
+									<figure><img src="images/blog-1.jpg" alt="Vasi Yoga"></figure>
+								</div>
+								<div class="col-md-3 col-6">
+									<figure><img src="images/blog-2.jpg" alt="Siddhar Teachings"></figure>
+								</div>
+								<div class="col-md-3 col-6">
+									<figure><img src="images/blog-3.jpg" alt="Spiritual Camp"></figure>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<p>In devotion, there is a humble surrender; in madness, an earnest yearning. In the state of Siddha, there is a divine search; and in clarity, there is true wisdom. Understand the path your soul has taken when love and wisdom go missing.</p>
+							<p>Our camps offer direct spiritual insights, dynamic wisdom, and practical energy keys. Free admission is available for registered spiritual seekers across our regional centers.</p>
+							<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Our Gallery</a>
+							<a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Book Free Seat</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<figure>
+						<img src="images/section-4-bg.jpg" alt="Athimagayogi">
+					</figure>
+					<div class="gradient"></div>
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid Ended-->
+	</section>
+	<!-- Section-4 section Ended-->
+	<!-- Blog section start-->
+	<section class="blog">
+		<!-- container Start-->
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6">
-					<div class="heading mb-4">
-						<h2>Become a Foundation Member</h2>
-						<h3>Generate your lifelong access card identification instantly</h3>
-					</div>
-					<form id="registrationForm" onsubmit="handleRegistration(event)">
-						<div class="form-group"><input type="text" id="regName" class="form-control" placeholder="Full Name" required /></div>
-						<div class="form-group"><input type="tel" id="regMobile" class="form-control" placeholder="Mobile Number" required /></div>
-						<div class="form-group"><input type="number" id="regAge" class="form-control" placeholder="Age" required /></div>
-						<div class="form-group"><input type="text" id="regState" class="form-control" placeholder="State" required /></div>
-						<div class="form-group"><input type="text" id="regDistrict" class="form-control" placeholder="District" required /></div>
-
-						<!-- 7. Fee Verification Alert Box -->
-						<div class="alert alert-warning py-2 small">
-							<strong>Payment Step:</strong> Maintenance contribution can be verified via our WhatsApp validation processing bot.
+				<div class="col-md-12 col-12 heading">
+					<img src="images/leaf.png" alt="">
+					<h2>Useful Spiritual & Yoga Articles for You</h2>
+					<h3>Spreading pure wisdom across Chennai, Trichy, and Arcot</h3>
+				</div>
+			</div>
+			<div class="row" data-aos="fade-up" data-aos-duration="400">
+				<div class="col-md-12 col-12">
+					<div class="row">
+						<div class="col-lg-6 col-md-12 col-12">
+							<div class="row">
+								<div class="col-md-4">
+									<figure>
+										<a href="blog_single.html"><img src="images/blog-1.jpg" class="zoom" alt="Chennai Session" width="304" height="228"></a>
+									</figure>
+								</div>
+								<div class="col-md-8 inner-content">
+									<h4><a href="blog_single.html">Highlights from the Mega Chennai Intensive Wisdom Camp</a></h4>
+									<p><span>April 28, 2024</span>Posted by <b><a href="blog_single.html">Aga Oli Media</a></b></p>
+								</div>
+							</div>
 						</div>
-						<button type="submit" class="btn btn-success btn-block">Generate Unique Membership Profile</button>
+						<div class="col-lg-6 col-md-12 col-12">
+							<div class="row">
+								<div class="col-md-4">
+									<figure>
+										<a href="blog_single.html"><img src="images/blog-2.jpg" alt="Trichy Session" width="304" height="228"></a>
+									</figure>
+								</div>
+								<div class="col-md-8 inner-content">
+									<h4><a href="blog_single.html">Siddhar's Secret Practices Unleashed at Trichy Conference</a></h4>
+									<p><span>September 24, 2023</span>Posted by <b><a href="blog_single.html">Aga Oli Media</a></b></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 col-12">
+					<div class="row">
+						<div class="col-lg-6 col-md-12 col-12">
+							<div class="row">
+								<div class="col-md-4">
+									<figure>
+										<a href="blog_single.html"><img src="images/blog-3.jpg" alt="Arcot Session" width="304" height="228"></a>
+									</figure>
+								</div>
+								<div class="col-md-8 inner-content">
+									<h4><a href="blog_single.html">Understanding Mudras & Adharas at Arcot Wedding Hall Camp</a></h4>
+									<p><span>December 03, 2023</span>Posted by <b><a href="blog_single.html">Aga Oli Media</a></b></p>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-12 col-12">
+							<div class="row">
+								<div class="col-md-4">
+									<figure>
+										<a href="blog_single.html"><img src="images/blog-4.jpg" alt="Vasi Yoga Article" width="304" height="228"></a>
+									</figure>
+								</div>
+								<div class="col-md-8 inner-content">
+									<h4><a href="blog_single.html">How to Quiet Your Restless Mind: The External & Internal Awareness Shift</a></h4>
+									<p><span>Recent Teachings</span>Posted by <b><a href="blog_single.html">Athimagayogi</a></b></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-12 button">
+					<a class="btn btn-success" href="blog-page.html" role="button">Read More Articles</a>
+				</div>
+			</div>
+		</div>
+		<!-- container Ended-->
+	</section>
+	<!-- Blog section Ended-->
+	<!-- Footer section start-->
+	<footer class="contact">
+		<!-- Gradient -->
+		<div class="gradient"></div>
+		<!-- container Start-->
+		<div class="container">
+			<div class="row" data-aos="fade-up" data-aos-duration="400">
+				<div class="col-lg-6 col-md-12 col-12 columns-1">
+					<h2>Our Center Address</h2>
+					<address>
+						<p>Kanesa Vijayalakshmi Marriage Hall,</p>
+						<p>Vellore Main Road, Arcot, Tamil Nadu, India</p>
+						<p>Inquiry Hours : Daily 9:00 AM - 1:30 PM</p>
+						<p>Call for Pre-Registration : <span>+91 63804 19470 / 73972 83252</span></p>
+					</address>
+				</div>
+				<div class="col-lg-1 col-md-12 col-12"></div>
+				<div class="col-lg-5 col-md-12 col-12 columns-2">
+					<h2>Quick Contact</h2>
+					<form class="row form-inline">
+						<div class="col-md-6 form-group">
+							<input type="text" class="form-control" placeholder="Your Name" required />
+						</div>
+						<div class="col-md-6 form-group">
+							<input type="email" class="form-control" placeholder="Your Email" required />
+						</div>
+						<div class="col-md-12 form-group">
+							<textarea class="form-control" placeholder="Message" rows="5" cols="70"></textarea>
+						</div>
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-primary">Submit Form</button>
+						</div>
 					</form>
 				</div>
-				<div class="col-md-6 text-center mt-5 mt-md-0">
-					<div id="qrOutputWrapper" style="display:none;">
-						<div class="qr-wrapper">
-							<h4 id="generatedMemberName" class="text-dark mb-2"></h4>
-							<p id="generatedMemberId" class="text-success font-weight-bold mb-3"></p>
-							<div id="qrcode" class="d-flex justify-content-center mb-4"></div>
-							<p class="small text-muted">Screenshot this QR Code image to scan tracking metrics at entry check-points.</p>
-							<a id="whatsappPayBtn" href="#" target="_blank" class="btn btn-outline-success btn-sm btn-block"><i class="fa fa-whatsapp"></i> Verify Contribution on WhatsApp</a>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
-	</section>
-
-	<!-- 4 & 5. Attendance Verification QR Scanning Interface Module -->
-	<section id="scanner" class="section-padding text-center bg-dark text-white">
-		<div class="container">
-			<h2>Class Attendance Terminal</h2>
-			<p class="mb-4">Point your generated member identity token QR code at the camera scanner below</p>
-			<div class="card p-3 mb-3 text-dark" style="max-width:520px; margin:auto;">
-				<div id="reader"></div>
-			</div>
-			<div id="scannerMessage" class="h5 mt-3 text-warning">Camera interface uninitialized. Click toggle below.</div>
-			<button class="btn btn-outline-light mt-2" onclick="startScannerEngine()">Activate Scanning Optics</button>
-		</div>
-	</section>
-
-	<!-- 2. Spiritual Activities Gallery Section -->
-	<section id="gallery" class="section-padding">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 heading text-center mb-5">
-					<h2>Foundation Action Gallery</h2>
-					<h3>Visual highlights across classes, historical annadhanams, and gatherings</h3>
-				</div>
-				<div class="col-md-4 col-sm-6"><img src="images/blog-1.jpg" alt="Active Yoga Class Sessions" class="gallery-img"><p class="text-center font-weight-bold">Structured Yoga Classes</p></div>
-				<div class="col-md-4 col-sm-6"><img src="images/blog-2.jpg" alt="Mass Annadhanam Seva Activities" class="gallery-img"><p class="text-center font-weight-bold">Mass Annadhanam Seva</p></div>
-				<div class="col-md-4 col-sm-6"><img src="images/blog-3.jpg" alt="Divine Chanting and Satsang Assemblies" class="gallery-img"><p class="text-center font-weight-bold">Devotional Gathering Assemblies</p></div>
-			</div>
-		</div>
-	</section>
-
-	<!-- 3. Videos - YouTube Link Embed System Segment -->
-	<section id="videos" class="section-padding bg-light">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 heading text-center mb-5">
-					<h2>Satsang Video Streams</h2>
-					<h3>Access online video dynamic recordings from anywhere</h3>
-				</div>
-				<div class="col-md-6 mb-4">
-					<div class="embed-responsive embed-responsive-16by9 shadow-sm">
-						<!-- Target YouTube placeholder frame mappings -->
-						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-					</div>
-					<h5 class="mt-3">Introduction to Vasi Breathwork Systems</h5>
-				</div>
-				<div class="col-md-6 mb-4">
-					<div class="embed-responsive embed-responsive-16by9 shadow-sm">
-						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-					</div>
-					<h5 class="mt-3">Calming the Restless Intellect Mechanics</h5>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- 13. Products Online Sale E-Commerce Showcase Section -->
-	<section id="shop" class="section-padding">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 heading text-center mb-5">
-					<h2>Online Store / Materials Center</h2>
-					<h3>Authentic physical materials supporting personal meditation practices</h3>
-				</div>
-				<div class="col-md-4">
-					<div class="product-card">
-						<img src="images/leaf.png" alt="Premium Rudraksha Japa Meditation Mala Set">
-						<h5 class="mt-3">Premium Rudraksha Mala</h5>
-						<p class="text-success font-weight-bold">₹499.00</p>
-						<a href="https://wa.me/916380419470?text=I%20want%20to%20order%20Premium%20Rudraksha%20Mala" target="_blank" class="btn btn-sm btn-primary">Order via WhatsApp</a>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="product-card">
-						<img src="images/leaf.png" alt="Traditional Herbal Meditation Sitting Mat">
-						<h5 class="mt-3">Herbal Dhyana Sitting Mat</h5>
-						<p class="text-success font-weight-bold">₹750.00</p>
-						<a href="https://wa.me/916380419470?text=I%20want%20to%20order%20Herbal%20Dhyana%20Mat" target="_blank" class="btn btn-sm btn-primary">Order via WhatsApp</a>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="product-card">
-						<img src="images/leaf.png" alt="Siddhar Wisdom Spiritual Guideline Literature Guide Book">
-						<h5 class="mt-3">Siddhar Wisdom Guideline Literature</h5>
-						<p class="text-success font-weight-bold">₹250.00</p>
-						<a href="https://wa.me/916380419470?text=I%20want%20to%20order%20Siddhar%20Wisdom%20Book" target="_blank" class="btn btn-sm btn-primary">Order via WhatsApp</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- 10. About Gurunathar Biography Context -->
-	<section id="about-gurunathar" class="section-padding bg-light">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-md-4 text-center">
-					<img src="images/section-4-bg.jpg" alt="Thavasilar Thiru Athimagayogi Biography Frame" class="img-fluid rounded-circle shadow" style="max-width:280px;">
-				</div>
-				<div class="col-md-8 mt-4 mt-md-0">
-					<h2>About Gurunathar</h2>
-					<h4>Thavasilar Thiru Athimagayogi</h4>
-					<p>Gurunathar is a realized contemporary mystic who has dedicated multiple decades to analyzing internal energetic paths mapped out by historical Tamil Siddhars. Rejecting overly complex terminology formats, his direct practical teaching methodology allows modern everyday citizens to access ancient spiritual secrets safely, establishing absolute control over their wandering sensory minds.</p>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- 11. About Plan of the Foundation Project Blueprint Section -->
-	<section id="foundation-plan" class="section-padding">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<h2>Aga Oli Foundation Strategic Blueprint</h2>
-					<p>The mission framework of the foundation is built on three core systemic pillars:</p>
-					<ul>
-						<li><strong>Pillar 1:</strong> Constructing dedicated local practice halls to offer completely cost-free Vasi Yoga classes to the general public.</li>
-						<li><strong>Pillar 2:</strong> Digitizing historical medical and spiritual palm-leaf manuscripts to preserve Tamil Siddhar science frameworks.</li>
-						<li><strong>Pillar 3:</strong> Expanding regular community-level food relief channels (Annadhanam Seva) across rural geographic sectors.</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- 8. About Us Segment Shifted to Last Section Placement -->
-	<section id="about-us" class="section-padding bg-light">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<h3>About Our Foundation</h3>
-					<p>Aga Oli Meignana Yogam functions as a non-profit spiritual foundation dedicated to scaling tools for self-realization. By offering direct support and practical training models across our functional main centers in Arcot, Trichy, and Chennai, we assist human individuals in achieving optimal bodily health, stable psychological wellness, and unified spiritual integration.</p>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Global Layout Footer System -->
-	<footer class="contact">
-		<div class="gradient"></div>
+		<!-- container Ended-->
 		<div class="copyright">
 			<div class="container">
 				<div class="row border-img">
-					<div class="col-md-12"><img src="images/border.png" alt=""></div>
+					<div class="col-md-12">
+						<img src="images/border.png" alt="">
+					</div>
 				</div>
 			</div>
 			<div class="container">
-				<div class="row">
+				<div class="row" data-aos="fade-up" data-aos-duration="400">
 					<div class="col-lg-3 col-md-12">
-						<a href="#home"><img src="images/footer-logo-bg.png" alt="logo"></a>
+						<a href="index.html"><img src="images/footer-logo-bg.png" alt="logo"></a>
 					</div>
 					<div class="col-lg-9 col-md-12 right-part">
-						<p>(C) 2026 Aga Oli Meignana Yogam Foundation. All Rights Reserved.</p>
+						<ul class="ml-auto">
+							<li class="nav-item active">
+								<a class="nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
+							</li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="services.html">Our Services</a></li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="products.html">Our Products</a></li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="rates.html">Rates</a></li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="blog-page.html">Read Blog</a></li>
+						</ul>
+						<p>(C) 2026 All Rights Reserved. Designed for Athimagayogi Spreads.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</footer>
+	<!-- Footer section Ended-->
+	<!-- Return to Top -->
+	<a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 
-	<!-- Scripts Engine Initialization Block Core Configurations Logic -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!-- Custom JavaScript -->
+	<script src="js/animate.js"></script>
+	<script src="js/custom.js"></script>
 
 	<script>
-		// Replace this string with your real Google Web App URL link after publishing your Apps Script project
-		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
-
 		function openNav() {
-			document.getElementById("mySidenav").style.width = "280px";
+			var sideNav = document.getElementById("mySidenav");
+			if (sideNav) {
+				sideNav.style.width = "250px";
+			}
 		}
+
 		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-		}
-
-		// Form Input Submission Routing Engine Pipeline Handling
-		function handleRegistration(event) {
-			event.preventDefault();
-
-			const name = document.getElementById("regName").value;
-			const mobile = document.getElementById("regMobile").value;
-			const age = document.getElementById("regAge").value;
-			const state = document.getElementById("regState").value;
-			const district = document.getElementById("regDistrict").value;
-
-			const payload = {
-				action: "registerMember",
-				name: name,
-				mobile: mobile,
-				age: age,
-				state: state,
-				district: district
-			};
-
-			// UI Response Layer State Initializing Updates
-			document.getElementById("qrOutputWrapper").style.display = "block";
-			document.getElementById("generatedMemberName").innerText = name;
-			document.getElementById("generatedMemberId").innerText = "Processing Cloud Sync...";
-			document.getElementById("qrcode").innerHTML = "";
-
-			// POST Transmission Request directly hitting Spreadsheet API Engine Target
-			fetch(GOOGLE_APPS_SCRIPT_URL, {
-				method: "POST",
-				mode: "no-cors", // Bypasses browser strict cross-origin preflight execution controls
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(payload)
-			}).then(() => {
-				// Fallback simulation layout parameters mapping token output generation key triggers
-				const simulatedId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
-				document.getElementById("generatedMemberId").innerText = simulatedId;
-
-				// QR Generation Rendering Engine Execution
-				new QRCode(document.getElementById("qrcode"), {
-					text: simulatedId,
-					width: 180,
-					height: 180
-				});
-
-				// WhatsApp Redirect Payload String Generation
-				const textMessage = encodeURIComponent(`Hello Team, I completed registration on the website.\nName: ${name}\nMobile: ${mobile}\nAssigned Token ID: ${simulatedId}\nPlease verify my contribution.`);
-				document.getElementById("whatsappPayBtn").href = `https://wa.me/916380419470?text=${textMessage}`;
-			}).catch(err => {
-				console.error("Transmission Exception:", err);
-				document.getElementById("generatedMemberId").innerText = "Network Sync Error. Check Console.";
-			});
-		}
-
-		// HTML5 Camera QR Code Scan Recognition Pipeline Framework Execution
-		let html5QrcodeScanner;
-		function startScannerEngine() {
-			document.getElementById("scannerMessage").innerText = "Accessing device camera array...";
-
-			html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
-			html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-		}
-
-		function onScanSuccess(decodedText, decodedResult) {
-			document.getElementById("scannerMessage").className = "h5 mt-3 text-success";
-			document.getElementById("scannerMessage").innerText = `Token Detected: ${decodedText}. Sending to sheet backend...`;
-
-			// Hitting Attendance Table tracking function inside Google Spreadsheet Target API
-			fetch(GOOGLE_APPS_SCRIPT_URL, {
-				method: "POST",
-				mode: "no-cors",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ action: "markAttendance", memberId: decodedText })
-			}).then(() => {
-				document.getElementById("scannerMessage").innerText = `Success! Attendance logged for Member ID: ${decodedText}`;
-				html5QrcodeScanner.clear();
-			}).catch(err => {
-				document.getElementById("scannerMessage").innerText = "API error logging attendance.";
-			});
-		}
-
-		function onScanFailure(error) {
-			// Continuous detection logging passes here silently
+			var sideNav = document.getElementById("mySidenav");
+			if (sideNav) {
+				sideNav.style.width = "0";
+			}
 		}
 	</script>
 </body>
