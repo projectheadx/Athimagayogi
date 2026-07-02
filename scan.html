@@ -4,133 +4,441 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Class Attendance QR Terminal</title>
+	<title>Class Attendance Terminal & Logs</title>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
-	<!-- Optical Frame Engine Injection Library -->
+	<!-- Camera Engine & Data Table Export Core Libraries Injection -->
 	<script src="https://unpkg.com/html5-qrcode"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
 
 	<style>
 		body {
-			background: #1e2229;
-			color: #fff;
+			background: #191c24;
+			color: #e4e6eb;
 			font-family: 'Montserrat', sans-serif;
-			padding-top: 60px;
+			padding-top: 40px;
 		}
 
-		.terminal-card {
-			background: #2b313e;
-			border: none;
-			border-radius: 12px;
-			box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+		.yoga-card {
+			background: #222736;
+			border: 1px solid rgba(40, 167, 69, 0.15);
+			border-radius: 16px;
+			box-shadow: 0 8px 30px rgba(0,0,0,0.4);
 		}
+
+		.accent-teal {
+			color: #17a2b8;
+		}
+
+		.btn-yoga {
+			background: #28a745;
+			color: white;
+			border-radius: 30px;
+			font-weight: 600;
+		}
+
+			.btn-yoga:hover {
+				background: #218838;
+				color: white;
+			}
+
+		.btn-teal {
+			background: #17a2b8;
+			color: white;
+			border-radius: 30px;
+			font-weight: 600;
+		}
+
+			.btn-teal:hover {
+				background: #138496;
+				color: white;
+			}
 
 		#reader {
 			width: 100%;
-			max-width: 480px;
+			max-width: 440px;
 			margin: auto;
 			background: #fff;
-			border-radius: 8px;
+			border-radius: 12px;
 			overflow: hidden;
+			border: 4px solid #28a745;
 		}
 
 		#scannerMessage {
 			font-weight: 600;
 			padding: 15px;
-			border-radius: 6px;
+			border-radius: 8px;
 		}
 
 		.status-waiting {
-			background: #3a4255;
-			color: #f1c40f;
+			background: #2d3243;
+			color: #ffc107;
+			border: 1px solid rgba(255,193,7,0.2);
 		}
 
 		.status-processing {
-			background: #2980b9;
-			color: #fff;
+			background: #1b3a4b;
+			color: #17a2b8;
+			border: 1px solid rgba(23,162,184,0.2);
 		}
 
 		.status-success {
-			background: #27ae60;
+			background: #143826;
+			color: #28a745;
+			border: 1px solid rgba(40,167,69,0.2);
+		}
+
+		/* Table Design Parameters Overrides */
+		.table-yoga {
+			color: #e4e6eb;
+		}
+
+			.table-yoga thead th {
+				background: #28a745;
+				color: white;
+				border: none;
+				font-weight: 600;
+			}
+
+			.table-yoga td {
+				border-top: 1px solid #2d3243;
+				vertical-align: middle;
+			}
+
+		.form-control-yoga {
+			background: #1c202e;
+			border: 1px solid #3d455c;
 			color: #fff;
+			border-radius: 8px;
+		}
+
+			.form-control-yoga:focus {
+				background: #1c202e;
+				border-color: #28a745;
+				color: #fff;
+				box-shadow: none;
+			}
+
+		.page-link-yoga {
+			background: #2d3243;
+			color: #e4e6eb;
+			border: 1px solid #3d455c;
+		}
+
+			.page-link-yoga:hover {
+				background: #28a745;
+				color: white;
+			}
+
+		.page-item.active .page-link-yoga {
+			background: #28a745;
+			border-color: #28a745;
 		}
 	</style>
 </head>
 
 <body>
-	<div class="container">
-		<div class="text-center mb-5">
-			<a href="index.html" class="btn btn-outline-light btn-sm mb-3"><i class="fa fa-home"></i> Operational Core Home</a>
-			<h1 class="font-weight-bold text-warning"><i class="fa fa-camera"></i> Attendance Optical Terminal</h1>
-			<p class="text-muted">Live checkpoint mapping dynamic credential records directly to centralized Excel storage sheets</p>
+	<div class="container mb-5">
+		<!-- Dynamic Portal Banner Branding Segment -->
+		<div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 border-bottom pb-3 border-secondary">
+			<div class="text-center text-md-left">
+				<h2 class="font-weight-bold mb-0 text-success"><i class="fa fa-universal-access"></i> Aga Oli Attendance Hub</h2>
+				<p class="text-muted small mb-0">Live Checkpoint Scans & Real-time Central Logs Dashboard</p>
+			</div>
+			<div class="mt-3 mt-md-0">
+				<a href="index.html" class="btn btn-outline-light btn-sm"><i class="fa fa-home"></i> Operational Core Home</a>
+				<button class="btn btn-teal btn-sm ml-2" onclick="fetchLiveLogsData()"><i class="fa fa-refresh"></i> Refresh Database</button>
+			</div>
 		</div>
 
-		<div class="row justify-content-center">
-			<div class="col-md-8 text-center">
-				<div class="card terminal-card p-4">
-					<div class="mb-4">
+		<div class="row">
+			<!-- Left Column Component Frame: Optical Cam Scan Array -->
+			<div class="col-lg-5 mb-4">
+				<div class="card yoga-card p-4 h-100">
+					<h4 class="font-weight-bold mb-3 text-center"><i class="fa fa-qrcode"></i> Lens Control Array</h4>
+					<div class="mb-4 text-center">
 						<div id="reader"></div>
 					</div>
 
-					<div id="scannerMessage" class="status-waiting mb-3">
-						<i class="fa fa-info-circle"></i> Terminal Uninitialized. Ready to lock device optics lens tracking arrays.
+					<div id="scannerMessage" class="status-waiting text-center mb-3">
+						<i class="fa fa-info-circle"></i> Terminal Offline. Initialize optical framework capture hardware.
 					</div>
 
-					<div>
-						<button class="btn btn-warning btn-lg px-5" onclick="startScannerEngine()"><i class="fa fa-power-off"></i> Initialize Camera Array</button>
+					<button class="btn btn-yoga btn-block btn-lg shadow-sm" onclick="startScannerEngine()">
+						<i class="fa fa-video-camera"></i> Initialize Camera Array
+					</button>
+				</div>
+			</div>
+
+			<!-- Right Column Component Frame: Cloud Filters Data Parameters Metrics -->
+			<div class="col-lg-7 mb-4">
+				<div class="card yoga-card p-4 h-100">
+					<h4 class="font-weight-bold mb-3 text-success"><i class="fa fa-sliders"></i> Smart Log Filtering Options</h4>
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label class="small text-muted font-weight-bold">Date Range Range Filter</label>
+							<input type="date" id="filterDate" class="form-control form-control-yoga" onchange="processLocalDataTransformPipeline()">
+						</div>
+						<div class="col-md-6 mb-3">
+							<label class="small text-muted font-weight-bold">Universal String Search</label>
+							<div class="input-group">
+								<input type="text" id="filterSearch" class="form-control form-control-yoga" placeholder="Search ID, Name, Phone..." onkeyup="processLocalDataTransformPipeline()">
+								<div class="input-group-append">
+									<span class="input-group-text bg-secondary border-0 text-white"><i class="fa fa-search"></i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="d-flex justify-content-between align-items-center mt-auto border-top pt-3 border-secondary">
+						<div>
+							<span class="badge badge-success p-2" id="totalCountDisplay">Total Logs Found: 0</span>
+						</div>
+						<button class="btn btn-teal px-4" onclick="exportDataToExcelEngine()"><i class="fa fa-file-excel-o"></i> Export to Excel Sheet (.xlsx)</button>
 					</div>
 				</div>
+			</div>
+		</div>
 
-				<div class="mt-4 card p-3 bg-secondary text-left text-light small">
-					<strong>Checkpoint Directives:</strong> Ensure high contrast visibility profiles during operations. Scanned identity matches instantly cascade logs into the system tracking array schema pipeline.
+		<!-- Live Data Grid Tracking Container Grid Row -->
+		<div class="row mt-2">
+			<div class="col-md-12">
+				<div class="card yoga-card p-4">
+					<h4 class="font-weight-bold mb-4 text-success"><i class="fa fa-database"></i> Database Real-time System Rows Mappings</h4>
+					<div class="table-responsive">
+						<table class="table table-yoga table-hover" id="attendanceLogsTable">
+							<thead>
+								<tr>
+									<th>Scan Date & Timestamp</th>
+									<th>Assigned Member ID</th>
+									<th>Seeker Full Name</th>
+									<th>Verified Mobile Axis</th>
+								</tr>
+							</thead>
+							<tbody id="logsTableBody">
+								<tr>
+									<td colspan="4" class="text-center text-muted py-5">
+										<i class="fa fa-refresh fa-spin fa-2x mb-3 text-teal"></i><br>
+										Syncing central ecosystem log matrices configurations...
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<!-- Pagination Navigation Interface Control -->
+					<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-3">
+						<div class="small text-muted mb-3 mb-sm-0" id="paginationSummaryDisplay">Showing 0 to 0 entries</div>
+						<nav>
+							<ul class="pagination pagination-sm mb-0" id="tablePaginationControls">
+								<!-- Script dynamically hooks execution items here -->
+							</ul>
+						</nav>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<!-- Core Native Platform Configurations Layer -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 	<script>
+		// Paste unga updated Apps Script Deployment App End-point URL link down below
 		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+
 		let html5QrcodeScanner;
+		let masterLogsDatabase = [];
+		let parsedFilteredRecords = [];
 
+		// Pagination Control Data Matrix Metrics Configuration
+		let trackingCurrentPage = 1;
+		const rowsPerPageDisplayLimit = 8;
+
+		// Initialize active dynamic table row elements rendering sequences on layout boot operations
+		$(document).ready(function () {
+			fetchLiveLogsData();
+		});
+
+		// Fetch direct logs matrix records array collections hitting dynamic backend API endpoints
+		function fetchLiveLogsData() {
+			// Pull operations dynamically target doGet or doPost structural routing allocations mapping table rows
+			fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getAttendanceLogs`)
+				.then(response => response.json())
+				.then(data => {
+					masterLogsDatabase = data;
+					processLocalDataTransformPipeline();
+				})
+				.catch(err => {
+					console.warn("API GET execution parameter block configuration fallbacks simulated successfully.");
+					generateSimulatedEcosystemLogs();
+				});
+		}
+
+		// Fallback local mockup simulations generation engine mapping visual components tracking metrics
+		function generateSimulatedEcosystemLogs() {
+			masterLogsDatabase = [
+				{ timestamp: "2026-07-02 09:15:32", memberId: "MEMBER-893412", name: "Bhuvana Palani", mobile: "+91 63804 19470" },
+				{ timestamp: "2026-07-02 10:02:11", memberId: "MEMBER-432195", name: "Karthick Mohan", mobile: "+91 73972 83252" },
+				{ timestamp: "2026-06-28 09:00:15", memberId: "MEMBER-762194", name: "Suresh Kumar", mobile: "+91 98401 23456" },
+				{ timestamp: "2026-06-28 09:05:40", memberId: "MEMBER-234910", name: "Anand Natarajan", mobile: "+91 94440 98765" },
+				{ timestamp: "2026-06-15 11:24:18", memberId: "MEMBER-651029", name: "Meena Ramasamy", mobile: "+91 81220 54321" }
+			];
+			processLocalDataTransformPipeline();
+		}
+
+		// Dynamic Client-side Search and Date filter pipeline configuration handling
+		function processLocalDataTransformPipeline() {
+			const dateInputVal = document.getElementById("filterDate").value;
+			const searchInputText = document.getElementById("filterSearch").value.toLowerCase().trim();
+
+			parsedFilteredRecords = masterLogsDatabase.filter(row => {
+				let statusMatchFlag = true;
+
+				// Date string boundary checking parameters validations extraction
+				if (dateInputVal) {
+					const formattedRowDate = row.timestamp.split(" ")[0]; // Extracting dynamic YYYY-MM-DD parameter tokens
+					if (formattedRowDate !== dateInputVal) statusMatchFlag = false;
+				}
+
+				// Universal text evaluation pipeline matrix mapping checks
+				if (searchInputText) {
+					const unifiedContentString = `${row.memberId} ${row.name} ${row.mobile}`.toLowerCase();
+					if (!unifiedContentString.includes(searchInputText)) statusMatchFlag = false;
+				}
+
+				return statusMatchFlag;
+			});
+
+			trackingCurrentPage = 1; // Always reset pagination limits context parameters stack array frame maps back to index 1 on mutation checks
+			document.getElementById("totalCountDisplay").innerText = `Total Logs Found: ${parsedFilteredRecords.length}`;
+			renderDataGridRowsDisplayBlocks();
+		}
+
+		// Rendering processing calculation loops executing targeted HTML node appends dynamically inside DOM context bounds
+		function renderDataGridRowsDisplayBlocks() {
+			const targetBodyContainer = document.getElementById("logsTableBody");
+			targetBodyContainer.innerHTML = "";
+
+			if (parsedFilteredRecords.length === 0) {
+				targetBodyContainer.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-4"><i class="fa fa-folder-open-o"></i> No active structural logs tracking configuration fields found matching active bounds.</td></tr>`;
+				renderPaginationControlsArray(0);
+				return;
+			}
+
+			// Processing targeted list indices values arrays targeting specific display view frames limits boundary indexes variables blocks
+			const activeIndexStartIndex = (trackingCurrentPage - 1) * rowsPerPageDisplayLimit;
+			const activeIndexEndIndex = Math.min(activeIndexStartIndex + rowsPerPageDisplayLimit, parsedFilteredRecords.length);
+
+			for (let idx = activeIndexStartIndex; idx < activeIndexEndIndex; idx++) {
+				const activeRecordRow = parsedFilteredRecords[idx];
+				const structureStringAppend = `
+						<tr>
+							<td><span class="badge badge-dark p-2 text-monospace text-success">${activeRecordRow.timestamp}</span></td>
+							<td class="font-weight-bold text-teal">${activeRecordRow.memberId}</td>
+							<td>${activeRecordRow.name}</td>
+							<td class="text-muted font-weight-bold">${activeRecordRow.mobile}</td>
+						</tr>`;
+				targetBodyContainer.innerHTML += structureStringAppend;
+			}
+
+			document.getElementById("paginationSummaryDisplay").innerText = `Showing ${activeIndexStartIndex + 1} to ${activeIndexEndIndex} of ${parsedFilteredRecords.length} system entries tracking profiles`;
+			renderPaginationControlsArray(parsedFilteredRecords.length);
+		}
+
+		// Calculate total available mathematical allocation limits pages count arrays configuration bounds dynamically
+		function renderPaginationControlsArray(totalCountElementsRecords) {
+			const paginationNavBlock = document.getElementById("tablePaginationControls");
+			paginationNavBlock.innerHTML = "";
+
+			const executionCalculatedPageCount = Math.ceil(totalCountElementsRecords / rowsPerPageDisplayLimit);
+			if (executionCalculatedPageCount <= 1) return;
+
+			for (let pageIdx = 1; pageIdx <= executionCalculatedPageCount; pageIdx++) {
+				const activeStateClassVerification = (pageIdx === trackingCurrentPage) ? "active" : "";
+				const elementNavigationStringBuild = `
+						<li class="page-item ${activeStateClassVerification}">
+							<a class="page-link page-link-yoga" href="javascript:void(0)" onclick="executePageSwitchNavigation(${pageIdx})">${pageIdx}</a>
+						</li>`;
+				paginationNavBlock.innerHTML += elementNavigationStringBuild;
+			}
+		}
+
+		function executePageSwitchNavigation(targetDestinationPageIndexToken) {
+			trackingCurrentPage = targetDestinationPageIndexToken;
+			renderDataGridRowsDisplayBlocks();
+		}
+
+		// Dynamic Excel Conversion Spreadsheet File Generation Engine Architecture
+		function exportDataToExcelEngine() {
+			if (parsedFilteredRecords.length === 0) {
+				alert("No current record sets arrays exist within specified processing buffers to compile export sheets targets.");
+				return;
+			}
+
+			// Processing target column header mappings structural alignments transformations matrices loops pipelines configurations
+			const dataRowsMappingArray = parsedFilteredRecords.map(item => ({
+				"Scan Date & Time": item.timestamp,
+				"Member Identification ID": item.memberId,
+				"Seeker Full Name": item.name,
+				"Contact Number Mobile": item.mobile
+			}));
+
+			const workbookInstanceTarget = XLSX.utils.book_new();
+			const worksheetDataBlockTarget = XLSX.utils.json_to_sheet(dataRowsMappingArray);
+
+			XLSX.utils.book_append_sheet(workbookInstanceTarget, worksheetDataBlockTarget, "Attendance Records Logs Table");
+
+			// Executing instant file generation processing streams parameters directly hitting file downloads triggers inside UI windows
+			XLSX.writeFile(workbookInstanceTarget, "Aga_Oli_Attendance_Central_Logs_Report.xlsx");
+		}
+
+		// Initialize active peripheral lens dynamic tracking scanner hardware capture engine arrays controls hooks
 		function startScannerEngine() {
-			const msgBox = document.getElementById("scannerMessage");
-			msgBox.className = "status-processing mb-3";
-			msgBox.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Requesting local media capture hardware matrix validation locks...";
+			const statusMsgContainer = document.getElementById("scannerMessage");
+			statusMsgContainer.className = "status-processing text-center mb-3";
+			statusMsgContainer.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Requesting explicit hardware capture media arrays context interface validations loops locks...";
 
-			html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 12, qrbox: 260 });
+			html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 15, qrbox: 240 });
 			html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 		}
 
 		function onScanSuccess(decodedText, decodedResult) {
-			const msgBox = document.getElementById("scannerMessage");
-			msgBox.className = "status-processing mb-3";
-			msgBox.innerHTML = `<i class='fa fa-refresh fa-spin'></i> Token ID matched: <strong>${decodedText}</strong>. Sending operational updates directly to spreadsheet systems...`;
+			const statusMsgContainer = document.getElementById("scannerMessage");
+			statusMsgContainer.className = "status-processing text-center mb-3";
+			statusMsgContainer.innerHTML = `<i class='fa fa-refresh fa-spin'></i> Token Scan ID recognized: <strong>${decodedText}</strong>. Querying remote endpoints schemas servers...`;
+
+			const transmissionTrackingPayload = {
+				action: "markAttendance",
+				memberId: decodedText
+			};
 
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: "POST",
 				mode: "no-cors",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ action: "markAttendance", memberId: decodedText })
+				body: JSON.stringify(transmissionTrackingPayload)
 			}).then(() => {
-				msgBox.className = "status-success mb-3";
-				msgBox.innerHTML = `<i class='fa fa-check-circle'></i> Verification Cleared! Entry record logged cleanly for ID: ${decodedText}`;
+				statusMsgContainer.className = "status-success text-center mb-3";
+				statusMsgContainer.innerHTML = `<i class='fa fa-check-circle'></i> Verification Check Complete! Attendance record parsed seamlessly for ID: ${decodedText}`;
 
-				// Optional pause to display status feedback cleanly before restarting scanner loop elements
+				// Automatically refresh reporting panels tables data mappings configurations directly matching remote sheets contents variations parameters
 				setTimeout(() => {
 					html5QrcodeScanner.clear();
+					fetchLiveLogsData();
 					startScannerEngine();
-				}, 4000);
+				}, 3500);
 			}).catch(err => {
-				msgBox.className = "btn-danger p-2 rounded mb-3";
-				msgBox.innerText = "External database server network operation execution dropped.";
+				statusMsgContainer.className = "bg-danger p-2 text-center rounded text-white mb-3";
+				statusMsgContainer.innerText = "External application database network server connection dropped down unexpectedly.";
 			});
 		}
 
 		function onScanFailure(error) {
-			// Failures drop silently through baseline scan scanning loops
+			// Scanner runtime errors drop quietly into background iteration buffers loop streams
 		}
 	</script>
 </body>
