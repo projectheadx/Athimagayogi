@@ -74,7 +74,6 @@
 				<div class="form-box">
 					<h4 class="mb-4 font-weight-bold text-success"><i class="fa fa-user-plus"></i> Personal Particulars</h4>
 
-					<!-- Status Message -->
 					<div id="statusMessage" style="display:none;" class="alert mb-3"></div>
 
 					<form id="registrationForm" onsubmit="handleRegistration(event)">
@@ -127,9 +126,9 @@
 	</div>
 
 	<script>
-		// ============================================
-		// ✅ UPDATE THIS URL - Paste your deployment URL
-		// ============================================
+		// ========================================================
+		// ⚠️ இங்க உன்னோட REAL GOOGLE APPS SCRIPT URL-ஐ போடு மச்சி
+		// ========================================================
 		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
 
 		let isProcessing = false;
@@ -178,7 +177,6 @@
 
 			showStatus('⏳ Registering... Please wait', 'info');
 
-			// ✅ FIXED: Proper fetch - no "no-cors"
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: "POST",
 				headers: {
@@ -198,11 +196,10 @@
 
 					if (data.status === 'SUCCESS') {
 						showStatus('✅ Registration successful!', 'success');
-						generateQR(name, memberId);
+						generateQR(name, memberId, mobile); // ✅ FIXED: Passed mobile data directly
 						document.getElementById("registrationForm").reset();
 					} else if (data.status === 'ERROR') {
 						if (data.message.includes('already exists')) {
-							// Generate new ID and retry
 							const newId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
 							payload.memberId = newId;
 
@@ -227,7 +224,7 @@
 				.then(retryData => {
 					if (retryData && retryData.status === 'SUCCESS') {
 						showStatus('✅ Registration successful!', 'success');
-						generateQR(document.getElementById("regName").value, retryData.memberId);
+						generateQR(name, retryData.memberId, mobile); // ✅ FIXED: Passed mobile data directly
 						document.getElementById("registrationForm").reset();
 					} else if (retryData && retryData.status === 'ERROR') {
 						throw new Error(retryData.message);
@@ -246,7 +243,7 @@
 		// ============================================
 		// GENERATE QR CODE
 		// ============================================
-		function generateQR(name, memberId) {
+		function generateQR(name, memberId, mobile) { // ✅ FIXED: Receives mobile directly now
 			document.getElementById("qrOutputWrapper").style.display = "block";
 			document.getElementById("generatedMemberName").innerText = name;
 			document.getElementById("generatedMemberId").innerText = memberId;
@@ -262,7 +259,6 @@
 				correctLevel: QRCode.CorrectLevel.H
 			});
 
-			const mobile = document.getElementById("regMobile").value;
 			const msg = encodeURIComponent(
 				`Hello Admin,\n\n` +
 				`📛 Name: ${name}\n` +
