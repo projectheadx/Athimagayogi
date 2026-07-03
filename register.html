@@ -58,38 +58,6 @@
 				transform: rotate(360deg);
 			}
 		}
-
-		.alert-success-custom {
-			background: #d4edda;
-			border-color: #c3e6cb;
-			color: #155724;
-			padding: 12px 20px;
-			border-radius: 8px;
-		}
-
-		.alert-danger-custom {
-			background: #f8d7da;
-			border-color: #f5c6cb;
-			color: #721c24;
-			padding: 12px 20px;
-			border-radius: 8px;
-		}
-
-		.alert-warning-custom {
-			background: #fff3cd;
-			border-color: #ffeaa7;
-			color: #856404;
-			padding: 12px 20px;
-			border-radius: 8px;
-		}
-
-		.alert-info-custom {
-			background: #d1ecf1;
-			border-color: #bee5eb;
-			color: #0c5460;
-			padding: 12px 20px;
-			border-radius: 8px;
-		}
 	</style>
 </head>
 
@@ -106,7 +74,8 @@
 				<div class="form-box">
 					<h4 class="mb-4 font-weight-bold text-success"><i class="fa fa-user-plus"></i> Personal Particulars</h4>
 
-					<div id="statusMessage" style="display:none;" class="mb-3"></div>
+					<!-- Status Message -->
+					<div id="statusMessage" style="display:none;" class="alert mb-3"></div>
 
 					<form id="registrationForm" onsubmit="handleRegistration(event)">
 						<div class="form-group">
@@ -130,10 +99,6 @@
 							<input type="text" id="regDistrict" class="form-control" placeholder="Your district" required />
 						</div>
 
-						<div class="alert alert-warning py-2 small my-3">
-							<strong>⚠️ Verification Requirement:</strong> Platform processing maps automated tracking via standard WhatsApp operations interface.
-						</div>
-
 						<button type="submit" class="btn btn-success btn-block btn-lg" id="registerBtn">
 							<i class="fa fa-id-card"></i> Generate Unique Membership Card
 						</button>
@@ -148,12 +113,8 @@
 						<p id="generatedMemberId" class="text-success font-weight-bold h5 mb-3"></p>
 						<div id="qrcode" class="d-flex justify-content-center mb-4"></div>
 
-						<div id="qrStatus" class="alert alert-info small text-left mb-3">
-							<i class="fa fa-info-circle"></i> <strong>Important:</strong> Please save or screenshot this QR image block. This credential boundary executes security scanning operations at every individual class checkpoint.
-						</div>
-
-						<a id="whatsappPayBtn" href="#" target="_blank" class="btn btn-outline-success btn-block">
-							<i class="fa fa-whatsapp"></i> Submit Receipt to Bot Verification
+						<a id="whatsappBtn" href="#" target="_blank" class="btn btn-outline-success btn-block">
+							<i class="fa fa-whatsapp"></i> Submit to Bot Verification
 						</a>
 
 						<button class="btn btn-outline-secondary btn-block mt-2" onclick="resetForm()">
@@ -167,21 +128,17 @@
 
 	<script>
 		// ============================================
-		// CONFIGURATION - UPDATE THIS URL
+		// ✅ UPDATE THIS URL - Paste your deployment URL
 		// ============================================
-		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_NEW_DEPLOYMENT_ID/exec";
+		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
 
 		let isProcessing = false;
-		let generatedMemberId = null;
 
-		// ============================================
-		// HANDLE REGISTRATION
-		// ============================================
 		function handleRegistration(event) {
 			event.preventDefault();
 
 			if (isProcessing) {
-				showStatus('⚠️ Please wait, processing in progress...', 'warning');
+				showStatus('⚠️ Please wait...', 'warning');
 				return;
 			}
 
@@ -197,15 +154,16 @@
 			}
 
 			if (mobile.length !== 10 || !/^[0-9]{10}$/.test(mobile)) {
-				showStatus('⚠️ Please enter a valid 10-digit mobile number', 'danger');
+				showStatus('⚠️ Enter valid 10-digit mobile number', 'danger');
 				return;
 			}
 
-			generatedMemberId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
+			// Generate Member ID
+			const memberId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
 
 			const payload = {
 				action: "registerMember",
-				memberId: generatedMemberId,
+				memberId: memberId,
 				name: name,
 				mobile: mobile,
 				age: age,
@@ -218,9 +176,9 @@
 			btn.disabled = true;
 			btn.innerHTML = '<span class="loading-spinner"></span> Registering...';
 
-			showStatus('⏳ Registering member... Please wait', 'info');
+			showStatus('⏳ Registering... Please wait', 'info');
 
-			// ✅ FIXED: Proper fetch with CORS
+			// ✅ FIXED: Proper fetch - no "no-cors"
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: "POST",
 				headers: {
@@ -229,24 +187,24 @@
 				body: JSON.stringify(payload)
 			})
 				.then(response => {
-					console.log('Response status:', response.status);
+					console.log('Response Status:', response.status);
 					if (!response.ok) {
-						throw new Error(`HTTP error! status: ${response.status}`);
+						throw new Error('HTTP Error: ' + response.status);
 					}
 					return response.json();
 				})
 				.then(data => {
-					console.log('Response data:', data);
+					console.log('Response Data:', data);
 
 					if (data.status === 'SUCCESS') {
 						showStatus('✅ Registration successful!', 'success');
-						showQRCode(name, generatedMemberId);
+						generateQR(name, memberId);
 						document.getElementById("registrationForm").reset();
 					} else if (data.status === 'ERROR') {
 						if (data.message.includes('already exists')) {
-							// Retry with new ID
-							generatedMemberId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
-							payload.memberId = generatedMemberId;
+							// Generate new ID and retry
+							const newId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
+							payload.memberId = newId;
 
 							return fetch(GOOGLE_APPS_SCRIPT_URL, {
 								method: "POST",
@@ -257,7 +215,7 @@
 							throw new Error(data.message);
 						}
 					} else {
-						throw new Error(data.message || 'Registration failed');
+						throw new Error('Unknown response');
 					}
 				})
 				.then(response => {
@@ -268,15 +226,15 @@
 				})
 				.then(retryData => {
 					if (retryData && retryData.status === 'SUCCESS') {
-						showStatus('✅ Registration successful with new ID!', 'success');
-						showQRCode(document.getElementById("regName").value, generatedMemberId);
+						showStatus('✅ Registration successful!', 'success');
+						generateQR(document.getElementById("regName").value, retryData.memberId);
 						document.getElementById("registrationForm").reset();
 					} else if (retryData && retryData.status === 'ERROR') {
 						throw new Error(retryData.message);
 					}
 				})
 				.catch(err => {
-					console.error('Registration error:', err);
+					console.error('Error:', err);
 					showStatus('❌ Registration failed: ' + err.message, 'danger');
 
 					btn.disabled = false;
@@ -286,14 +244,15 @@
 		}
 
 		// ============================================
-		// SHOW QR CODE
+		// GENERATE QR CODE
 		// ============================================
-		function showQRCode(name, memberId) {
+		function generateQR(name, memberId) {
 			document.getElementById("qrOutputWrapper").style.display = "block";
 			document.getElementById("generatedMemberName").innerText = name;
 			document.getElementById("generatedMemberId").innerText = memberId;
 
 			document.getElementById("qrcode").innerHTML = "";
+
 			new QRCode(document.getElementById("qrcode"), {
 				text: memberId,
 				width: 200,
@@ -303,14 +262,15 @@
 				correctLevel: QRCode.CorrectLevel.H
 			});
 
-			const textMessage = encodeURIComponent(
-				`Hello Admin, I completed my membership registration.\n\n` +
+			const mobile = document.getElementById("regMobile").value;
+			const msg = encodeURIComponent(
+				`Hello Admin,\n\n` +
 				`📛 Name: ${name}\n` +
-				`📱 Mobile: ${document.getElementById("regMobile").value}\n` +
+				`📱 Mobile: ${mobile}\n` +
 				`🆔 Member ID: ${memberId}\n\n` +
-				`Please verify and activate my membership.`
+				`Please verify and activate.`
 			);
-			document.getElementById("whatsappPayBtn").href = `https://wa.me/916380419470?text=${textMessage}`;
+			document.getElementById("whatsappBtn").href = `https://wa.me/916380419470?text=${msg}`;
 
 			const btn = document.getElementById("registerBtn");
 			btn.disabled = false;
@@ -321,24 +281,25 @@
 		}
 
 		// ============================================
-		// SHOW STATUS MESSAGE
+		// SHOW STATUS
 		// ============================================
 		function showStatus(message, type) {
-			const statusDiv = document.getElementById("statusMessage");
-			statusDiv.style.display = "block";
+			const div = document.getElementById("statusMessage");
+			div.style.display = "block";
+			div.className = "alert mb-3";
 
-			const classes = {
-				'success': 'alert-success-custom',
-				'danger': 'alert-danger-custom',
-				'warning': 'alert-warning-custom',
-				'info': 'alert-info-custom'
+			const types = {
+				'success': 'alert-success',
+				'danger': 'alert-danger',
+				'warning': 'alert-warning',
+				'info': 'alert-info'
 			};
-			statusDiv.className = 'mb-3 ' + (classes[type] || 'alert-info-custom');
-			statusDiv.innerHTML = message;
+			div.className += ' ' + (types[type] || 'alert-info');
+			div.innerHTML = message;
 
 			if (type === 'success') {
 				setTimeout(() => {
-					statusDiv.style.display = "none";
+					div.style.display = "none";
 				}, 5000);
 			}
 		}
@@ -349,9 +310,6 @@
 		function resetForm() {
 			document.getElementById("qrOutputWrapper").style.display = "none";
 			document.getElementById("qrcode").innerHTML = "";
-			document.getElementById("generatedMemberName").innerText = "";
-			document.getElementById("generatedMemberId").innerText = "";
-
 			document.getElementById("registrationForm").reset();
 
 			const btn = document.getElementById("registerBtn");
