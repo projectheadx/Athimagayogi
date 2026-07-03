@@ -5,7 +5,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Class Attendance Terminal & Logs</title>
-	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
@@ -30,7 +29,6 @@
 			margin: 0 auto;
 		}
 
-		/* Cards */
 		.yoga-card {
 			background: linear-gradient(145deg, #1a1f2e, #141926);
 			border: 1px solid rgba(40, 167, 69, 0.2);
@@ -46,7 +44,6 @@
 				box-shadow: 0 8px 50px rgba(40, 167, 69, 0.1);
 			}
 
-		/* Headers */
 		.section-title {
 			font-size: 1.2rem;
 			font-weight: 700;
@@ -61,7 +58,6 @@
 				font-size: 1.5rem;
 			}
 
-		/* Scanner */
 		#reader {
 			width: 100%;
 			max-width: 500px;
@@ -78,7 +74,6 @@
 				height: auto !important;
 			}
 
-		/* Scanner Message */
 		#scannerMessage {
 			padding: 15px 20px;
 			border-radius: 12px;
@@ -112,7 +107,6 @@
 			border: 1px solid rgba(220,53,69,0.3);
 		}
 
-		/* Buttons */
 		.btn-yoga {
 			background: linear-gradient(135deg, #28a745, #1e7e34);
 			color: white;
@@ -177,7 +171,6 @@
 				color: white;
 			}
 
-		/* Tabs */
 		.nav-tabs-custom {
 			border-bottom: 2px solid #2d3243;
 			margin-bottom: 25px;
@@ -212,7 +205,6 @@
 					margin-right: 8px;
 				}
 
-		/* Tables */
 		.table-yoga {
 			color: #e4e6eb;
 			margin-bottom: 0;
@@ -239,13 +231,9 @@
 				font-size: 0.9rem;
 			}
 
-			.table-yoga tbody tr {
-				transition: all 0.2s ease;
+			.table-yoga tbody tr:hover {
+				background: rgba(40, 167, 69, 0.05);
 			}
-
-				.table-yoga tbody tr:hover {
-					background: rgba(40, 167, 69, 0.05);
-				}
 
 			.table-yoga .badge-status {
 				padding: 5px 12px;
@@ -254,7 +242,6 @@
 				font-size: 0.75rem;
 			}
 
-		/* Forms */
 		.form-control-yoga {
 			background: #0d1120;
 			border: 1px solid #2d3243;
@@ -275,7 +262,6 @@
 				color: #5a627a;
 			}
 
-		/* Pagination */
 		.pagination-yoga .page-link {
 			background: #1a1f2e;
 			color: #e4e6eb;
@@ -296,7 +282,6 @@
 			color: white;
 		}
 
-		/* Image Upload */
 		#imageInput {
 			display: none;
 		}
@@ -322,7 +307,6 @@
 				margin-bottom: 10px;
 			}
 
-		/* Preview Image */
 		#imagePreview {
 			max-width: 100%;
 			max-height: 300px;
@@ -332,7 +316,6 @@
 			border: 2px solid #2d3243;
 		}
 
-		/* Scrollable table container */
 		.table-container {
 			max-height: 500px;
 			overflow-y: auto;
@@ -354,7 +337,6 @@
 				border-radius: 10px;
 			}
 
-		/* Stats */
 		.stat-box {
 			background: rgba(13, 17, 32, 0.7);
 			border-radius: 12px;
@@ -375,7 +357,6 @@
 				margin-top: 5px;
 			}
 
-		/* Loading overlay */
 		.loading-overlay {
 			display: none;
 			position: fixed;
@@ -419,42 +400,6 @@
 			font-weight: 600;
 		}
 
-		/* Responsive */
-		@media (max-width: 768px) {
-			.yoga-card {
-				padding: 15px;
-			}
-
-			.section-title {
-				font-size: 1rem;
-			}
-
-			.btn-yoga, .btn-teal, .btn-danger-custom {
-				padding: 10px 20px;
-				font-size: 0.9rem;
-			}
-		}
-
-		/* Animation */
-		@keyframes pulse {
-			0% {
-				opacity: 1;
-			}
-
-			50% {
-				opacity: 0.5;
-			}
-
-			100% {
-				opacity: 1;
-			}
-		}
-
-		.scanning {
-			animation: pulse 1.5s ease-in-out infinite;
-		}
-
-		/* Badge colors */
 		.badge-success-custom {
 			background: #28a745;
 			color: white;
@@ -469,15 +414,29 @@
 			background: #dc3545;
 			color: white;
 		}
+
+		@media (max-width: 768px) {
+			.yoga-card {
+				padding: 15px;
+			}
+
+			.section-title {
+				font-size: 1rem;
+			}
+
+			.btn-yoga, .btn-teal, .btn-danger-custom {
+				padding: 10px 20px;
+				font-size: 0.9rem;
+			}
+		}
 	</style>
 </head>
 
 <body>
 
-	<!-- Loading Overlay -->
 	<div class="loading-overlay" id="loadingOverlay">
 		<div class="spinner"></div>
-		<p><i class="fa fa-database"></i> Loading real data from Google Sheet...</p>
+		<p><i class="fa fa-database"></i> Loading data from Google Sheet...</p>
 	</div>
 
 	<div class="container-custom">
@@ -502,7 +461,7 @@
 			</div>
 		</div>
 
-		<!-- Stats Row -->
+		<!-- Stats -->
 		<div class="row mb-4">
 			<div class="col-md-3 col-6 mb-2">
 				<div class="stat-box">
@@ -530,9 +489,9 @@
 			</div>
 		</div>
 
-		<!-- Main Row: Scanner + Controls -->
+		<!-- Main Row -->
 		<div class="row">
-			<!-- Left: Scanner -->
+			<!-- Scanner -->
 			<div class="col-lg-5 mb-4">
 				<div class="yoga-card h-100">
 					<div class="section-title">
@@ -577,26 +536,26 @@
 						</button>
 					</div>
 
-					<!-- Date Picker -->
+					<!-- Date Filter -->
 					<hr style="border-color: #2d3243;">
 					<div class="section-title" style="font-size: 1rem;">
-						<i class="fa fa-calendar"></i> Date Picker
+						<i class="fa fa-calendar"></i> Filter by Date
 					</div>
 					<input type="date" id="filterDate" class="form-control form-control-yoga" onchange="applyFilters()">
 
 					<div class="mt-2 d-flex gap-2" style="gap: 10px;">
 						<button class="btn btn-outline-light-custom flex-grow-1" onclick="clearDateFilter()">
-							<i class="fa fa-times-circle"></i> Clear Date
+							<i class="fa fa-times-circle"></i> Clear Date Filter
 						</button>
 					</div>
 				</div>
 			</div>
 
-			<!-- Right: Search + Filters -->
+			<!-- Search -->
 			<div class="col-lg-7 mb-4">
 				<div class="yoga-card h-100">
 					<div class="section-title">
-						<i class="fa fa-sliders"></i> Filters & Search
+						<i class="fa fa-sliders"></i> Search & Export
 					</div>
 
 					<div class="row">
@@ -619,7 +578,7 @@
 			</div>
 		</div>
 
-		<!-- Tabs: Attendance Logs + Members List -->
+		<!-- Tabs -->
 		<div class="yoga-card">
 			<ul class="nav nav-tabs nav-tabs-custom" id="myTab" role="tablist">
 				<li class="nav-item">
@@ -637,7 +596,7 @@
 			</ul>
 
 			<div class="tab-content">
-				<!-- Tab 1: Attendance Logs -->
+				<!-- Attendance Tab -->
 				<div class="tab-pane fade show active" id="attendance" role="tabpanel">
 					<div class="table-container">
 						<table class="table table-yoga">
@@ -654,7 +613,7 @@
 								<tr>
 									<td colspan="5" class="text-center text-muted py-5">
 										<i class="fa fa-refresh fa-spin fa-2x mb-3"></i><br>
-										Loading attendance data from server...
+										Loading attendance data...
 									</td>
 								</tr>
 							</tbody>
@@ -668,7 +627,7 @@
 					</div>
 				</div>
 
-				<!-- Tab 2: Members List -->
+				<!-- Members Tab -->
 				<div class="tab-pane fade" id="members" role="tabpanel">
 					<div class="table-container">
 						<table class="table table-yoga">
@@ -688,7 +647,7 @@
 								<tr>
 									<td colspan="8" class="text-center text-muted py-5">
 										<i class="fa fa-refresh fa-spin fa-2x mb-3"></i><br>
-										Loading members data from server...
+										Loading members data...
 									</td>
 								</tr>
 							</tbody>
@@ -706,7 +665,6 @@
 
 	</div>
 
-	<!-- Scripts -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
@@ -740,14 +698,13 @@
 		});
 
 		// ============================================
-		// FETCH REAL DATA FROM GOOGLE SHEET
+		// FETCH DATA FROM GOOGLE SHEET
 		// ============================================
 		function fetchAllData() {
 			if (isLoading) return;
 			isLoading = true;
 			showLoading(true);
 
-			// Fetch both attendance and members in parallel
 			Promise.all([
 				fetchAttendanceLogs(),
 				fetchMembersList()
@@ -760,7 +717,7 @@
 				showLoading(false);
 				isLoading = false;
 				document.getElementById('scannerMessage').className = 'status-error';
-				document.getElementById('scannerMessage').innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error loading data: ${err.message}`;
+				document.getElementById('scannerMessage').innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}. Check URL & CORS.`;
 			});
 		}
 
@@ -772,9 +729,6 @@
 						return response.json();
 					})
 					.then(data => {
-						if (data && data.status === 'ERROR') {
-							throw new Error(data.message);
-						}
 						masterAttendanceData = Array.isArray(data) ? data : [];
 						filteredAttendance = [...masterAttendanceData];
 						renderAttendanceTable();
@@ -798,9 +752,6 @@
 						return response.json();
 					})
 					.then(data => {
-						if (data && data.status === 'ERROR') {
-							throw new Error(data.message);
-						}
 						masterMembersData = Array.isArray(data) ? data : [];
 						filteredMembers = [...masterMembersData];
 						renderMembersTable();
@@ -820,12 +771,7 @@
 		// LOADING OVERLAY
 		// ============================================
 		function showLoading(show) {
-			const overlay = document.getElementById('loadingOverlay');
-			if (show) {
-				overlay.classList.add('active');
-			} else {
-				overlay.classList.remove('active');
-			}
+			document.getElementById('loadingOverlay').classList.toggle('active', show);
 		}
 
 		// ============================================
@@ -855,7 +801,6 @@
 			const searchText = document.getElementById('filterSearch').value.toLowerCase().trim();
 			const dateFilter = document.getElementById('filterDate').value;
 
-			// Filter Attendance
 			filteredAttendance = masterAttendanceData.filter(row => {
 				let match = true;
 				if (searchText) {
@@ -869,7 +814,6 @@
 				return match;
 			});
 
-			// Filter Members
 			filteredMembers = masterMembersData.filter(row => {
 				if (!searchText) return true;
 				const content = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
@@ -913,18 +857,18 @@
 
 			if (total === 0) {
 				tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">
-					<i class="fa fa-inbox"></i> No attendance records found
-				</td></tr>`;
+				<i class="fa fa-inbox"></i> No attendance records found
+			</td></tr>`;
 			} else {
 				tbody.innerHTML = pageData.map((row, idx) => `
-					<tr>
-						<td>${start + idx + 1}</td>
-						<td><span class="badge badge-dark text-success">${row.timestamp || 'N/A'}</span></td>
-						<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
-						<td>${row.name || 'Unknown'}</td>
-						<td>${row.mobile || 'N/A'}</td>
-					</tr>
-				`).join('');
+				<tr>
+					<td>${start + idx + 1}</td>
+					<td><span class="badge badge-dark text-success">${row.timestamp || 'N/A'}</span></td>
+					<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
+					<td>${row.name || 'Unknown'}</td>
+					<td>${row.mobile || 'N/A'}</td>
+				</tr>
+			`).join('');
 			}
 
 			document.getElementById('attendancePaginationInfo').textContent =
@@ -947,24 +891,24 @@
 
 			if (total === 0) {
 				tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4">
-					<i class="fa fa-inbox"></i> No members found
-				</td></tr>`;
+				<i class="fa fa-inbox"></i> No members found
+			</td></tr>`;
 			} else {
 				tbody.innerHTML = pageData.map((row, idx) => {
 					const statusClass = row.status === 'Verified' ? 'badge-success-custom' :
 						row.status === 'Pending Verification' ? 'badge-warning-custom' : 'badge-danger-custom';
 					return `
-						<tr>
-							<td>${start + idx + 1}</td>
-							<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
-							<td>${row.name || 'Unknown'}</td>
-							<td>${row.mobile || 'N/A'}</td>
-							<td>${row.age || 'N/A'}</td>
-							<td>${row.state || 'N/A'}</td>
-							<td>${row.district || 'N/A'}</td>
-							<td><span class="badge badge-status ${statusClass}">${row.status || 'Pending'}</span></td>
-						</tr>
-					`;
+					<tr>
+						<td>${start + idx + 1}</td>
+						<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
+						<td>${row.name || 'Unknown'}</td>
+						<td>${row.mobile || 'N/A'}</td>
+						<td>${row.age || 'N/A'}</td>
+						<td>${row.state || 'N/A'}</td>
+						<td>${row.district || 'N/A'}</td>
+						<td><span class="badge badge-status ${statusClass}">${row.status || 'Pending'}</span></td>
+					</tr>
+				`;
 				}).join('');
 			}
 
@@ -987,8 +931,8 @@
 
 			let html = '';
 			html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-				<a class="page-link" href="#" onclick="goToPage(${currentPage - 1}, '${type}')">&laquo;</a>
-			</li>`;
+			<a class="page-link" href="#" onclick="goToPage(${currentPage - 1}, '${type}')">&laquo;</a>
+		</li>`;
 
 			const startPage = Math.max(1, currentPage - 2);
 			const endPage = Math.min(totalPages, currentPage + 2);
@@ -1000,8 +944,8 @@
 
 			for (let i = startPage; i <= endPage; i++) {
 				html += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-					<a class="page-link" href="#" onclick="goToPage(${i}, '${type}')">${i}</a>
-				</li>`;
+				<a class="page-link" href="#" onclick="goToPage(${i}, '${type}')">${i}</a>
+			</li>`;
 			}
 
 			if (endPage < totalPages) {
@@ -1010,8 +954,8 @@
 			}
 
 			html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-				<a class="page-link" href="#" onclick="goToPage(${currentPage + 1}, '${type}')">&raquo;</a>
-			</li>`;
+			<a class="page-link" href="#" onclick="goToPage(${currentPage + 1}, '${type}')">&raquo;</a>
+		</li>`;
 
 			container.innerHTML = html;
 		}
@@ -1042,7 +986,7 @@
 			}
 
 			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Initializing camera... Please allow camera access.';
+			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Initializing camera...';
 
 			try {
 				html5QrcodeScanner = new Html5QrcodeScanner('reader', {
@@ -1101,7 +1045,6 @@
 						statusMsg.className = 'status-success';
 						statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> ✅ Attendance marked for: <strong>${data.memberName || decodedText}</strong>`;
 
-						// Refresh data
 						setTimeout(() => {
 							fetchAllData();
 							if (isScannerRunning) {
@@ -1133,7 +1076,7 @@
 		}
 
 		function onScanError(error) {
-			// Silent - scanner keeps running
+			// Silent
 		}
 
 		// ============================================
