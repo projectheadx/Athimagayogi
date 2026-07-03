@@ -375,6 +375,50 @@
 				margin-top: 5px;
 			}
 
+		/* Loading overlay */
+		.loading-overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(10, 14, 26, 0.9);
+			z-index: 9999;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+
+			.loading-overlay.active {
+				display: flex;
+			}
+
+			.loading-overlay .spinner {
+				width: 60px;
+				height: 60px;
+				border: 4px solid #2d3243;
+				border-top: 4px solid #28a745;
+				border-radius: 50%;
+				animation: spin 1s linear infinite;
+			}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.loading-overlay p {
+			margin-top: 20px;
+			color: #e4e6eb;
+			font-weight: 600;
+		}
+
 		/* Responsive */
 		@media (max-width: 768px) {
 			.yoga-card {
@@ -430,6 +474,12 @@
 
 <body>
 
+	<!-- Loading Overlay -->
+	<div class="loading-overlay" id="loadingOverlay">
+		<div class="spinner"></div>
+		<p><i class="fa fa-database"></i> Loading real data from Google Sheet...</p>
+	</div>
+
 	<div class="container-custom">
 
 		<!-- Header -->
@@ -442,7 +492,7 @@
 					<p class="text-muted small mb-0"><i class="fa fa-database"></i> Live Checkpoint Scans & Real-time Dashboard</p>
 				</div>
 				<div class="mt-3 mt-md-0 d-flex gap-2 flex-wrap">
-					<button class="btn btn-teal btn-sm" onclick="fetchLiveLogsData()">
+					<button class="btn btn-teal btn-sm" onclick="fetchAllData()">
 						<i class="fa fa-refresh"></i> Refresh
 					</button>
 					<button class="btn btn-outline-light-custom btn-sm" onclick="window.location.reload()">
@@ -604,7 +654,7 @@
 								<tr>
 									<td colspan="5" class="text-center text-muted py-5">
 										<i class="fa fa-refresh fa-spin fa-2x mb-3"></i><br>
-										Loading attendance data...
+										Loading attendance data from server...
 									</td>
 								</tr>
 							</tbody>
@@ -638,7 +688,7 @@
 								<tr>
 									<td colspan="8" class="text-center text-muted py-5">
 										<i class="fa fa-refresh fa-spin fa-2x mb-3"></i><br>
-										Loading members data...
+										Loading members data from server...
 									</td>
 								</tr>
 							</tbody>
@@ -662,7 +712,7 @@
 
 	<script>
 		// ============================================
-		// CONFIGURATION
+		// CONFIGURATION - CHANGE THIS URL
 		// ============================================
 		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4MPZOVmW7bbWSpCpjpCHNyb1UbbZMh05nJDWWOwZxsmDiLt3NwclF82Ipepo6a8Ny/exec";
 
@@ -680,6 +730,7 @@
 		const rowsPerPage = 10;
 		let qrImageFile = null;
 		let qrImageData = null;
+		let isLoading = false;
 
 		// ============================================
 		// INITIALIZATION
@@ -689,101 +740,112 @@
 		});
 
 		// ============================================
-		// FETCH DATA
+		// FETCH REAL DATA FROM GOOGLE SHEET
 		// ============================================
 		function fetchAllData() {
-			fetchAttendanceLogs();
-			fetchMembersList();
+			if (isLoading) return;
+			isLoading = true;
+			showLoading(true);
+
+			// Fetch both attendance and members in parallel
+			Promise.all([
+				fetchAttendanceLogs(),
+				fetchMembersList()
+			]).then(() => {
+				showLoading(false);
+				isLoading = false;
+				updateStats();
+			}).catch((err) => {
+				console.error('Fetch error:', err);
+				showLoading(false);
+				isLoading = false;
+				document.getElementById('scannerMessage').className = 'status-error';
+				document.getElementById('scannerMessage').innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error loading data: ${err.message}`;
+			});
 		}
 
 		function fetchAttendanceLogs() {
-			const statusMsg = document.getElementById('scannerMessage');
-			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Fetching attendance logs...';
-
-			fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getAttendanceLogs`)
-				.then(response => {
-					if (!response.ok) throw new Error(`HTTP ${response.status}`);
-					return response.json();
-				})
-				.then(data => {
-					masterAttendanceData = data || [];
-					filteredAttendance = [...masterAttendanceData];
-					updateStats();
-					renderAttendanceTable();
-					statusMsg.className = 'status-success';
-					statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> Loaded ${masterAttendanceData.length} attendance records`;
-				})
-				.catch(err => {
-					console.error('Attendance fetch error:', err);
-					masterAttendanceData = getDemoAttendanceData();
-					filteredAttendance = [...masterAttendanceData];
-					updateStats();
-					renderAttendanceTable();
-					statusMsg.className = 'status-waiting';
-					statusMsg.innerHTML = '<i class="fa fa-exclamation-triangle"></i> Using demo data. Check Apps Script URL.';
-				});
+			return new Promise((resolve, reject) => {
+				fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getAttendanceLogs`)
+					.then(response => {
+						if (!response.ok) throw new Error(`HTTP ${response.status}`);
+						return response.json();
+					})
+					.then(data => {
+						if (data && data.status === 'ERROR') {
+							throw new Error(data.message);
+						}
+						masterAttendanceData = Array.isArray(data) ? data : [];
+						filteredAttendance = [...masterAttendanceData];
+						renderAttendanceTable();
+						resolve();
+					})
+					.catch(err => {
+						console.error('Attendance fetch error:', err);
+						masterAttendanceData = [];
+						filteredAttendance = [];
+						renderAttendanceTable();
+						reject(err);
+					});
+			});
 		}
 
 		function fetchMembersList() {
-			fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getMembers`)
-				.then(response => {
-					if (!response.ok) throw new Error(`HTTP ${response.status}`);
-					return response.json();
-				})
-				.then(data => {
-					masterMembersData = data || [];
-					filteredMembers = [...masterMembersData];
-					renderMembersTable();
-				})
-				.catch(err => {
-					console.error('Members fetch error:', err);
-					masterMembersData = getDemoMembersData();
-					filteredMembers = [...masterMembersData];
-					renderMembersTable();
-				});
+			return new Promise((resolve, reject) => {
+				fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getMembers`)
+					.then(response => {
+						if (!response.ok) throw new Error(`HTTP ${response.status}`);
+						return response.json();
+					})
+					.then(data => {
+						if (data && data.status === 'ERROR') {
+							throw new Error(data.message);
+						}
+						masterMembersData = Array.isArray(data) ? data : [];
+						filteredMembers = [...masterMembersData];
+						renderMembersTable();
+						resolve();
+					})
+					.catch(err => {
+						console.error('Members fetch error:', err);
+						masterMembersData = [];
+						filteredMembers = [];
+						renderMembersTable();
+						reject(err);
+					});
+			});
 		}
 
 		// ============================================
-		// DEMO DATA (Fallback)
+		// LOADING OVERLAY
 		// ============================================
-		function getDemoAttendanceData() {
-			return [
-				{ timestamp: "2026-07-03 09:15:32", memberId: "MEMBER-893412", name: "Bhuvana Palani", mobile: "+91 63804 19470" },
-				{ timestamp: "2026-07-03 10:02:11", memberId: "MEMBER-432195", name: "Karthick Mohan", mobile: "+91 73972 83252" },
-				{ timestamp: "2026-07-02 14:30:22", memberId: "MEMBER-123456", name: "Priya Dharshini", mobile: "+91 98765 43210" },
-				{ timestamp: "2026-07-01 09:00:15", memberId: "MEMBER-762194", name: "Suresh Kumar", mobile: "+91 98401 23456" },
-				{ timestamp: "2026-06-28 11:24:18", memberId: "MEMBER-651029", name: "Meena Ramasamy", mobile: "+91 81220 54321" }
-			];
-		}
-
-		function getDemoMembersData() {
-			return [
-				{ memberId: "MEMBER-893412", name: "Bhuvana Palani", mobile: "+91 63804 19470", age: "28", state: "Tamil Nadu", district: "Chennai", status: "Verified" },
-				{ memberId: "MEMBER-432195", name: "Karthick Mohan", mobile: "+91 73972 83252", age: "32", state: "Tamil Nadu", district: "Coimbatore", status: "Verified" },
-				{ memberId: "MEMBER-123456", name: "Priya Dharshini", mobile: "+91 98765 43210", age: "25", state: "Kerala", district: "Trivandrum", status: "Pending Verification" },
-				{ memberId: "MEMBER-762194", name: "Suresh Kumar", mobile: "+91 98401 23456", age: "35", state: "Karnataka", district: "Bangalore", status: "Verified" }
-			];
+		function showLoading(show) {
+			const overlay = document.getElementById('loadingOverlay');
+			if (show) {
+				overlay.classList.add('active');
+			} else {
+				overlay.classList.remove('active');
+			}
 		}
 
 		// ============================================
 		// UPDATE STATS
 		// ============================================
 		function updateStats() {
-			document.getElementById('totalMembers').textContent = masterMembersData.length;
-			document.getElementById('totalAttendance').textContent = masterAttendanceData.length;
+			document.getElementById('totalMembers').textContent = masterMembersData.length || 0;
+			document.getElementById('totalAttendance').textContent = masterAttendanceData.length || 0;
 
 			const today = new Date().toISOString().split('T')[0];
 			const todayCount = masterAttendanceData.filter(row => {
 				return row.timestamp && row.timestamp.startsWith(today);
-			}).length;
+			}).length || 0;
 			document.getElementById('todayAttendance').textContent = todayCount;
 
-			const pending = masterMembersData.filter(m => m.status === 'Pending Verification').length;
+			const pending = masterMembersData.filter(m => m.status === 'Pending Verification').length || 0;
 			document.getElementById('pendingMembers').textContent = pending;
 
-			document.getElementById('attendanceCount').textContent = masterAttendanceData.length;
-			document.getElementById('membersCount').textContent = masterMembersData.length;
+			document.getElementById('attendanceCount').textContent = masterAttendanceData.length || 0;
+			document.getElementById('membersCount').textContent = masterMembersData.length || 0;
 		}
 
 		// ============================================
@@ -797,7 +859,7 @@
 			filteredAttendance = masterAttendanceData.filter(row => {
 				let match = true;
 				if (searchText) {
-					const content = `${row.memberId} ${row.name} ${row.mobile}`.toLowerCase();
+					const content = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
 					if (!content.includes(searchText)) match = false;
 				}
 				if (dateFilter && row.timestamp) {
@@ -810,7 +872,7 @@
 			// Filter Members
 			filteredMembers = masterMembersData.filter(row => {
 				if (!searchText) return true;
-				const content = `${row.memberId} ${row.name} ${row.mobile}`.toLowerCase();
+				const content = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
 				return content.includes(searchText);
 			});
 
@@ -841,7 +903,7 @@
 		// ============================================
 		function renderAttendanceTable() {
 			const tbody = document.getElementById('attendanceTableBody');
-			const total = filteredAttendance.length;
+			const total = filteredAttendance.length || 0;
 			const totalPages = Math.ceil(total / rowsPerPage) || 1;
 			if (attendanceCurrentPage > totalPages) attendanceCurrentPage = totalPages;
 
@@ -875,7 +937,7 @@
 		// ============================================
 		function renderMembersTable() {
 			const tbody = document.getElementById('membersTableBody');
-			const total = filteredMembers.length;
+			const total = filteredMembers.length || 0;
 			const totalPages = Math.ceil(total / rowsPerPage) || 1;
 			if (membersCurrentPage > totalPages) membersCurrentPage = totalPages;
 
@@ -916,18 +978,18 @@
 		// ============================================
 		function renderPagination(containerId, totalPages, currentPage, type) {
 			const container = document.getElementById(containerId);
+			if (!container) return;
+
 			if (totalPages <= 1) {
 				container.innerHTML = '';
 				return;
 			}
 
 			let html = '';
-			// Previous
 			html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
 				<a class="page-link" href="#" onclick="goToPage(${currentPage - 1}, '${type}')">&laquo;</a>
 			</li>`;
 
-			// Page numbers
 			const startPage = Math.max(1, currentPage - 2);
 			const endPage = Math.min(totalPages, currentPage + 2);
 
@@ -947,7 +1009,6 @@
 				html += `<li class="page-item"><a class="page-link" href="#" onclick="goToPage(${totalPages}, '${type}')">${totalPages}</a></li>`;
 			}
 
-			// Next
 			html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
 				<a class="page-link" href="#" onclick="goToPage(${currentPage + 1}, '${type}')">&raquo;</a>
 			</li>`;
@@ -1044,7 +1105,6 @@
 						setTimeout(() => {
 							fetchAllData();
 							if (isScannerRunning) {
-								// Restart scanner after a moment
 								setTimeout(() => {
 									if (html5QrcodeScanner) {
 										try {
@@ -1064,8 +1124,10 @@
 					statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> ❌ Error: ${err.message}`;
 
 					setTimeout(() => {
-						statusMsg.className = 'status-processing scanning';
-						statusMsg.innerHTML = '<i class="fa fa-camera"></i> Scanner active - Ready for next scan';
+						if (isScannerRunning) {
+							statusMsg.className = 'status-processing scanning';
+							statusMsg.innerHTML = '<i class="fa fa-camera"></i> Scanner active - Ready for next scan';
+						}
 					}, 4000);
 				});
 		}
@@ -1104,14 +1166,11 @@
 			statusMsg.className = 'status-processing';
 			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Decoding QR from image...';
 
-			// Use html5-qrcode to scan from image
 			const tempScanner = new Html5Qrcode('reader');
 			tempScanner.scanFile(qrImageFile, true)
 				.then(decodedText => {
 					statusMsg.className = 'status-success';
 					statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> QR Decoded: <strong>${decodedText}</strong>`;
-
-					// Auto mark attendance
 					onScanSuccess(decodedText, null);
 					tempScanner.clear();
 				})
@@ -1156,19 +1215,6 @@
 
 			const fileName = `Attendance_Report_${new Date().toISOString().split('T')[0]}.xlsx`;
 			XLSX.writeFile(wb, fileName);
-		}
-
-		// ============================================
-		// REFRESH
-		// ============================================
-		function fetchLiveLogsData() {
-			document.getElementById('scannerMessage').className = 'status-processing';
-			document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-spinner fa-spin"></i> Refreshing data...';
-			fetchAllData();
-			setTimeout(() => {
-				document.getElementById('scannerMessage').className = 'status-success';
-				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check-circle"></i> Data refreshed successfully!';
-			}, 1000);
 		}
 	</script>
 
