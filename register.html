@@ -127,9 +127,9 @@
 
 	<script>
 		// ========================================================
-		// ⚠️ உன்னோட REAL GOOGLE APPS SCRIPT URL-ஐ இங்க போடு மச்சி
+		// ⚠️ இங்க உன்னோட REAL GOOGLE APPS SCRIPT URL-ஐ இங்க போடு மச்சி
 		// ========================================================
-		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0CyYsvyGqwgOpo3DkvmnATAYErkIjijXDTxESMBHF9u_2hAi6EyB_tG38Q9HMn7nk/exec";
+		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZqtk1nIy55bi73JAxBksEhbcnhy5IUhn2eLJL09k7RGrYK2VDFTzCHozeegdE1HE/exec";
 
 		let isProcessing = false;
 
@@ -157,44 +157,61 @@
 				return;
 			}
 
-			const memberId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
-
-			// QR கோடை உடனே லோக்கலாக உருவாக்குகிறது
-			generateQR(name, memberId, mobile);
-
 			isProcessing = true;
 			const btn = document.getElementById("registerBtn");
 			btn.disabled = true;
-			btn.innerHTML = '<span class="loading-spinner"></span> Saving to Cloud...';
+			btn.innerHTML = '<span class="loading-spinner"></span> Checking Duplicates...';
+			showStatus('⏳ Checking mobile number availability...', 'info');
 
-			showStatus('⏳ Registering... Saving data to Google Sheet', 'info');
+			// 🔥 முதலிலேயே மொபைல் நம்பர் ஏற்கனவே இருக்கானு GET API மூலமா செக் பண்றோம் மச்சி
+			fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getMembers`)
+				.then(res => res.json())
+				.then(members => {
+					const isMobileDuplicate = members.some(m => m.mobile === mobile);
 
-			// ✅ CORS பிரச்சனையை தவிர்க்க URLSearchParams (Form Data) வடிவில் அனுப்பப்படுகிறது
-			const formData = new URLSearchParams();
-			formData.append('action', 'registerMember');
-			formData.append('memberId', memberId);
-			formData.append('name', name);
-			formData.append('mobile', mobile);
-			formData.append('age', age);
-			formData.append('state', state);
-			formData.append('district', district);
+					if (isMobileDuplicate) {
+						showStatus('❌ This Mobile Number is already registered!', 'danger');
+						document.getElementById("qrOutputWrapper").style.display = "none"; // QR-ஐ மறைச்சிடுவோம்
+						btn.disabled = false;
+						btn.innerHTML = '<i class="fa fa-id-card"></i> Generate Unique Membership Card';
+						isProcessing = false;
+						return; // ரெஜிஸ்ட்ரேஷனை இதோட நிறுத்திடுறோம்
+					}
 
-			fetch(GOOGLE_APPS_SCRIPT_URL, {
-				method: "POST",
-				mode: "no-cors", // 👈 பிரவுசர் பிளாக்கிங்கை பைபாஸ் செய்ய
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded"
-				},
-				body: formData.toString()
-			})
-				.then(() => {
-					// 'no-cors' மோடு என்பதால் ரெஸ்பான்ஸை படிக்க முடியாது, ஆனால் டேட்டா ஷீட்டிற்கு சென்றுவிடும்
-					showStatus('✅ Registration successful and saved to cloud!', 'success');
-					document.getElementById("registrationForm").reset();
+					// டூப்ளிகேட் இல்லைனா, ரெஜிஸ்டர் பண்ற ப்ராசஸ் தொடரும்
+					const memberId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
+					generateQR(name, memberId, mobile);
+
+					btn.innerHTML = '<span class="loading-spinner"></span> Saving to Cloud...';
+					showStatus('⏳ Saving data to Google Sheet...', 'info');
+
+					const formData = new URLSearchParams();
+					formData.append('action', 'registerMember');
+					formData.append('memberId', memberId);
+					formData.append('name', name);
+					formData.append('mobile', mobile);
+					formData.append('age', age);
+					formData.append('state', state);
+					formData.append('district', district);
+
+					return fetch(GOOGLE_APPS_SCRIPT_URL, {
+						method: "POST",
+						mode: "no-cors",
+						headers: { "Content-Type": "application/x-www-form-urlencoded" },
+						body: formData.toString()
+					});
+				})
+				.then(response => {
+					if (response) { // ஃபெட்ச் நடந்திருந்தால் மட்டும்
+						showStatus('✅ Registration successful and saved to cloud!', 'success');
+						document.getElementById("registrationForm").reset();
+					}
 				})
 				.catch(err => {
 					console.error('Error:', err);
-					showStatus('❌ Network sync delayed, but your card is ready!', 'warning');
+					if (isProcessing) {
+						showStatus('⚠️ Sheet sync issue, but card is generated below!', 'warning');
+					}
 				})
 				.finally(() => {
 					btn.disabled = false;
