@@ -137,6 +137,18 @@
 			background: #28a745;
 			border-color: #28a745;
 		}
+
+		.bg-danger {
+			background: #dc3545 !important;
+		}
+
+		.text-white {
+			color: #fff !important;
+		}
+
+		.rounded {
+			border-radius: 8px !important;
+		}
 	</style>
 </head>
 
@@ -247,7 +259,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 	<script>
-		// Paste unga updated Apps Script Deployment App End-point URL link down below
+		// 🔥 IMPORTANT: Paste unga updated Apps Script Deployment URL inga
 		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4MPZOVmW7bbWSpCpjpCHNyb1UbbZMh05nJDWWOwZxsmDiLt3NwclF82Ipepo6a8Ny/exec";
 
 		let html5QrcodeScanner;
@@ -265,32 +277,47 @@
 
 		// Fetch direct logs matrix records array collections hitting dynamic backend API endpoints
 		function fetchLiveLogsData() {
-			// Pull operations dynamically target doGet or doPost structural routing allocations mapping table rows
+			const statusMsg = document.getElementById("scannerMessage");
+			statusMsg.className = "status-processing text-center mb-3";
+			statusMsg.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Fetching live logs from server...";
+
+			// Pull operations dynamically target doGet structural routing
 			fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getAttendanceLogs`)
-				.then(response => response.json())
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json();
+				})
 				.then(data => {
 					masterLogsDatabase = data;
 					processLocalDataTransformPipeline();
+					statusMsg.className = "status-success text-center mb-3";
+					statusMsg.innerHTML = `<i class='fa fa-check-circle'></i> Database synced! ${data.length} records loaded.`;
 				})
 				.catch(err => {
-					console.warn("API GET execution parameter block configuration fallbacks simulated successfully.");
+					console.warn("API GET failed, using simulated data:", err);
+					statusMsg.className = "status-waiting text-center mb-3";
+					statusMsg.innerHTML = "<i class='fa fa-exclamation-triangle'></i> Using offline demo data. Check your Apps Script URL.";
 					generateSimulatedEcosystemLogs();
 				});
 		}
 
-		// Fallback local mockup simulations generation engine mapping visual components tracking metrics
+		// Fallback local mockup simulations generation engine
 		function generateSimulatedEcosystemLogs() {
 			masterLogsDatabase = [
 				{ timestamp: "2026-07-02 09:15:32", memberId: "MEMBER-893412", name: "Bhuvana Palani", mobile: "+91 63804 19470" },
 				{ timestamp: "2026-07-02 10:02:11", memberId: "MEMBER-432195", name: "Karthick Mohan", mobile: "+91 73972 83252" },
 				{ timestamp: "2026-06-28 09:00:15", memberId: "MEMBER-762194", name: "Suresh Kumar", mobile: "+91 98401 23456" },
 				{ timestamp: "2026-06-28 09:05:40", memberId: "MEMBER-234910", name: "Anand Natarajan", mobile: "+91 94440 98765" },
-				{ timestamp: "2026-06-15 11:24:18", memberId: "MEMBER-651029", name: "Meena Ramasamy", mobile: "+91 81220 54321" }
+				{ timestamp: "2026-06-15 11:24:18", memberId: "MEMBER-651029", name: "Meena Ramasamy", mobile: "+91 81220 54321" },
+				{ timestamp: "2026-07-01 14:30:22", memberId: "MEMBER-123456", name: "Priya Dharshini", mobile: "+91 98765 43210" },
+				{ timestamp: "2026-07-01 15:45:10", memberId: "MEMBER-789012", name: "Vijay Kumar", mobile: "+91 87654 32109" }
 			];
 			processLocalDataTransformPipeline();
 		}
 
-		// Dynamic Client-side Search and Date filter pipeline configuration handling
+		// Dynamic Client-side Search and Date filter pipeline
 		function processLocalDataTransformPipeline() {
 			const dateInputVal = document.getElementById("filterDate").value;
 			const searchInputText = document.getElementById("filterSearch").value.toLowerCase().trim();
@@ -298,13 +325,13 @@
 			parsedFilteredRecords = masterLogsDatabase.filter(row => {
 				let statusMatchFlag = true;
 
-				// Date string boundary checking parameters validations extraction
+				// Date filter
 				if (dateInputVal) {
-					const formattedRowDate = row.timestamp.split(" ")[0]; // Extracting dynamic YYYY-MM-DD parameter tokens
+					const formattedRowDate = row.timestamp.split(" ")[0];
 					if (formattedRowDate !== dateInputVal) statusMatchFlag = false;
 				}
 
-				// Universal text evaluation pipeline matrix mapping checks
+				// Text search filter
 				if (searchInputText) {
 					const unifiedContentString = `${row.memberId} ${row.name} ${row.mobile}`.toLowerCase();
 					if (!unifiedContentString.includes(searchInputText)) statusMatchFlag = false;
@@ -313,12 +340,12 @@
 				return statusMatchFlag;
 			});
 
-			trackingCurrentPage = 1; // Always reset pagination limits context parameters stack array frame maps back to index 1 on mutation checks
+			trackingCurrentPage = 1;
 			document.getElementById("totalCountDisplay").innerText = `Total Logs Found: ${parsedFilteredRecords.length}`;
 			renderDataGridRowsDisplayBlocks();
 		}
 
-		// Rendering processing calculation loops executing targeted HTML node appends dynamically inside DOM context bounds
+		// Rendering processing calculation loops
 		function renderDataGridRowsDisplayBlocks() {
 			const targetBodyContainer = document.getElementById("logsTableBody");
 			targetBodyContainer.innerHTML = "";
@@ -329,27 +356,26 @@
 				return;
 			}
 
-			// Processing targeted list indices values arrays targeting specific display view frames limits boundary indexes variables blocks
 			const activeIndexStartIndex = (trackingCurrentPage - 1) * rowsPerPageDisplayLimit;
 			const activeIndexEndIndex = Math.min(activeIndexStartIndex + rowsPerPageDisplayLimit, parsedFilteredRecords.length);
 
 			for (let idx = activeIndexStartIndex; idx < activeIndexEndIndex; idx++) {
 				const activeRecordRow = parsedFilteredRecords[idx];
 				const structureStringAppend = `
-						<tr>
-							<td><span class="badge badge-dark p-2 text-monospace text-success">${activeRecordRow.timestamp}</span></td>
-							<td class="font-weight-bold text-teal">${activeRecordRow.memberId}</td>
-							<td>${activeRecordRow.name}</td>
-							<td class="text-muted font-weight-bold">${activeRecordRow.mobile}</td>
-						</tr>`;
+							<tr>
+								<td><span class="badge badge-dark p-2 text-monospace text-success">${activeRecordRow.timestamp}</span></td>
+								<td class="font-weight-bold text-teal">${activeRecordRow.memberId}</td>
+								<td>${activeRecordRow.name}</td>
+								<td class="text-muted font-weight-bold">${activeRecordRow.mobile}</td>
+							</tr>`;
 				targetBodyContainer.innerHTML += structureStringAppend;
 			}
 
-			document.getElementById("paginationSummaryDisplay").innerText = `Showing ${activeIndexStartIndex + 1} to ${activeIndexEndIndex} of ${parsedFilteredRecords.length} system entries tracking profiles`;
+			document.getElementById("paginationSummaryDisplay").innerText = `Showing ${activeIndexStartIndex + 1} to ${activeIndexEndIndex} of ${parsedFilteredRecords.length} system entries`;
 			renderPaginationControlsArray(parsedFilteredRecords.length);
 		}
 
-		// Calculate total available mathematical allocation limits pages count arrays configuration bounds dynamically
+		// Calculate total available mathematical allocation limits
 		function renderPaginationControlsArray(totalCountElementsRecords) {
 			const paginationNavBlock = document.getElementById("tablePaginationControls");
 			paginationNavBlock.innerHTML = "";
@@ -360,9 +386,9 @@
 			for (let pageIdx = 1; pageIdx <= executionCalculatedPageCount; pageIdx++) {
 				const activeStateClassVerification = (pageIdx === trackingCurrentPage) ? "active" : "";
 				const elementNavigationStringBuild = `
-						<li class="page-item ${activeStateClassVerification}">
-							<a class="page-link page-link-yoga" href="javascript:void(0)" onclick="executePageSwitchNavigation(${pageIdx})">${pageIdx}</a>
-						</li>`;
+							<li class="page-item ${activeStateClassVerification}">
+								<a class="page-link page-link-yoga" href="javascript:void(0)" onclick="executePageSwitchNavigation(${pageIdx})">${pageIdx}</a>
+							</li>`;
 				paginationNavBlock.innerHTML += elementNavigationStringBuild;
 			}
 		}
@@ -372,14 +398,13 @@
 			renderDataGridRowsDisplayBlocks();
 		}
 
-		// Dynamic Excel Conversion Spreadsheet File Generation Engine Architecture
+		// Dynamic Excel Conversion Spreadsheet File Generation
 		function exportDataToExcelEngine() {
 			if (parsedFilteredRecords.length === 0) {
 				alert("No current record sets arrays exist within specified processing buffers to compile export sheets targets.");
 				return;
 			}
 
-			// Processing target column header mappings structural alignments transformations matrices loops pipelines configurations
 			const dataRowsMappingArray = parsedFilteredRecords.map(item => ({
 				"Scan Date & Time": item.timestamp,
 				"Member Identification ID": item.memberId,
@@ -390,55 +415,95 @@
 			const workbookInstanceTarget = XLSX.utils.book_new();
 			const worksheetDataBlockTarget = XLSX.utils.json_to_sheet(dataRowsMappingArray);
 
-			XLSX.utils.book_append_sheet(workbookInstanceTarget, worksheetDataBlockTarget, "Attendance Records Logs Table");
+			XLSX.utils.book_append_sheet(workbookInstanceTarget, worksheetDataBlockTarget, "Attendance Records");
 
-			// Executing instant file generation processing streams parameters directly hitting file downloads triggers inside UI windows
-			XLSX.writeFile(workbookInstanceTarget, "Aga_Oli_Attendance_Central_Logs_Report.xlsx");
+			XLSX.writeFile(workbookInstanceTarget, `Aga_Oli_Attendance_${new Date().toISOString().split('T')[0]}.xlsx`);
 		}
 
-		// Initialize active peripheral lens dynamic tracking scanner hardware capture engine arrays controls hooks
+		// Initialize camera scanner
 		function startScannerEngine() {
 			const statusMsgContainer = document.getElementById("scannerMessage");
 			statusMsgContainer.className = "status-processing text-center mb-3";
-			statusMsgContainer.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Requesting explicit hardware capture media arrays context interface validations loops locks...";
+			statusMsgContainer.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Starting camera... Please grant permission when prompted.";
 
-			html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 15, qrbox: 240 });
+			if (html5QrcodeScanner) {
+				html5QrcodeScanner.clear();
+				html5QrcodeScanner = null;
+			}
+
+			html5QrcodeScanner = new Html5QrcodeScanner("reader", {
+				fps: 15,
+				qrbox: 240,
+				aspectRatio: 1.0
+			});
+
 			html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 		}
 
+		// ✅ FIXED: Success callback with proper POST handling
 		function onScanSuccess(decodedText, decodedResult) {
 			const statusMsgContainer = document.getElementById("scannerMessage");
 			statusMsgContainer.className = "status-processing text-center mb-3";
-			statusMsgContainer.innerHTML = `<i class='fa fa-refresh fa-spin'></i> Token Scan ID recognized: <strong>${decodedText}</strong>. Querying remote endpoints schemas servers...`;
+			statusMsgContainer.innerHTML = `<i class='fa fa-refresh fa-spin'></i> Scanning ID: <strong>${decodedText}</strong>. Sending to server...`;
 
 			const transmissionTrackingPayload = {
 				action: "markAttendance",
 				memberId: decodedText
 			};
 
+			// ✅ FIXED: Removed 'mode: "no-cors"' - now properly handles response
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: "POST",
-				mode: "no-cors",
-				headers: { "Content-Type": "application/json" },
+				headers: {
+					"Content-Type": "application/json"
+				},
 				body: JSON.stringify(transmissionTrackingPayload)
-			}).then(() => {
-				statusMsgContainer.className = "status-success text-center mb-3";
-				statusMsgContainer.innerHTML = `<i class='fa fa-check-circle'></i> Verification Check Complete! Attendance record parsed seamlessly for ID: ${decodedText}`;
+			})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`Server error: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (data.status === "SUCCESS") {
+						statusMsgContainer.className = "status-success text-center mb-3";
+						statusMsgContainer.innerHTML = `<i class='fa fa-check-circle'></i> ✅ Attendance recorded for ID: ${decodedText}`;
+					} else {
+						throw new Error(data.message || "Unknown error");
+					}
 
-				// Automatically refresh reporting panels tables data mappings configurations directly matching remote sheets contents variations parameters
-				setTimeout(() => {
-					html5QrcodeScanner.clear();
-					fetchLiveLogsData();
-					startScannerEngine();
-				}, 3500);
-			}).catch(err => {
-				statusMsgContainer.className = "bg-danger p-2 text-center rounded text-white mb-3";
-				statusMsgContainer.innerText = "External application database network server connection dropped down unexpectedly.";
-			});
+					// Auto-refresh after success
+					setTimeout(() => {
+						if (html5QrcodeScanner) {
+							html5QrcodeScanner.clear();
+						}
+						fetchLiveLogsData();
+						// Restart scanner after a moment
+						setTimeout(() => {
+							startScannerEngine();
+						}, 500);
+					}, 3000);
+				})
+				.catch(err => {
+					console.error("POST Error:", err);
+					statusMsgContainer.className = "bg-danger text-white text-center p-3 rounded mb-3";
+					statusMsgContainer.innerHTML = `<i class='fa fa-exclamation-triangle'></i> ❌ Error: ${err.message}. Check Apps Script URL & CORS.`;
+
+					// Try to restart scanner after error
+					setTimeout(() => {
+						statusMsgContainer.className = "status-waiting text-center mb-3";
+						statusMsgContainer.innerHTML = "<i class='fa fa-info-circle'></i> Ready to scan again.";
+						if (html5QrcodeScanner) {
+							html5QrcodeScanner.clear();
+							startScannerEngine();
+						}
+					}, 5000);
+				});
 		}
 
 		function onScanFailure(error) {
-			// Scanner runtime errors drop quietly into background iteration buffers loop streams
+			// Scanner quietly handles errors
 		}
 	</script>
 </body>
