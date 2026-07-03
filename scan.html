@@ -415,6 +415,19 @@
 			color: white;
 		}
 
+		/* Date range filter row */
+		.filter-row {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+			align-items: center;
+		}
+
+			.filter-row .form-control {
+				flex: 1;
+				min-width: 120px;
+			}
+
 		@media (max-width: 768px) {
 			.yoga-card {
 				padding: 15px;
@@ -427,6 +440,11 @@
 			.btn-yoga, .btn-teal, .btn-danger-custom {
 				padding: 10px 20px;
 				font-size: 0.9rem;
+			}
+
+			.filter-row .form-control {
+				min-width: 100px;
+				font-size: 0.85rem;
 			}
 		}
 	</style>
@@ -515,7 +533,7 @@
 
 					<hr style="border-color: #2d3243;">
 
-					<!-- Image Upload -->
+					<!-- Image Upload - FIXED -->
 					<div class="section-title" style="font-size: 1rem;">
 						<i class="fa fa-image"></i> Upload QR Image
 					</div>
@@ -536,12 +554,18 @@
 						</button>
 					</div>
 
-					<!-- Date Filter -->
+					<!-- Date Filter - IMPROVED -->
 					<hr style="border-color: #2d3243;">
 					<div class="section-title" style="font-size: 1rem;">
-						<i class="fa fa-calendar"></i> Filter by Date
+						<i class="fa fa-calendar"></i> Date Wise Search
 					</div>
-					<input type="date" id="filterDate" class="form-control form-control-yoga" onchange="applyFilters()">
+					<div class="filter-row">
+						<input type="date" id="filterDateFrom" class="form-control form-control-yoga"
+							   placeholder="From Date" onchange="applyFilters()">
+						<span class="text-muted">to</span>
+						<input type="date" id="filterDateTo" class="form-control form-control-yoga"
+							   placeholder="To Date" onchange="applyFilters()">
+					</div>
 
 					<div class="mt-2 d-flex gap-2" style="gap: 10px;">
 						<button class="btn btn-outline-light-custom flex-grow-1" onclick="clearDateFilter()">
@@ -670,7 +694,7 @@
 
 	<script>
 		// ============================================
-		// CONFIGURATION - CHANGE THIS URL
+		// CONFIGURATION
 		// ============================================
 		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4MPZOVmW7bbWSpCpjpCHNyb1UbbZMh05nJDWWOwZxsmDiLt3NwclF82Ipepo6a8Ny/exec";
 
@@ -717,7 +741,7 @@
 				showLoading(false);
 				isLoading = false;
 				document.getElementById('scannerMessage').className = 'status-error';
-				document.getElementById('scannerMessage').innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}. Check URL & CORS.`;
+				document.getElementById('scannerMessage').innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}`;
 			});
 		}
 
@@ -795,25 +819,39 @@
 		}
 
 		// ============================================
-		// FILTERS
+		// FILTERS - IMPROVED with Date Range
 		// ============================================
 		function applyFilters() {
 			const searchText = document.getElementById('filterSearch').value.toLowerCase().trim();
-			const dateFilter = document.getElementById('filterDate').value;
+			const dateFrom = document.getElementById('filterDateFrom').value;
+			const dateTo = document.getElementById('filterDateTo').value;
 
+			// Filter Attendance with Date Range
 			filteredAttendance = masterAttendanceData.filter(row => {
 				let match = true;
+
+				// Search filter
 				if (searchText) {
 					const content = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
 					if (!content.includes(searchText)) match = false;
 				}
-				if (dateFilter && row.timestamp) {
+
+				// Date From filter
+				if (dateFrom && row.timestamp) {
 					const rowDate = row.timestamp.split(' ')[0];
-					if (rowDate !== dateFilter) match = false;
+					if (rowDate < dateFrom) match = false;
 				}
+
+				// Date To filter
+				if (dateTo && row.timestamp) {
+					const rowDate = row.timestamp.split(' ')[0];
+					if (rowDate > dateTo) match = false;
+				}
+
 				return match;
 			});
 
+			// Filter Members with search only
 			filteredMembers = masterMembersData.filter(row => {
 				if (!searchText) return true;
 				const content = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
@@ -827,13 +865,15 @@
 		}
 
 		function clearDateFilter() {
-			document.getElementById('filterDate').value = '';
+			document.getElementById('filterDateFrom').value = '';
+			document.getElementById('filterDateTo').value = '';
 			applyFilters();
 		}
 
 		function clearAllFilters() {
 			document.getElementById('filterSearch').value = '';
-			document.getElementById('filterDate').value = '';
+			document.getElementById('filterDateFrom').value = '';
+			document.getElementById('filterDateTo').value = '';
 			filteredAttendance = [...masterAttendanceData];
 			filteredMembers = [...masterMembersData];
 			attendanceCurrentPage = 1;
@@ -1080,11 +1120,16 @@
 		}
 
 		// ============================================
-		// IMAGE UPLOAD & QR SCAN
+		// IMAGE UPLOAD & QR SCAN - FIXED
 		// ============================================
 		function handleImageUpload(event) {
 			const file = event.target.files[0];
-			if (!file) return;
+			if (!file) {
+				console.log('No file selected');
+				return;
+			}
+
+			console.log('File selected:', file.name, file.type, file.size);
 
 			qrImageFile = file;
 			const reader = new FileReader();
@@ -1093,13 +1138,19 @@
 				document.getElementById('imagePreview').src = qrImageData;
 				document.getElementById('imagePreview').style.display = 'block';
 				document.getElementById('scannerMessage').className = 'status-processing';
-				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check"></i> Image loaded. Click "Scan QR from Image"';
+				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check-circle"></i> Image loaded successfully! Click "Scan QR from Image"';
+				console.log('Image loaded successfully');
+			};
+			reader.onerror = function (e) {
+				console.error('FileReader error:', e);
+				document.getElementById('scannerMessage').className = 'status-error';
+				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-exclamation-triangle"></i> Failed to load image';
 			};
 			reader.readAsDataURL(file);
 		}
 
 		function scanFromImage() {
-			if (!qrImageData) {
+			if (!qrImageFile) {
 				document.getElementById('scannerMessage').className = 'status-error';
 				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-exclamation-triangle"></i> Please upload an image first';
 				return;
@@ -1109,19 +1160,29 @@
 			statusMsg.className = 'status-processing';
 			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Decoding QR from image...';
 
-			const tempScanner = new Html5Qrcode('reader');
-			tempScanner.scanFile(qrImageFile, true)
-				.then(decodedText => {
-					statusMsg.className = 'status-success';
-					statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> QR Decoded: <strong>${decodedText}</strong>`;
-					onScanSuccess(decodedText, null);
-					tempScanner.clear();
-				})
-				.catch(err => {
-					statusMsg.className = 'status-error';
-					statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Failed to decode QR: ${err}`;
-					tempScanner.clear();
-				});
+			try {
+				// Create a temporary scanner for image decoding
+				const tempScanner = new Html5Qrcode('reader');
+
+				tempScanner.scanFile(qrImageFile, true)
+					.then(decodedText => {
+						console.log('QR Decoded:', decodedText);
+						statusMsg.className = 'status-success';
+						statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> QR Decoded: <strong>${decodedText}</strong>`;
+						onScanSuccess(decodedText, null);
+						tempScanner.clear();
+					})
+					.catch(err => {
+						console.error('QR Decode error:', err);
+						statusMsg.className = 'status-error';
+						statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Failed to decode QR: ${err}`;
+						tempScanner.clear();
+					});
+			} catch (err) {
+				console.error('Scanner error:', err);
+				statusMsg.className = 'status-error';
+				statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Scanner error: ${err.message}`;
+			}
 		}
 
 		function clearImage() {
@@ -1132,6 +1193,7 @@
 			document.getElementById('imageInput').value = '';
 			document.getElementById('scannerMessage').className = 'status-waiting';
 			document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Image cleared. Ready to scan.';
+			console.log('Image cleared');
 		}
 
 		// ============================================
