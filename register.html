@@ -8,7 +8,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-
 	<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
 	<style>
@@ -128,7 +127,7 @@
 
 	<script>
 		// ========================================================
-		// ⚠️ இங்க உன்னோட REAL GOOGLE APPS SCRIPT URL-ஐ போடு மச்சி
+		// ⚠️ உன்னோட REAL GOOGLE APPS SCRIPT URL-ஐ இங்க போடு மச்சி
 		// ========================================================
 		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4MPZOVmW7bbWSpCpjpCHNyb1UbbZMh05nJDWWOwZxsmDiLt3NwclF82Ipepo6a8Ny/exec";
 
@@ -158,10 +157,9 @@
 				return;
 			}
 
-			// 1. முதலிலேயே Member ID ஜெனரேட் செய்கிறோம்
 			const memberId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
 
-			// 2. 🔥 மாற்றப்பட்டது: சர்வர் பதிலுக்கு காத்திராமல் உடனே QR காட்டுகிறோம்!
+			// 🔥 QR முதலில் லோக்கலாக ஜெனரேட் ஆகிவிடும்
 			generateQR(name, memberId, mobile);
 
 			const payload = {
@@ -177,11 +175,11 @@
 			isProcessing = true;
 			const btn = document.getElementById("registerBtn");
 			btn.disabled = true;
-			btn.innerHTML = '<span class="loading-spinner"></span> Background Sync...';
+			btn.innerHTML = '<span class="loading-spinner"></span> Saving to Cloud...';
 
-			showStatus('⏳ Generating Card & Saving to Cloud...', 'info');
+			showStatus('⏳ Registering... Saving data to Google Sheet', 'info');
 
-			// பின்னணியில் டேட்டாவை கூகுள் ஷீட்டுக்கு அனுப்புகிறது
+			// ஷீட்டுக்கு அனுப்பும் மெயின் Fetch லாஜிக் (Cleaned Up)
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -196,13 +194,12 @@
 						showStatus('✅ Registration & Cloud Sync Successful!', 'success');
 						document.getElementById("registrationForm").reset();
 					} else {
-						showStatus('⚠️ QR Generated locally, but Cloud Sync failed: ' + data.message, 'warning');
+						showStatus('⚠️ Card generated, but Sheet update failed: ' + data.message, 'warning');
 					}
 				})
 				.catch(err => {
-					console.error('Database Sync Error:', err);
-					// டேட்டாபேஸ் ஃபெயில் ஆனாலும் பயனர் குழம்பாமல் இருக்க எச்சரிக்கை மட்டும் காட்டுகிறோம்
-					showStatus('ℹ️ Card Generated. (Note: Sheet sync delayed or pending)', 'info');
+					console.error('Error:', err);
+					showStatus('❌ Network timeout, but your Card is ready below!', 'warning');
 				})
 				.finally(() => {
 					btn.disabled = false;
@@ -211,17 +208,12 @@
 				});
 		}
 
-		// ============================================
-		// GENERATE QR CODE
-		// ============================================
 		function generateQR(name, memberId, mobile) {
 			document.getElementById("qrOutputWrapper").style.display = "block";
 			document.getElementById("generatedMemberName").innerText = name;
 			document.getElementById("generatedMemberId").innerText = memberId;
-
 			document.getElementById("qrcode").innerHTML = "";
 
-			// QR Code உருவாக்கும் லாஜிக்
 			try {
 				new QRCode(document.getElementById("qrcode"), {
 					text: memberId,
@@ -232,11 +224,9 @@
 					correctLevel: QRCode.CorrectLevel.H
 				});
 			} catch (e) {
-				console.error("QR Library Error: ", e);
-				document.getElementById("qrcode").innerHTML = "<p class='text-danger'>QR Library Loading Error!</p>";
+				console.error("QR Error:", e);
 			}
 
-			// WhatsApp லிங்க் செட் பண்றோம்
 			const msg = encodeURIComponent(
 				`Hello Admin,\n\n` +
 				`📛 Name: ${name}\n` +
@@ -245,13 +235,9 @@
 				`Please verify and activate.`
 			);
 			document.getElementById("whatsappBtn").href = `https://wa.me/916380419470?text=${msg}`;
-
 			document.getElementById("qrOutputWrapper").scrollIntoView({ behavior: 'smooth' });
 		}
 
-		// ============================================
-		// SHOW STATUS
-		// ============================================
 		function showStatus(message, type) {
 			const div = document.getElementById("statusMessage");
 			div.style.display = "block";
@@ -267,9 +253,6 @@
 			div.innerHTML = message;
 		}
 
-		// ============================================
-		// RESET FORM
-		// ============================================
 		function resetForm() {
 			document.getElementById("qrOutputWrapper").style.display = "none";
 			document.getElementById("qrcode").innerHTML = "";
