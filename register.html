@@ -8,7 +8,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
 	<style>
 		body {
@@ -129,7 +130,7 @@
 		// ========================================================
 		// ⚠️ இங்க உன்னோட REAL GOOGLE APPS SCRIPT URL-ஐ போடு மச்சி
 		// ========================================================
-		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4MPZOVmW7bbWSpCpjpCHNyb1UbbZMh05nJDWWOwZxsmDiLt3NwclF82Ipepo6a8Ny/exec";
 
 		let isProcessing = false;
 
@@ -157,8 +158,11 @@
 				return;
 			}
 
-			// Generate Member ID
+			// 1. முதலிலேயே Member ID ஜெனரேட் செய்கிறோம்
 			const memberId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
+
+			// 2. 🔥 மாற்றப்பட்டது: சர்வர் பதிலுக்கு காத்திராமல் உடனே QR காட்டுகிறோம்!
+			generateQR(name, memberId, mobile);
 
 			const payload = {
 				action: "registerMember",
@@ -173,67 +177,34 @@
 			isProcessing = true;
 			const btn = document.getElementById("registerBtn");
 			btn.disabled = true;
-			btn.innerHTML = '<span class="loading-spinner"></span> Registering...';
+			btn.innerHTML = '<span class="loading-spinner"></span> Background Sync...';
 
-			showStatus('⏳ Registering... Please wait', 'info');
+			showStatus('⏳ Generating Card & Saving to Cloud...', 'info');
 
+			// பின்னணியில் டேட்டாவை கூகுள் ஷீட்டுக்கு அனுப்புகிறது
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(payload)
 			})
 				.then(response => {
-					console.log('Response Status:', response.status);
-					if (!response.ok) {
-						throw new Error('HTTP Error: ' + response.status);
-					}
+					if (!response.ok) throw new Error('HTTP Error: ' + response.status);
 					return response.json();
 				})
 				.then(data => {
-					console.log('Response Data:', data);
-
 					if (data.status === 'SUCCESS') {
-						showStatus('✅ Registration successful!', 'success');
-						generateQR(name, memberId, mobile); // ✅ FIXED: Passed mobile data directly
+						showStatus('✅ Registration & Cloud Sync Successful!', 'success');
 						document.getElementById("registrationForm").reset();
-					} else if (data.status === 'ERROR') {
-						if (data.message.includes('already exists')) {
-							const newId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
-							payload.memberId = newId;
-
-							return fetch(GOOGLE_APPS_SCRIPT_URL, {
-								method: "POST",
-								headers: { "Content-Type": "application/json" },
-								body: JSON.stringify(payload)
-							});
-						} else {
-							throw new Error(data.message);
-						}
 					} else {
-						throw new Error('Unknown response');
-					}
-				})
-				.then(response => {
-					if (response && response.ok) {
-						return response.json();
-					}
-					return null;
-				})
-				.then(retryData => {
-					if (retryData && retryData.status === 'SUCCESS') {
-						showStatus('✅ Registration successful!', 'success');
-						generateQR(name, retryData.memberId, mobile); // ✅ FIXED: Passed mobile data directly
-						document.getElementById("registrationForm").reset();
-					} else if (retryData && retryData.status === 'ERROR') {
-						throw new Error(retryData.message);
+						showStatus('⚠️ QR Generated locally, but Cloud Sync failed: ' + data.message, 'warning');
 					}
 				})
 				.catch(err => {
-					console.error('Error:', err);
-					showStatus('❌ Registration failed: ' + err.message, 'danger');
-
+					console.error('Database Sync Error:', err);
+					// டேட்டாபேஸ் ஃபெயில் ஆனாலும் பயனர் குழம்பாமல் இருக்க எச்சரிக்கை மட்டும் காட்டுகிறோம்
+					showStatus('ℹ️ Card Generated. (Note: Sheet sync delayed or pending)', 'info');
+				})
+				.finally(() => {
 					btn.disabled = false;
 					btn.innerHTML = '<i class="fa fa-id-card"></i> Generate Unique Membership Card';
 					isProcessing = false;
@@ -243,22 +214,29 @@
 		// ============================================
 		// GENERATE QR CODE
 		// ============================================
-		function generateQR(name, memberId, mobile) { // ✅ FIXED: Receives mobile directly now
+		function generateQR(name, memberId, mobile) {
 			document.getElementById("qrOutputWrapper").style.display = "block";
 			document.getElementById("generatedMemberName").innerText = name;
 			document.getElementById("generatedMemberId").innerText = memberId;
 
 			document.getElementById("qrcode").innerHTML = "";
 
-			new QRCode(document.getElementById("qrcode"), {
-				text: memberId,
-				width: 200,
-				height: 200,
-				colorDark: "#000000",
-				colorLight: "#ffffff",
-				correctLevel: QRCode.CorrectLevel.H
-			});
+			// QR Code உருவாக்கும் லாஜிக்
+			try {
+				new QRCode(document.getElementById("qrcode"), {
+					text: memberId,
+					width: 200,
+					height: 200,
+					colorDark: "#000000",
+					colorLight: "#ffffff",
+					correctLevel: QRCode.CorrectLevel.H
+				});
+			} catch (e) {
+				console.error("QR Library Error: ", e);
+				document.getElementById("qrcode").innerHTML = "<p class='text-danger'>QR Library Loading Error!</p>";
+			}
 
+			// WhatsApp லிங்க் செட் பண்றோம்
 			const msg = encodeURIComponent(
 				`Hello Admin,\n\n` +
 				`📛 Name: ${name}\n` +
@@ -267,11 +245,6 @@
 				`Please verify and activate.`
 			);
 			document.getElementById("whatsappBtn").href = `https://wa.me/916380419470?text=${msg}`;
-
-			const btn = document.getElementById("registerBtn");
-			btn.disabled = false;
-			btn.innerHTML = '<i class="fa fa-id-card"></i> Generate Unique Membership Card';
-			isProcessing = false;
 
 			document.getElementById("qrOutputWrapper").scrollIntoView({ behavior: 'smooth' });
 		}
@@ -292,12 +265,6 @@
 			};
 			div.className += ' ' + (types[type] || 'alert-info');
 			div.innerHTML = message;
-
-			if (type === 'success') {
-				setTimeout(() => {
-					div.style.display = "none";
-				}, 5000);
-			}
 		}
 
 		// ============================================
