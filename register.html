@@ -5,13 +5,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Foundation Registration Portal</title>
-	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/main.css">
 
-	<!-- QR Engine Code Injection -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 	<style>
@@ -94,8 +92,12 @@
 			const state = document.getElementById("regState").value;
 			const district = document.getElementById("regDistrict").value;
 
+			// FIXED: Generate random Member ID on frontend first to ensure sync with spreadsheet payload
+			const generatedId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
+
 			const payload = {
 				action: "registerMember",
+				memberId: generatedId, // FIXED: Added missing memberId key mappings here
 				name: name,
 				mobile: mobile,
 				age: age,
@@ -114,16 +116,16 @@
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(payload)
 			}).then(() => {
-				const simulatedId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
-				document.getElementById("generatedMemberId").innerText = simulatedId;
+				// FIXED: Render the verified exact structural ID mapping parameters cleanly
+				document.getElementById("generatedMemberId").innerText = generatedId;
 
 				new QRCode(document.getElementById("qrcode"), {
-					text: simulatedId,
+					text: generatedId,
 					width: 200,
 					height: 200
 				});
 
-				const textMessage = encodeURIComponent(`Hello System Admin, I completed my membership registration pipeline details.\nName: ${name}\nMobile: ${mobile}\nAssigned Key ID: ${simulatedId}\nPlease execute payment status verification logic routines.`);
+				const textMessage = encodeURIComponent(`Hello System Admin, I completed my membership registration pipeline details.\nName: ${name}\nMobile: ${mobile}\nAssigned Key ID: ${generatedId}\nPlease execute payment status verification logic routines.`);
 				document.getElementById("whatsappPayBtn").href = `https://wa.me/916380419470?text=${textMessage}`;
 			}).catch(err => {
 				console.error(err);
@@ -132,4 +134,5 @@
 		}
 	</script>
 </body>
+
 </html>
