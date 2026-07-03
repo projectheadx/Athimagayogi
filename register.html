@@ -5,11 +5,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Foundation Registration Portal</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/main.css">
-
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 	<style>
@@ -34,6 +32,48 @@
 			display: inline-block;
 			width: 100%;
 		}
+
+		.btn-success:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+
+		.loading-spinner {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			border: 3px solid #f3f3f3;
+			border-top: 3px solid #28a745;
+			border-radius: 50%;
+			animation: spin 1s linear infinite;
+			margin-right: 10px;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.alert-success-custom {
+			background: #d4edda;
+			border-color: #c3e6cb;
+			color: #155724;
+			padding: 12px 20px;
+			border-radius: 8px;
+		}
+
+		.alert-danger-custom {
+			background: #f8d7da;
+			border-color: #f5c6cb;
+			color: #721c24;
+			padding: 12px 20px;
+			border-radius: 8px;
+		}
 	</style>
 </head>
 
@@ -49,17 +89,39 @@
 			<div class="col-lg-6 col-md-8 mb-4">
 				<div class="form-box">
 					<h4 class="mb-4 font-weight-bold text-success"><i class="fa fa-user-plus"></i> Personal Particulars</h4>
+
+					<!-- Status Message -->
+					<div id="statusMessage" style="display:none;" class="mb-3"></div>
+
 					<form id="registrationForm" onsubmit="handleRegistration(event)">
-						<div class="form-group"><label>Full Name</label><input type="text" id="regName" class="form-control" placeholder="Name Token" required /></div>
-						<div class="form-group"><label>Mobile Number</label><input type="tel" id="regMobile" class="form-control" placeholder="Primary Contact" required /></div>
-						<div class="form-group"><label>Age</label><input type="number" id="regAge" class="form-control" placeholder="Biological Years" required /></div>
-						<div class="form-group"><label>State</label><input type="text" id="regState" class="form-control" placeholder="State/Region" required /></div>
-						<div class="form-group"><label>District</label><input type="text" id="regDistrict" class="form-control" placeholder="District Branch" required /></div>
+						<div class="form-group">
+							<label>Full Name <span class="text-danger">*</span></label>
+							<input type="text" id="regName" class="form-control" placeholder="Enter full name" required />
+						</div>
+						<div class="form-group">
+							<label>Mobile Number <span class="text-danger">*</span></label>
+							<input type="tel" id="regMobile" class="form-control" placeholder="10 digit mobile number" required pattern="[0-9]{10}" />
+						</div>
+						<div class="form-group">
+							<label>Age <span class="text-danger">*</span></label>
+							<input type="number" id="regAge" class="form-control" placeholder="Your age" required min="1" max="120" />
+						</div>
+						<div class="form-group">
+							<label>State <span class="text-danger">*</span></label>
+							<input type="text" id="regState" class="form-control" placeholder="Your state" required />
+						</div>
+						<div class="form-group">
+							<label>District <span class="text-danger">*</span></label>
+							<input type="text" id="regDistrict" class="form-control" placeholder="Your district" required />
+						</div>
 
 						<div class="alert alert-warning py-2 small my-3">
-							<strong>Verification Requirement:</strong> Platform processing maps automated tracking via standard WhatsApp operations interface.
+							<strong>⚠️ Verification Requirement:</strong> Platform processing maps automated tracking via standard WhatsApp operations interface.
 						</div>
-						<button type="submit" class="btn btn-success btn-block btn-lg">Generate Unique Membership Card</button>
+
+						<button type="submit" class="btn btn-success btn-block btn-lg" id="registerBtn">
+							<i class="fa fa-id-card"></i> Generate Unique Membership Card
+						</button>
 					</form>
 				</div>
 			</div>
@@ -70,10 +132,18 @@
 						<h4 id="generatedMemberName" class="text-dark font-weight-bold mb-2"></h4>
 						<p id="generatedMemberId" class="text-success font-weight-bold h5 mb-3"></p>
 						<div id="qrcode" class="d-flex justify-content-center mb-4"></div>
-						<div class="alert alert-info small text-left mb-3">
+
+						<div id="qrStatus" class="alert alert-info small text-left mb-3">
 							<i class="fa fa-info-circle"></i> <strong>Important:</strong> Please save or screenshot this QR image block. This credential boundary executes security scanning operations at every individual class checkpoint.
 						</div>
-						<a id="whatsappPayBtn" href="#" target="_blank" class="btn btn-outline-success btn-block"><i class="fa fa-whatsapp"></i> Submit Receipt to Bot Verification</a>
+
+						<a id="whatsappPayBtn" href="#" target="_blank" class="btn btn-outline-success btn-block">
+							<i class="fa fa-whatsapp"></i> Submit Receipt to Bot Verification
+						</a>
+
+						<button class="btn btn-outline-secondary btn-block mt-2" onclick="resetForm()">
+							<i class="fa fa-refresh"></i> Register Another Member
+						</button>
 					</div>
 				</div>
 			</div>
@@ -81,23 +151,51 @@
 	</div>
 
 	<script>
+		// ============================================
+		// CONFIGURATION
+		// ============================================
 		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4MPZOVmW7bbWSpCpjpCHNyb1UbbZMh05nJDWWOwZxsmDiLt3NwclF82Ipepo6a8Ny/exec";
 
+		let isProcessing = false;
+		let generatedMemberId = null;
+
+		// ============================================
+		// HANDLE REGISTRATION
+		// ============================================
 		function handleRegistration(event) {
 			event.preventDefault();
 
-			const name = document.getElementById("regName").value;
-			const mobile = document.getElementById("regMobile").value;
-			const age = document.getElementById("regAge").value;
-			const state = document.getElementById("regState").value;
-			const district = document.getElementById("regDistrict").value;
+			// Check if already processing
+			if (isProcessing) {
+				showStatus('⚠️ Please wait, processing in progress...', 'warning');
+				return;
+			}
 
-			// FIXED: Generate random Member ID on frontend first to ensure sync with spreadsheet payload
-			const generatedId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
+			// Get form values
+			const name = document.getElementById("regName").value.trim();
+			const mobile = document.getElementById("regMobile").value.trim();
+			const age = document.getElementById("regAge").value.trim();
+			const state = document.getElementById("regState").value.trim();
+			const district = document.getElementById("regDistrict").value.trim();
 
+			// Validate
+			if (!name || !mobile || !age || !state || !district) {
+				showStatus('⚠️ Please fill all fields', 'danger');
+				return;
+			}
+
+			if (mobile.length !== 10 || !/^[0-9]{10}$/.test(mobile)) {
+				showStatus('⚠️ Please enter a valid 10-digit mobile number', 'danger');
+				return;
+			}
+
+			// Generate Member ID
+			generatedMemberId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
+
+			// Prepare payload
 			const payload = {
 				action: "registerMember",
-				memberId: generatedId, // FIXED: Added missing memberId key mappings here
+				memberId: generatedMemberId,
 				name: name,
 				mobile: mobile,
 				age: age,
@@ -105,32 +203,177 @@
 				district: district
 			};
 
-			document.getElementById("qrOutputWrapper").style.display = "block";
-			document.getElementById("generatedMemberName").innerText = name;
-			document.getElementById("generatedMemberId").innerText = "Syncing with Cloud Registry...";
-			document.getElementById("qrcode").innerHTML = "";
+			// Disable button and show loading
+			isProcessing = true;
+			const btn = document.getElementById("registerBtn");
+			btn.disabled = true;
+			btn.innerHTML = '<span class="loading-spinner"></span> Registering...';
 
+			showStatus('⏳ Registering member... Please wait', 'info');
+
+			// ✅ FIXED: Removed mode: "no-cors" - now properly waits for response
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: "POST",
-				mode: "no-cors",
-				headers: { "Content-Type": "application/json" },
+				headers: {
+					"Content-Type": "application/json"
+				},
 				body: JSON.stringify(payload)
-			}).then(() => {
-				// FIXED: Render the verified exact structural ID mapping parameters cleanly
-				document.getElementById("generatedMemberId").innerText = generatedId;
+			})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(data => {
+					console.log('Registration response:', data);
 
-				new QRCode(document.getElementById("qrcode"), {
-					text: generatedId,
-					width: 200,
-					height: 200
+					if (data.status === 'SUCCESS') {
+						// ✅ Success - Show QR
+						showStatus('✅ Registration successful!', 'success');
+						showQRCode(name, generatedMemberId);
+
+						// Reset form
+						document.getElementById("registrationForm").reset();
+
+					} else if (data.status === 'ERROR' && data.message.includes('already exists')) {
+						// Member already exists - generate new ID
+						showStatus('⚠️ ' + data.message + '. Generating new ID...', 'warning');
+
+						// Generate new ID and retry
+						generatedMemberId = "MEMBER-" + Math.floor(100000 + Math.random() * 900000);
+						payload.memberId = generatedMemberId;
+
+						// Retry with new ID
+						return fetch(GOOGLE_APPS_SCRIPT_URL, {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify(payload)
+						});
+
+					} else {
+						throw new Error(data.message || 'Registration failed');
+					}
+				})
+				.then(response => {
+					// Handle retry response
+					if (response && response.ok) {
+						return response.json();
+					}
+					return null;
+				})
+				.then(retryData => {
+					if (retryData && retryData.status === 'SUCCESS') {
+						showStatus('✅ Registration successful with new ID!', 'success');
+						showQRCode(document.getElementById("regName").value, generatedMemberId);
+						document.getElementById("registrationForm").reset();
+					} else if (retryData && retryData.status === 'ERROR') {
+						throw new Error(retryData.message);
+					}
+				})
+				.catch(err => {
+					console.error('Registration error:', err);
+					showStatus('❌ Registration failed: ' + err.message, 'danger');
+
+					// Reset button
+					btn.disabled = false;
+					btn.innerHTML = '<i class="fa fa-id-card"></i> Generate Unique Membership Card';
+					isProcessing = false;
 				});
+		}
 
-				const textMessage = encodeURIComponent(`Hello System Admin, I completed my membership registration pipeline details.\nName: ${name}\nMobile: ${mobile}\nAssigned Key ID: ${generatedId}\nPlease execute payment status verification logic routines.`);
-				document.getElementById("whatsappPayBtn").href = `https://wa.me/916380419470?text=${textMessage}`;
-			}).catch(err => {
-				console.error(err);
-				document.getElementById("generatedMemberId").innerText = "API Connectivity Timeout Error.";
+		// ============================================
+		// SHOW QR CODE
+		// ============================================
+		function showQRCode(name, memberId) {
+			// Show QR wrapper
+			document.getElementById("qrOutputWrapper").style.display = "block";
+			document.getElementById("generatedMemberName").innerText = name;
+			document.getElementById("generatedMemberId").innerText = memberId;
+
+			// Generate QR
+			document.getElementById("qrcode").innerHTML = "";
+			new QRCode(document.getElementById("qrcode"), {
+				text: memberId,
+				width: 200,
+				height: 200,
+				colorDark: "#000000",
+				colorLight: "#ffffff",
+				correctLevel: QRCode.CorrectLevel.H
 			});
+
+			// WhatsApp link
+			const textMessage = encodeURIComponent(
+				`Hello Admin, I completed my membership registration.\n\n` +
+				`📛 Name: ${name}\n` +
+				`📱 Mobile: ${document.getElementById("regMobile").value}\n` +
+				`🆔 Member ID: ${memberId}\n\n` +
+				`Please verify and activate my membership.`
+			);
+			document.getElementById("whatsappPayBtn").href = `https://wa.me/916380419470?text=${textMessage}`;
+
+			// Reset button
+			const btn = document.getElementById("registerBtn");
+			btn.disabled = false;
+			btn.innerHTML = '<i class="fa fa-id-card"></i> Generate Unique Membership Card';
+			isProcessing = false;
+
+			// Scroll to QR
+			document.getElementById("qrOutputWrapper").scrollIntoView({ behavior: 'smooth' });
+		}
+
+		// ============================================
+		// SHOW STATUS MESSAGE
+		// ============================================
+		function showStatus(message, type) {
+			const statusDiv = document.getElementById("statusMessage");
+			statusDiv.style.display = "block";
+			statusDiv.className = "mb-3";
+
+			if (type === 'success') {
+				statusDiv.className += " alert-success-custom";
+			} else if (type === 'danger') {
+				statusDiv.className += " alert-danger-custom";
+			} else if (type === 'warning') {
+				statusDiv.className += " alert-warning";
+			} else {
+				statusDiv.className += " alert-info";
+			}
+
+			statusDiv.innerHTML = message;
+
+			// Auto hide after 5 seconds for success messages
+			if (type === 'success') {
+				setTimeout(() => {
+					statusDiv.style.display = "none";
+				}, 5000);
+			}
+		}
+
+		// ============================================
+		// RESET FORM
+		// ============================================
+		function resetForm() {
+			// Hide QR
+			document.getElementById("qrOutputWrapper").style.display = "none";
+			document.getElementById("qrcode").innerHTML = "";
+			document.getElementById("generatedMemberName").innerText = "";
+			document.getElementById("generatedMemberId").innerText = "";
+
+			// Reset form
+			document.getElementById("registrationForm").reset();
+
+			// Reset button
+			const btn = document.getElementById("registerBtn");
+			btn.disabled = false;
+			btn.innerHTML = '<i class="fa fa-id-card"></i> Generate Unique Membership Card';
+			isProcessing = false;
+
+			// Hide status
+			document.getElementById("statusMessage").style.display = "none";
+
+			// Scroll to top
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 	</script>
 </body>
