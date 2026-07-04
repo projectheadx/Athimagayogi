@@ -67,6 +67,7 @@
 			overflow: hidden;
 			border: 3px solid #28a745;
 			position: relative;
+			min-height: 250px;
 		}
 
 			#reader video {
@@ -314,6 +315,8 @@
 			margin-top: 15px;
 			display: none;
 			border: 2px solid #2d3243;
+			margin-left: auto;
+			margin-right: auto;
 		}
 
 		.table-container {
@@ -415,7 +418,6 @@
 			color: white;
 		}
 
-		/* Date range filter row */
 		.filter-row {
 			display: flex;
 			gap: 10px;
@@ -509,7 +511,7 @@
 
 		<!-- Main Row -->
 		<div class="row">
-			<!-- Scanner -->
+			<!-- Scanner Row -->
 			<div class="col-lg-5 mb-4">
 				<div class="yoga-card h-100">
 					<div class="section-title">
@@ -533,7 +535,7 @@
 
 					<hr style="border-color: #2d3243;">
 
-					<!-- Image Upload - FIXED -->
+					<!-- Image Upload -->
 					<div class="section-title" style="font-size: 1rem;">
 						<i class="fa fa-image"></i> Upload QR Image
 					</div>
@@ -554,17 +556,15 @@
 						</button>
 					</div>
 
-					<!-- Date Filter - IMPROVED -->
+					<!-- Date Filter -->
 					<hr style="border-color: #2d3243;">
 					<div class="section-title" style="font-size: 1rem;">
 						<i class="fa fa-calendar"></i> Date Wise Search
 					</div>
 					<div class="filter-row">
-						<input type="date" id="filterDateFrom" class="form-control form-control-yoga"
-							   placeholder="From Date" onchange="applyFilters()">
+						<input type="date" id="filterDateFrom" class="form-control form-control-yoga" onchange="applyFilters()">
 						<span class="text-muted">to</span>
-						<input type="date" id="filterDateTo" class="form-control form-control-yoga"
-							   placeholder="To Date" onchange="applyFilters()">
+						<input type="date" id="filterDateTo" class="form-control form-control-yoga" onchange="applyFilters()">
 					</div>
 
 					<div class="mt-2 d-flex gap-2" style="gap: 10px;">
@@ -575,7 +575,7 @@
 				</div>
 			</div>
 
-			<!-- Search -->
+			<!-- Search Dashboard -->
 			<div class="col-lg-7 mb-4">
 				<div class="yoga-card h-100">
 					<div class="section-title">
@@ -602,7 +602,7 @@
 			</div>
 		</div>
 
-		<!-- Tabs -->
+		<!-- Logs Tabs -->
 		<div class="yoga-card">
 			<ul class="nav nav-tabs nav-tabs-custom" id="myTab" role="tablist">
 				<li class="nav-item">
@@ -620,7 +620,7 @@
 			</ul>
 
 			<div class="tab-content">
-				<!-- Attendance Tab -->
+				<!-- Attendance Logs -->
 				<div class="tab-pane fade show active" id="attendance" role="tabpanel">
 					<div class="table-container">
 						<table class="table table-yoga">
@@ -651,7 +651,7 @@
 					</div>
 				</div>
 
-				<!-- Members Tab -->
+				<!-- Members List -->
 				<div class="tab-pane fade" id="members" role="tabpanel">
 					<div class="table-container">
 						<table class="table table-yoga">
@@ -819,39 +819,34 @@
 		}
 
 		// ============================================
-		// FILTERS - IMPROVED with Date Range
+		// FILTERS - Synchronized Date Range & Text
 		// ============================================
 		function applyFilters() {
 			const searchText = document.getElementById('filterSearch').value.toLowerCase().trim();
 			const dateFrom = document.getElementById('filterDateFrom').value;
 			const dateTo = document.getElementById('filterDateTo').value;
 
-			// Filter Attendance with Date Range
+			// Filter Attendance Logs
 			filteredAttendance = masterAttendanceData.filter(row => {
 				let match = true;
 
-				// Search filter
 				if (searchText) {
 					const content = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
 					if (!content.includes(searchText)) match = false;
 				}
 
-				// Date From filter
-				if (dateFrom && row.timestamp) {
-					const rowDate = row.timestamp.split(' ')[0];
-					if (rowDate < dateFrom) match = false;
-				}
-
-				// Date To filter
-				if (dateTo && row.timestamp) {
-					const rowDate = row.timestamp.split(' ')[0];
-					if (rowDate > dateTo) match = false;
+				if (row.timestamp) {
+					const rowDateStr = row.timestamp.split(' ')[0]; // YYYY-MM-DD
+					if (dateFrom && rowDateStr < dateFrom) match = false;
+					if (dateTo && rowDateStr > dateTo) match = false;
+				} else if (dateFrom || dateTo) {
+					match = false;
 				}
 
 				return match;
 			});
 
-			// Filter Members with search only
+			// Filter Members List
 			filteredMembers = masterMembersData.filter(row => {
 				if (!searchText) return true;
 				const content = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
@@ -883,7 +878,7 @@
 		}
 
 		// ============================================
-		// RENDER ATTENDANCE TABLE
+		// RENDER TABLES
 		// ============================================
 		function renderAttendanceTable() {
 			const tbody = document.getElementById('attendanceTableBody');
@@ -896,29 +891,23 @@
 			const pageData = filteredAttendance.slice(start, end);
 
 			if (total === 0) {
-				tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">
-				<i class="fa fa-inbox"></i> No attendance records found
-			</td></tr>`;
+				tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4"><i class="fa fa-inbox"></i> No attendance records found</td></tr>`;
 			} else {
 				tbody.innerHTML = pageData.map((row, idx) => `
-				<tr>
-					<td>${start + idx + 1}</td>
-					<td><span class="badge badge-dark text-success">${row.timestamp || 'N/A'}</span></td>
-					<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
-					<td>${row.name || 'Unknown'}</td>
-					<td>${row.mobile || 'N/A'}</td>
-				</tr>
-			`).join('');
+					<tr>
+						<td>${start + idx + 1}</td>
+						<td><span class="badge badge-dark text-success">${row.timestamp || 'N/A'}</span></td>
+						<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
+						<td>${row.name || 'Unknown'}</td>
+						<td>${row.mobile || 'N/A'}</td>
+					</tr>
+				`).join('');
 			}
 
-			document.getElementById('attendancePaginationInfo').textContent =
-				`Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} entries`;
+			document.getElementById('attendancePaginationInfo').textContent = `Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} entries`;
 			renderPagination('attendancePagination', totalPages, attendanceCurrentPage, 'attendance');
 		}
 
-		// ============================================
-		// RENDER MEMBERS TABLE
-		// ============================================
 		function renderMembersTable() {
 			const tbody = document.getElementById('membersTableBody');
 			const total = filteredMembers.length || 0;
@@ -930,50 +919,36 @@
 			const pageData = filteredMembers.slice(start, end);
 
 			if (total === 0) {
-				tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4">
-				<i class="fa fa-inbox"></i> No members found
-			</td></tr>`;
+				tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4"><i class="fa fa-inbox"></i> No members found</td></tr>`;
 			} else {
 				tbody.innerHTML = pageData.map((row, idx) => {
 					const statusClass = row.status === 'Verified' ? 'badge-success-custom' :
 						row.status === 'Pending Verification' ? 'badge-warning-custom' : 'badge-danger-custom';
 					return `
-					<tr>
-						<td>${start + idx + 1}</td>
-						<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
-						<td>${row.name || 'Unknown'}</td>
-						<td>${row.mobile || 'N/A'}</td>
-						<td>${row.age || 'N/A'}</td>
-						<td>${row.state || 'N/A'}</td>
-						<td>${row.district || 'N/A'}</td>
-						<td><span class="badge badge-status ${statusClass}">${row.status || 'Pending'}</span></td>
-					</tr>
-				`;
+						<tr>
+							<td>${start + idx + 1}</td>
+							<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
+							<td>${row.name || 'Unknown'}</td>
+							<td>${row.mobile || 'N/A'}</td>
+							<td>${row.age || 'N/A'}</td>
+							<td>${row.state || 'N/A'}</td>
+							<td>${row.district || 'N/A'}</td>
+							<td><span class="badge badge-status ${statusClass}">${row.status || 'Pending'}</span></td>
+						</tr>
+					`;
 				}).join('');
 			}
 
-			document.getElementById('membersPaginationInfo').textContent =
-				`Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} entries`;
+			document.getElementById('membersPaginationInfo').textContent = `Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} entries`;
 			renderPagination('membersPagination', totalPages, membersCurrentPage, 'members');
 		}
 
-		// ============================================
-		// PAGINATION
-		// ============================================
 		function renderPagination(containerId, totalPages, currentPage, type) {
 			const container = document.getElementById(containerId);
 			if (!container) return;
+			if (totalPages <= 1) { container.innerHTML = ''; return; }
 
-			if (totalPages <= 1) {
-				container.innerHTML = '';
-				return;
-			}
-
-			let html = '';
-			html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-			<a class="page-link" href="#" onclick="goToPage(${currentPage - 1}, '${type}')">&laquo;</a>
-		</li>`;
-
+			let html = `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="goToPage(${currentPage - 1}, '${type}')">&laquo;</a></li>`;
 			const startPage = Math.max(1, currentPage - 2);
 			const endPage = Math.min(totalPages, currentPage + 2);
 
@@ -981,64 +956,48 @@
 				html += `<li class="page-item"><a class="page-link" href="#" onclick="goToPage(1, '${type}')">1</a></li>`;
 				if (startPage > 2) html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
 			}
-
 			for (let i = startPage; i <= endPage; i++) {
-				html += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-				<a class="page-link" href="#" onclick="goToPage(${i}, '${type}')">${i}</a>
-			</li>`;
+				html += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="goToPage(${i}, '${type}')">${i}</a></li>`;
 			}
-
 			if (endPage < totalPages) {
 				if (endPage < totalPages - 1) html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
 				html += `<li class="page-item"><a class="page-link" href="#" onclick="goToPage(${totalPages}, '${type}')">${totalPages}</a></li>`;
 			}
-
-			html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-			<a class="page-link" href="#" onclick="goToPage(${currentPage + 1}, '${type}')">&raquo;</a>
-		</li>`;
-
+			html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}"><a class="page-link" href="#" onclick="goToPage(${currentPage + 1}, '${type}')">&raquo;</a></li>`;
 			container.innerHTML = html;
 		}
 
 		function goToPage(page, type) {
 			if (type === 'attendance') {
-				const totalPages = Math.ceil(filteredAttendance.length / rowsPerPage) || 1;
-				if (page < 1 || page > totalPages) return;
 				attendanceCurrentPage = page;
 				renderAttendanceTable();
 			} else if (type === 'members') {
-				const totalPages = Math.ceil(filteredMembers.length / rowsPerPage) || 1;
-				if (page < 1 || page > totalPages) return;
 				membersCurrentPage = page;
 				renderMembersTable();
 			}
 		}
 
 		// ============================================
-		// QR SCANNER
+		// CAMERA SCANNER ENGINE
 		// ============================================
 		function startScannerEngine() {
 			const statusMsg = document.getElementById('scannerMessage');
-
 			if (html5QrcodeScanner) {
-				html5QrcodeScanner.clear();
+				try { html5QrcodeScanner.clear(); } catch (e) { }
 				html5QrcodeScanner = null;
 			}
-
 			statusMsg.className = 'status-processing';
 			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Initializing camera...';
 
 			try {
 				html5QrcodeScanner = new Html5QrcodeScanner('reader', {
-					fps: 20,
-					qrbox: 280,
+					fps: 10,
+					qrbox: 250,
 					aspectRatio: 1.0,
 					showTorchButtonIfSupported: true
 				});
-
 				html5QrcodeScanner.render(onScanSuccess, onScanError);
 				isScannerRunning = true;
-
 				statusMsg.className = 'status-processing scanning';
 				statusMsg.innerHTML = '<i class="fa fa-camera"></i> Scanner active - Scanning for QR codes...';
 			} catch (err) {
@@ -1064,16 +1023,17 @@
 		function onScanSuccess(decodedText, decodedResult) {
 			const statusMsg = document.getElementById('scannerMessage');
 			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Processing QR: <strong>${decodedText}</strong>`;
+			statusMsg.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Submitting to cloud: <strong>${decodedText}</strong>`;
 
 			const payload = {
 				action: 'markAttendance',
 				memberId: decodedText
 			};
 
+			// Fixed Content-Type header to eliminate CORS blocking issues on Google Script Web Apps
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+				headers: { 'Content-Type': 'text/plain;charset=utf-8' },
 				body: JSON.stringify(payload)
 			})
 				.then(response => {
@@ -1084,52 +1044,31 @@
 					if (data.status === 'SUCCESS') {
 						statusMsg.className = 'status-success';
 						statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> ✅ Attendance marked for: <strong>${data.memberName || decodedText}</strong>`;
-
-						setTimeout(() => {
-							fetchAllData();
-							if (isScannerRunning) {
-								setTimeout(() => {
-									if (html5QrcodeScanner) {
-										try {
-											html5QrcodeScanner.clear();
-											html5QrcodeScanner.render(onScanSuccess, onScanError);
-										} catch (e) { }
-									}
-								}, 500);
-							}
-						}, 2000);
+						fetchAllData();
 					} else {
-						throw new Error(data.message || 'Unknown error');
+						throw new Error(data.message || 'Verification Error');
 					}
 				})
 				.catch(err => {
 					statusMsg.className = 'status-error';
 					statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> ❌ Error: ${err.message}`;
-
 					setTimeout(() => {
 						if (isScannerRunning) {
 							statusMsg.className = 'status-processing scanning';
 							statusMsg.innerHTML = '<i class="fa fa-camera"></i> Scanner active - Ready for next scan';
 						}
-					}, 4000);
+					}, 3000);
 				});
 		}
 
-		function onScanError(error) {
-			// Silent
-		}
+		function onScanError(error) { /* Silent logs to prevent console floods */ }
 
 		// ============================================
-		// IMAGE UPLOAD & QR SCAN - FIXED
+		// IMAGE UPLOAD & QR DECODER
 		// ============================================
 		function handleImageUpload(event) {
 			const file = event.target.files[0];
-			if (!file) {
-				console.log('No file selected');
-				return;
-			}
-
-			console.log('File selected:', file.name, file.type, file.size);
+			if (!file) return;
 
 			qrImageFile = file;
 			const reader = new FileReader();
@@ -1138,13 +1077,7 @@
 				document.getElementById('imagePreview').src = qrImageData;
 				document.getElementById('imagePreview').style.display = 'block';
 				document.getElementById('scannerMessage').className = 'status-processing';
-				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check-circle"></i> Image loaded successfully! Click "Scan QR from Image"';
-				console.log('Image loaded successfully');
-			};
-			reader.onerror = function (e) {
-				console.error('FileReader error:', e);
-				document.getElementById('scannerMessage').className = 'status-error';
-				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-exclamation-triangle"></i> Failed to load image';
+				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check-circle"></i> Image loaded! Click "Scan QR from Image"';
 			};
 			reader.readAsDataURL(file);
 		}
@@ -1158,31 +1091,27 @@
 
 			const statusMsg = document.getElementById('scannerMessage');
 			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Decoding QR from image...';
+			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Parsing QR metadata...';
 
-			try {
-				// Create a temporary scanner for image decoding
-				const tempScanner = new Html5Qrcode('reader');
+			// Stop live engine cleanly to release node binds on the reader element container
+			if (html5QrcodeScanner) {
+				try { html5QrcodeScanner.clear(); html5QrcodeScanner = null; isScannerRunning = false; } catch (e) { }
+			}
 
-				tempScanner.scanFile(qrImageFile, true)
+			setTimeout(() => {
+				const html5QrCode = new Html5Qrcode("reader");
+				html5QrCode.scanFile(qrImageFile, true)
 					.then(decodedText => {
-						console.log('QR Decoded:', decodedText);
 						statusMsg.className = 'status-success';
 						statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> QR Decoded: <strong>${decodedText}</strong>`;
 						onScanSuccess(decodedText, null);
-						tempScanner.clear();
 					})
 					.catch(err => {
-						console.error('QR Decode error:', err);
+						console.error(err);
 						statusMsg.className = 'status-error';
-						statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Failed to decode QR: ${err}`;
-						tempScanner.clear();
+						statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Decoding Failed. Make sure QR is clear.`;
 					});
-			} catch (err) {
-				console.error('Scanner error:', err);
-				statusMsg.className = 'status-error';
-				statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Scanner error: ${err.message}`;
-			}
+			}, 300);
 		}
 
 		function clearImage() {
@@ -1192,20 +1121,15 @@
 			document.getElementById('imagePreview').style.display = 'none';
 			document.getElementById('imageInput').value = '';
 			document.getElementById('scannerMessage').className = 'status-waiting';
-			document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Image cleared. Ready to scan.';
-			console.log('Image cleared');
+			document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Image cleared.';
 		}
 
 		// ============================================
-		// EXPORT TO EXCEL
+		// EXPORT SYSTEM
 		// ============================================
 		function exportDataToExcelEngine() {
 			const dataToExport = filteredAttendance.length > 0 ? filteredAttendance : masterAttendanceData;
-
-			if (dataToExport.length === 0) {
-				alert('No data to export!');
-				return;
-			}
+			if (dataToExport.length === 0) { alert('No data available to export!'); return; }
 
 			const excelData = dataToExport.map(row => ({
 				'Scan Date & Time': row.timestamp || 'N/A',
@@ -1217,11 +1141,8 @@
 			const wb = XLSX.utils.book_new();
 			const ws = XLSX.utils.json_to_sheet(excelData);
 			XLSX.utils.book_append_sheet(wb, ws, 'Attendance');
-
-			const fileName = `Attendance_Report_${new Date().toISOString().split('T')[0]}.xlsx`;
-			XLSX.writeFile(wb, fileName);
+			XLSX.writeFile(wb, `Attendance_Report_${new Date().toISOString().split('T')[0]}.xlsx`);
 		}
 	</script>
-
 </body>
 </html>
