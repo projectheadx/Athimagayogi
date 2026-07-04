@@ -4,12 +4,14 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Class Attendance Terminal & Logs</title>
+	<title>Aga Oli Ultimate Attendance Hub</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+
 	<script src="https://unpkg.com/html5-qrcode"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 	<style>
 		* {
@@ -17,7 +19,7 @@
 		}
 
 		body {
-			background: #0a0e1a;
+			background: #060913;
 			color: #e4e6eb;
 			font-family: 'Montserrat', sans-serif;
 			padding: 20px;
@@ -25,186 +27,125 @@
 		}
 
 		.container-custom {
-			max-width: 1400px;
+			max-width: 1440px;
 			margin: 0 auto;
 		}
 
 		.yoga-card {
-			background: linear-gradient(145deg, #1a1f2e, #141926);
-			border: 1px solid rgba(40, 167, 69, 0.2);
-			border-radius: 20px;
-			box-shadow: 0 8px 40px rgba(0,0,0,0.6);
-			padding: 25px;
-			margin-bottom: 25px;
-			transition: all 0.3s ease;
+			background: linear-gradient(145deg, #111625, #0a0d18);
+			border: 1px solid rgba(40, 167, 69, 0.15);
+			border-radius: 16px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+			padding: 24px;
+			margin-bottom: 24px;
+			transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 		}
 
 			.yoga-card:hover {
-				border-color: rgba(40, 167, 69, 0.4);
-				box-shadow: 0 8px 50px rgba(40, 167, 69, 0.1);
+				border-color: rgba(40, 167, 69, 0.35);
+				box-shadow: 0 12px 40px rgba(40, 167, 69, 0.08);
 			}
 
 		.section-title {
-			font-size: 1.2rem;
+			font-size: 1.15rem;
 			font-weight: 700;
-			color: #28a745;
-			margin-bottom: 20px;
+			color: #2eb85c;
+			margin-bottom: 18px;
 			display: flex;
 			align-items: center;
-			gap: 12px;
+			gap: 10px;
 		}
-
-			.section-title i {
-				font-size: 1.5rem;
-			}
 
 		#reader {
 			width: 100%;
-			max-width: 500px;
+			max-width: 420px;
 			margin: 0 auto;
 			background: #000;
-			border-radius: 16px;
+			border-radius: 12px;
 			overflow: hidden;
-			border: 3px solid #28a745;
-			position: relative;
-			min-height: 250px;
+			border: 2px solid #2eb85c;
 		}
 
-			#reader video {
-				width: 100% !important;
-				height: auto !important;
-			}
-
 		#scannerMessage {
-			padding: 15px 20px;
-			border-radius: 12px;
+			padding: 12px 16px;
+			border-radius: 8px;
 			font-weight: 600;
-			font-size: 0.95rem;
+			font-size: 0.9rem;
 			margin-top: 15px;
 			text-align: center;
 		}
 
 		.status-waiting {
-			background: #1e2335;
-			color: #ffc107;
-			border: 1px solid rgba(255,193,7,0.2);
+			background: #1b1e2e;
+			color: #f9b115;
+			border: 1px solid rgba(249,177,21,0.2);
 		}
 
 		.status-processing {
-			background: #0d2b3e;
-			color: #17a2b8;
-			border: 1px solid rgba(23,162,184,0.2);
+			background: #0f2638;
+			color: #39f;
+			border: 1px solid rgba(51,153,255,0.2);
 		}
 
 		.status-success {
-			background: #0d2b1a;
-			color: #28a745;
-			border: 1px solid rgba(40,167,69,0.3);
+			background: #0f2d19;
+			color: #2eb85c;
+			border: 1px solid rgba(46,184,92,0.2);
 		}
 
 		.status-error {
-			background: #3d1a1a;
-			color: #dc3545;
-			border: 1px solid rgba(220,53,69,0.3);
+			background: #351616;
+			color: #e55353;
+			border: 1px solid rgba(229,83,83,0.2);
 		}
 
-		.btn-yoga {
-			background: linear-gradient(135deg, #28a745, #1e7e34);
+		.btn-action-primary {
+			background: linear-gradient(135deg, #2eb85c, #1b8a3f);
 			color: white;
 			border: none;
-			border-radius: 30px;
+			border-radius: 8px;
 			font-weight: 600;
-			padding: 12px 28px;
-			transition: all 0.3s ease;
-			box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+			padding: 10px 20px;
+			transition: all 0.2s ease;
 		}
 
-			.btn-yoga:hover {
-				transform: translateY(-2px);
-				box-shadow: 0 6px 25px rgba(40, 167, 69, 0.5);
+			.btn-action-primary:hover {
+				transform: translateY(-1px);
+				box-shadow: 0 4px 12px rgba(46, 184, 92, 0.3);
 				color: white;
 			}
 
-		.btn-teal {
-			background: linear-gradient(135deg, #17a2b8, #0f7a8a);
+		.btn-action-secondary {
+			background: linear-gradient(135deg, #39f, #1f6acc);
 			color: white;
 			border: none;
-			border-radius: 30px;
+			border-radius: 8px;
 			font-weight: 600;
-			padding: 12px 28px;
-			transition: all 0.3s ease;
+			padding: 10px 20px;
+			transition: all 0.2s ease;
 		}
 
-			.btn-teal:hover {
-				transform: translateY(-2px);
-				box-shadow: 0 6px 25px rgba(23, 162, 184, 0.4);
+			.btn-action-secondary:hover {
+				transform: translateY(-1px);
+				box-shadow: 0 4px 12px rgba(51, 153, 255, 0.3);
 				color: white;
 			}
 
-		.btn-danger-custom {
-			background: linear-gradient(135deg, #dc3545, #a71d2a);
-			color: white;
-			border: none;
-			border-radius: 30px;
-			font-weight: 600;
-			padding: 12px 28px;
-			transition: all 0.3s ease;
-		}
-
-			.btn-danger-custom:hover {
-				transform: translateY(-2px);
-				box-shadow: 0 6px 25px rgba(220, 53, 69, 0.4);
-				color: white;
-			}
-
-		.btn-outline-light-custom {
+		.btn-outline-custom {
 			background: transparent;
 			color: #e4e6eb;
-			border: 1px solid #3d455c;
-			border-radius: 30px;
-			padding: 10px 20px;
+			border: 1px solid #2f354a;
+			border-radius: 8px;
+			padding: 9px 18px;
 			font-weight: 500;
-			transition: all 0.3s ease;
+			transition: all 0.2s ease;
 		}
 
-			.btn-outline-light-custom:hover {
-				background: #2d3243;
+			.btn-outline-custom:hover {
+				background: #1b2030;
 				color: white;
+				border-color: #4f5d75;
 			}
-
-		.nav-tabs-custom {
-			border-bottom: 2px solid #2d3243;
-			margin-bottom: 25px;
-		}
-
-			.nav-tabs-custom .nav-item {
-				margin-bottom: -2px;
-			}
-
-			.nav-tabs-custom .nav-link {
-				color: #8a92a8;
-				font-weight: 600;
-				border: none;
-				padding: 12px 25px;
-				background: transparent;
-				border-radius: 0;
-				transition: all 0.3s ease;
-			}
-
-				.nav-tabs-custom .nav-link:hover {
-					color: #e4e6eb;
-					background: rgba(40, 167, 69, 0.05);
-				}
-
-				.nav-tabs-custom .nav-link.active {
-					color: #28a745;
-					background: transparent;
-					border-bottom: 3px solid #28a745;
-				}
-
-				.nav-tabs-custom .nav-link i {
-					margin-right: 8px;
-				}
 
 		.table-yoga {
 			color: #e4e6eb;
@@ -212,153 +153,120 @@
 		}
 
 			.table-yoga thead th {
-				background: #28a745;
-				color: white;
+				background: #1b2032;
+				color: #2eb85c;
 				border: none;
 				font-weight: 600;
-				padding: 12px 15px;
+				padding: 14px;
 				font-size: 0.85rem;
 				text-transform: uppercase;
 				letter-spacing: 0.5px;
-				position: sticky;
-				top: 0;
-				z-index: 10;
 			}
 
 			.table-yoga td {
-				border-top: 1px solid #2d3243;
-				padding: 12px 15px;
+				border-top: 1px solid #1c2235;
+				padding: 12px 14px;
 				vertical-align: middle;
-				font-size: 0.9rem;
 			}
 
 			.table-yoga tbody tr:hover {
-				background: rgba(40, 167, 69, 0.05);
-			}
-
-			.table-yoga .badge-status {
-				padding: 5px 12px;
-				border-radius: 20px;
-				font-weight: 600;
-				font-size: 0.75rem;
+				background: rgba(46, 184, 92, 0.04);
 			}
 
 		.form-control-yoga {
-			background: #0d1120;
-			border: 1px solid #2d3243;
+			background: #090d1a;
+			border: 1px solid #2f354a;
 			color: #e4e6eb;
-			border-radius: 12px;
-			padding: 10px 15px;
-			transition: all 0.3s ease;
+			border-radius: 8px;
+			padding: 10px 14px;
 		}
 
 			.form-control-yoga:focus {
-				background: #0d1120;
-				border-color: #28a745;
+				background: #090d1a;
+				border-color: #2eb85c;
 				color: #e4e6eb;
-				box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+				box-shadow: 0 0 0 3px rgba(46, 184, 92, 0.15);
 			}
 
-			.form-control-yoga::placeholder {
-				color: #5a627a;
+		.nav-tabs-custom {
+			border-bottom: 2px solid #1c2235;
+			margin-bottom: 20px;
+		}
+
+			.nav-tabs-custom .nav-link {
+				color: #8a92a8;
+				font-weight: 600;
+				border: none;
+				padding: 12px 20px;
+				background: transparent;
 			}
 
-		.pagination-yoga .page-link {
-			background: #1a1f2e;
-			color: #e4e6eb;
-			border: 1px solid #2d3243;
-			padding: 8px 16px;
-			transition: all 0.3s ease;
-		}
-
-			.pagination-yoga .page-link:hover {
-				background: #28a745;
-				color: white;
-				border-color: #28a745;
-			}
-
-		.pagination-yoga .page-item.active .page-link {
-			background: #28a745;
-			border-color: #28a745;
-			color: white;
-		}
-
-		#imageInput {
-			display: none;
-		}
+				.nav-tabs-custom .nav-link.active {
+					color: #2eb85c;
+					border-bottom: 3px solid #2eb85c;
+					background: transparent;
+				}
 
 		.upload-area {
-			border: 2px dashed #2d3243;
-			border-radius: 16px;
-			padding: 30px;
+			border: 2px dashed #2f354a;
+			border-radius: 12px;
+			padding: 20px;
 			text-align: center;
 			cursor: pointer;
-			transition: all 0.3s ease;
-			background: rgba(13, 17, 32, 0.5);
+			background: rgba(9, 13, 26, 0.4);
 		}
 
 			.upload-area:hover {
-				border-color: #28a745;
-				background: rgba(40, 167, 69, 0.05);
-			}
-
-			.upload-area i {
-				font-size: 2.5rem;
-				color: #28a745;
-				margin-bottom: 10px;
+				border-color: #2eb85c;
+				background: rgba(46, 184, 92, 0.03);
 			}
 
 		#imagePreview {
 			max-width: 100%;
-			max-height: 300px;
-			border-radius: 12px;
-			margin-top: 15px;
+			max-height: 180px;
+			border-radius: 8px;
+			margin-top: 12px;
 			display: none;
-			border: 2px solid #2d3243;
-			margin-left: auto;
-			margin-right: auto;
 		}
-
-		.table-container {
-			max-height: 500px;
-			overflow-y: auto;
-			border-radius: 12px;
-			border: 1px solid #2d3243;
-		}
-
-			.table-container::-webkit-scrollbar {
-				width: 8px;
-			}
-
-			.table-container::-webkit-scrollbar-track {
-				background: #0d1120;
-				border-radius: 10px;
-			}
-
-			.table-container::-webkit-scrollbar-thumb {
-				background: #28a745;
-				border-radius: 10px;
-			}
 
 		.stat-box {
-			background: rgba(13, 17, 32, 0.7);
+			background: rgba(17, 22, 37, 0.6);
 			border-radius: 12px;
-			padding: 15px 20px;
-			border: 1px solid #2d3243;
+			padding: 16px;
+			border: 1px solid #1c2235;
 			text-align: center;
 		}
 
 			.stat-box .number {
-				font-size: 2rem;
+				font-size: 1.8rem;
 				font-weight: 700;
-				color: #28a745;
+				color: #2eb85c;
 			}
 
 			.stat-box .label {
 				font-size: 0.8rem;
 				color: #8a92a8;
-				margin-top: 5px;
+				margin-top: 4px;
 			}
+
+		.pagination-yoga .page-link {
+			background: #111625;
+			color: #e4e6eb;
+			border: 1px solid #2f354a;
+			padding: 6px 12px;
+		}
+
+			.pagination-yoga .page-link:hover {
+				background: #2eb85c;
+				color: white;
+				border-color: #2eb85c;
+			}
+
+		.pagination-yoga .page-item.active .page-link {
+			background: #2eb85c;
+			border-color: #2eb85c;
+			color: white;
+		}
 
 		.loading-overlay {
 			display: none;
@@ -367,7 +275,7 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-			background: rgba(10, 14, 26, 0.9);
+			background: rgba(6, 9, 19, 0.9);
 			z-index: 9999;
 			justify-content: center;
 			align-items: center;
@@ -379,10 +287,10 @@
 			}
 
 			.loading-overlay .spinner {
-				width: 60px;
-				height: 60px;
-				border: 4px solid #2d3243;
-				border-top: 4px solid #28a745;
+				width: 50px;
+				height: 50px;
+				border: 3px solid #1c2235;
+				border-top: 3px solid #2eb85c;
 				border-radius: 50%;
 				animation: spin 1s linear infinite;
 			}
@@ -397,57 +305,20 @@
 			}
 		}
 
-		.loading-overlay p {
-			margin-top: 20px;
+		/* Custom QR Modal Configuration Styles */
+		.modal-custom-content {
+			background: #111625;
 			color: #e4e6eb;
-			font-weight: 600;
+			border: 1px solid #2f354a;
+			border-radius: 16px;
 		}
 
-		.badge-success-custom {
-			background: #28a745;
-			color: white;
-		}
-
-		.badge-warning-custom {
-			background: #ffc107;
-			color: #000;
-		}
-
-		.badge-danger-custom {
-			background: #dc3545;
-			color: white;
-		}
-
-		.filter-row {
-			display: flex;
-			gap: 10px;
-			flex-wrap: wrap;
-			align-items: center;
-		}
-
-			.filter-row .form-control {
-				flex: 1;
-				min-width: 120px;
-			}
-
-		@media (max-width: 768px) {
-			.yoga-card {
-				padding: 15px;
-			}
-
-			.section-title {
-				font-size: 1rem;
-			}
-
-			.btn-yoga, .btn-teal, .btn-danger-custom {
-				padding: 10px 20px;
-				font-size: 0.9rem;
-			}
-
-			.filter-row .form-control {
-				min-width: 100px;
-				font-size: 0.85rem;
-			}
+		.qr-wrapper {
+			background: white;
+			padding: 16px;
+			border-radius: 12px;
+			display: inline-block;
+			margin: 15px 0;
 		}
 	</style>
 </head>
@@ -456,237 +327,218 @@
 
 	<div class="loading-overlay" id="loadingOverlay">
 		<div class="spinner"></div>
-		<p><i class="fa fa-database"></i> Loading data from Google Sheet...</p>
+		<p class="mt-3 font-weight-bold"><i class="fa fa-database"></i> Connecting Server Terminal...</p>
 	</div>
 
 	<div class="container-custom">
 
-		<!-- Header -->
-		<div class="yoga-card" style="border-color: #28a745;">
+		<div class="yoga-card" style="border-left: 4px solid #2eb85c;">
 			<div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
 				<div>
-					<h2 class="font-weight-bold mb-0 text-success">
-						<i class="fa fa-universal-access"></i> Aga Oli Attendance Hub
-					</h2>
-					<p class="text-muted small mb-0"><i class="fa fa-database"></i> Live Checkpoint Scans & Real-time Dashboard</p>
+					<h2 class="font-weight-bold mb-0 text-success"><i class="fa fa-universal-access"></i> Aga Oli Attendance Terminal</h2>
+					<p class="text-muted small mb-0"><i class="fa fa-link"></i> Live Synced via Authorized Web Engine Script</p>
 				</div>
-				<div class="mt-3 mt-md-0 d-flex gap-2 flex-wrap">
-					<button class="btn btn-teal btn-sm" onclick="fetchAllData()">
-						<i class="fa fa-refresh"></i> Refresh
+				<div class="mt-3 mt-md-0 d-flex gap-2">
+					<button class="btn btn-action-secondary btn-sm mr-2" onclick="fetchAllData()">
+						<i class="fa fa-refresh"></i> Pull Live Records
 					</button>
-					<button class="btn btn-outline-light-custom btn-sm" onclick="window.location.reload()">
-						<i class="fa fa-power-off"></i> Reset
+					<button class="btn btn-outline-custom btn-sm" onclick="window.location.reload()">
+						<i class="fa fa-power-off"></i> Reboot UI
 					</button>
 				</div>
 			</div>
 		</div>
 
-		<!-- Stats -->
 		<div class="row mb-4">
 			<div class="col-md-3 col-6 mb-2">
 				<div class="stat-box">
 					<div class="number" id="totalMembers">0</div>
-					<div class="label"><i class="fa fa-users"></i> Total Members</div>
+					<div class="label"><i class="fa fa-users"></i> Registered Members Count</div>
 				</div>
 			</div>
 			<div class="col-md-3 col-6 mb-2">
 				<div class="stat-box">
 					<div class="number" id="totalAttendance">0</div>
-					<div class="label"><i class="fa fa-check-circle"></i> Total Attendance</div>
+					<div class="label"><i class="fa fa-check-circle"></i> Total Attendance Checked</div>
 				</div>
 			</div>
 			<div class="col-md-3 col-6 mb-2">
 				<div class="stat-box">
 					<div class="number" id="todayAttendance">0</div>
-					<div class="label"><i class="fa fa-calendar"></i> Today's Attendance</div>
+					<div class="label"><i class="fa fa-calendar"></i> Today's Scans</div>
 				</div>
 			</div>
 			<div class="col-md-3 col-6 mb-2">
 				<div class="stat-box">
 					<div class="number" id="pendingMembers">0</div>
-					<div class="label"><i class="fa fa-clock-o"></i> Pending Verification</div>
+					<div class="label"><i class="fa fa-clock-o"></i> Pending Validations</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Main Row -->
 		<div class="row">
-			<!-- Scanner Row -->
 			<div class="col-lg-5 mb-4">
 				<div class="yoga-card h-100">
-					<div class="section-title">
-						<i class="fa fa-qrcode"></i> QR Scanner
-					</div>
-
+					<div class="section-title"><i class="fa fa-qrcode"></i> Automated Scanner Control</div>
 					<div id="reader"></div>
+					<div id="scannerMessage" class="status-waiting"><i class="fa fa-info-circle"></i> Awaiting Scanner Driver Start Request</div>
 
-					<div id="scannerMessage" class="status-waiting">
-						<i class="fa fa-info-circle"></i> Click "Start Camera" to begin scanning
-					</div>
-
-					<div class="d-flex flex-wrap gap-2 mt-3" style="gap: 10px;">
-						<button class="btn btn-yoga flex-grow-1" onclick="startScannerEngine()">
-							<i class="fa fa-video-camera"></i> Start Camera
+					<div class="d-flex gap-2 mt-3">
+						<button class="btn btn-action-primary flex-grow-1 mr-2" onclick="startScannerEngine()">
+							<i class="fa fa-video-camera"></i> Start Live Cam
 						</button>
-						<button class="btn btn-danger-custom flex-grow-1" onclick="stopScannerEngine()">
-							<i class="fa fa-stop"></i> Stop Camera
+						<button class="btn btn-danger btn-sm px-3" style="border-radius:8px;" onclick="stopScannerEngine()">
+							<i class="fa fa-stop"></i> Kill Cam
 						</button>
 					</div>
 
-					<hr style="border-color: #2d3243;">
+					<hr style="border-color: #1c2235;">
 
-					<!-- Image Upload -->
-					<div class="section-title" style="font-size: 1rem;">
-						<i class="fa fa-image"></i> Upload QR Image
-					</div>
+					<div class="section-title" style="font-size: 1rem;"><i class="fa fa-image"></i> Local Metadata File Decryptor</div>
 					<div class="upload-area" onclick="document.getElementById('imageInput').click()">
-						<i class="fa fa-cloud-upload"></i>
-						<p class="mb-0">Click to upload QR code image</p>
-						<small class="text-muted">Supported: JPG, PNG, BMP</small>
+						<i class="fa fa-cloud-upload text-success"></i>
+						<p class="mb-0 small font-weight-bold">Browse or Drop QR Code File</p>
 					</div>
-					<input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
-					<img id="imagePreview" alt="Preview">
+					<input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="handleImageUpload(event)">
+					<div class="text-center"><img id="imagePreview" alt="Uploaded View Matrix"></div>
 
-					<div class="d-flex flex-wrap gap-2 mt-3" style="gap: 10px;">
-						<button class="btn btn-teal flex-grow-1" onclick="scanFromImage()">
-							<i class="fa fa-search"></i> Scan QR from Image
+					<div class="d-flex gap-2 mt-3">
+						<button class="btn btn-action-secondary flex-grow-1 mr-2" onclick="scanFromImage()">
+							<i class="fa fa-search"></i> Extract & Check-In File
 						</button>
-						<button class="btn btn-outline-light-custom flex-grow-1" onclick="clearImage()">
-							<i class="fa fa-times"></i> Clear Image
-						</button>
-					</div>
-
-					<!-- Date Filter -->
-					<hr style="border-color: #2d3243;">
-					<div class="section-title" style="font-size: 1rem;">
-						<i class="fa fa-calendar"></i> Date Wise Search
-					</div>
-					<div class="filter-row">
-						<input type="date" id="filterDateFrom" class="form-control form-control-yoga" onchange="applyFilters()">
-						<span class="text-muted">to</span>
-						<input type="date" id="filterDateTo" class="form-control form-control-yoga" onchange="applyFilters()">
-					</div>
-
-					<div class="mt-2 d-flex gap-2" style="gap: 10px;">
-						<button class="btn btn-outline-light-custom flex-grow-1" onclick="clearDateFilter()">
-							<i class="fa fa-times-circle"></i> Clear Date Filter
-						</button>
+						<button class="btn btn-outline-custom btn-sm" onclick="clearImage()">Clear File</button>
 					</div>
 				</div>
 			</div>
 
-			<!-- Search Dashboard -->
 			<div class="col-lg-7 mb-4">
 				<div class="yoga-card h-100">
-					<div class="section-title">
-						<i class="fa fa-sliders"></i> Search & Export
+					<div class="section-title"><i class="fa fa-sliders"></i> Integrated Control System & Filter Engine</div>
+
+					<div class="mb-3">
+						<label class="text-muted small font-weight-bold">Universal Search Index</label>
+						<input type="text" id="filterSearch" class="form-control form-control-yoga w-100"
+							   placeholder="Scan target parameter (Name, Unique ID, Mobile Contacts...)" onkeyup="applyFilters()">
 					</div>
 
-					<div class="row">
-						<div class="col-12 mb-3">
-							<label class="text-muted small font-weight-bold">Search Member</label>
-							<input type="text" id="filterSearch" class="form-control form-control-yoga"
-								   placeholder="Search by ID, Name, Mobile..." onkeyup="applyFilters()">
+					<div class="mb-4">
+						<label class="text-muted small font-weight-bold d-block">Temporal Range Bounds Picker</label>
+						<div class="filter-row">
+							<input type="date" id="filterDateFrom" class="form-control form-control-yoga d-inline-block w-auto mr-2" onchange="applyFilters()">
+							<span class="text-muted mr-2">through</span>
+							<input type="date" id="filterDateTo" class="form-control form-control-yoga d-inline-block w-auto mr-2" onchange="applyFilters()">
+							<button class="btn btn-outline-custom btn-sm" onclick="clearDateFilter()"><i class="fa fa-times"></i> Reset Range</button>
 						</div>
 					</div>
 
-					<div class="d-flex flex-wrap gap-2" style="gap: 10px;">
-						<button class="btn btn-teal flex-grow-1" onclick="exportDataToExcelEngine()">
-							<i class="fa fa-file-excel-o"></i> Export to Excel
+					<div class="d-flex gap-2">
+						<button class="btn btn-action-secondary flex-grow-1 mr-2" onclick="exportDataToExcelEngine()">
+							<i class="fa fa-file-excel-o"></i> Generate Structured XLS Report
 						</button>
-						<button class="btn btn-outline-light-custom flex-grow-1" onclick="clearAllFilters()">
-							<i class="fa fa-eraser"></i> Clear All Filters
+						<button class="btn btn-outline-custom" onclick="clearAllFilters()">
+							<i class="fa fa-eraser"></i> Clear Search Matrices
 						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Logs Tabs -->
 		<div class="yoga-card">
-			<ul class="nav nav-tabs nav-tabs-custom" id="myTab" role="tablist">
+			<ul class="nav nav-tabs nav-tabs-custom" id="tabEngine" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="attendance-tab" data-toggle="tab" href="#attendance" role="tab">
-						<i class="fa fa-list-alt"></i> Attendance Logs
-						<span class="badge badge-success-custom ml-2" id="attendanceCount">0</span>
+					<a class="nav-link active" id="attendance-tab" data-toggle="tab" href="#attendancePane" role="tab">
+						<i class="fa fa-list-alt"></i> Live Checked Attendance Logs <span class="badge badge-success ml-2" id="attendanceCount">0</span>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="members-tab" data-toggle="tab" href="#members" role="tab">
-						<i class="fa fa-users"></i> Members List
-						<span class="badge badge-success-custom ml-2" id="membersCount">0</span>
+					<a class="nav-link" id="members-tab" data-toggle="tab" href="#membersPane" role="tab">
+						<i class="fa fa-users"></i> Registered Members Matrix <span class="badge badge-success ml-2" id="membersCount text-white">0</span>
 					</a>
 				</li>
 			</ul>
 
 			<div class="tab-content">
-				<!-- Attendance Logs -->
-				<div class="tab-pane fade show active" id="attendance" role="tabpanel">
+				<div class="tab-pane fade show active" id="attendancePane" role="tabpanel">
 					<div class="table-container">
 						<table class="table table-yoga">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Date & Time</th>
-									<th>Member ID</th>
-									<th>Name</th>
-									<th>Mobile</th>
+									<th># Index</th>
+									<th>Temporal Check-In Stamp</th>
+									<th>Member ID Key</th>
+									<th>Full Legal Profile Name</th>
+									<th>Mobile Target</th>
 								</tr>
 							</thead>
 							<tbody id="attendanceTableBody">
-								<tr>
-									<td colspan="5" class="text-center text-muted py-5">
-										<i class="fa fa-refresh fa-spin fa-2x mb-3"></i><br>
-										Loading attendance data...
-									</td>
-								</tr>
+								<tr><td colspan="5" class="text-center text-muted py-4">Awaiting Server Pull Execution Init...</td></tr>
 							</tbody>
 						</table>
 					</div>
 					<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-3">
-						<div class="small text-muted" id="attendancePaginationInfo">Showing 0 entries</div>
-						<nav>
-							<ul class="pagination pagination-yoga mb-0" id="attendancePagination"></ul>
-						</nav>
+						<div class="small text-muted" id="attendancePaginationInfo">Showing 0 matrix segments</div>
+						<nav><ul class="pagination pagination-yoga mb-0" id="attendancePagination"></ul></nav>
 					</div>
 				</div>
 
-				<!-- Members List -->
-				<div class="tab-pane fade" id="members" role="tabpanel">
+				<div class="tab-pane fade" id="membersPane" role="tabpanel">
 					<div class="table-container">
 						<table class="table table-yoga">
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Member ID</th>
-									<th>Name</th>
-									<th>Mobile</th>
-									<th>Age</th>
-									<th>State</th>
-									<th>District</th>
-									<th>Status</th>
+									<th>UID Key</th>
+									<th>Legal Name</th>
+									<th>Mobile Line</th>
+									<th>Age Index</th>
+									<th>State Matrix</th>
+									<th>District Zone</th>
+									<th>Security Status</th>
+									<th class="text-center">QR Operations</th>
 								</tr>
 							</thead>
 							<tbody id="membersTableBody">
-								<tr>
-									<td colspan="8" class="text-center text-muted py-5">
-										<i class="fa fa-refresh fa-spin fa-2x mb-3"></i><br>
-										Loading members data...
-									</td>
-								</tr>
+								<tr><td colspan="9" class="text-center text-muted py-4">Awaiting Server Pull Execution Init...</td></tr>
 							</tbody>
 						</table>
 					</div>
 					<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-3">
-						<div class="small text-muted" id="membersPaginationInfo">Showing 0 entries</div>
-						<nav>
-							<ul class="pagination pagination-yoga mb-0" id="membersPagination"></ul>
-						</nav>
+						<div class="small text-muted" id="membersPaginationInfo">Showing 0 matrix segments</div>
+						<nav><ul class="pagination pagination-yoga mb-0" id="membersPagination"></ul></nav>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
+	<div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content modal-custom-content">
+				<div class="modal-header border-0">
+					<h5 class="modal-title font-weight-bold text-success"><i class="fa fa-id-card"></i> Member Security QR Engine</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<p class="mb-1 text-muted small">Target Identification Key:</p>
+					<h4 id="modalMemberId" class="text-white font-weight-bold mb-3"></h4>
+					<p class="mb-0 text-muted small">Profile Label Name:</p>
+					<h5 id="modalMemberName" class="text-success font-weight-bold"></h5>
+
+					<div class="text-center">
+						<div class="qr-wrapper">
+							<div id="modalQrCanvas"></div>
+						</div>
+					</div>
+					<p class="text-muted small px-3">Standard encrypted biometric code map pattern for automated terminal scan check-ins.</p>
+				</div>
+				<div class="modal-footer border-0 d-flex justify-content-between">
+					<button type="button" class="btn btn-outline-custom btn-sm" data-dismiss="modal">Close Engine</button>
+					<button type="button" class="btn btn-action-primary btn-sm" onclick="downloadGeneratedQRImage()"><i class="fa fa-download"></i> Download QR Image</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -694,12 +546,12 @@
 
 	<script>
 		// ============================================
-		// CONFIGURATION
+		// CORE ENDPOINT PROPERTIES CONFIG
 		// ============================================
 		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZqtk1nIy55bi73JAxBksEhbcnhy5IUhn2eLJL09k7RGrYK2VDFTzCHozeegdE1HE/exec";
 
 		// ============================================
-		// GLOBAL VARIABLES
+		// STATE SPACE VARIABLES
 		// ============================================
 		let html5QrcodeScanner = null;
 		let isScannerRunning = false;
@@ -714,143 +566,107 @@
 		let qrImageData = null;
 		let isLoading = false;
 
-		// ============================================
-		// INITIALIZATION
-		// ============================================
 		$(document).ready(function () {
 			fetchAllData();
 		});
 
 		// ============================================
-		// FETCH DATA FROM GOOGLE SHEET
+		// DATABOUND OPERATIONS PIPELINE (GET)
 		// ============================================
 		function fetchAllData() {
 			if (isLoading) return;
 			isLoading = true;
 			showLoading(true);
 
-			Promise.all([
-				fetchAttendanceLogs(),
-				fetchMembersList()
-			]).then(() => {
-				showLoading(false);
-				isLoading = false;
-				updateStats();
-			}).catch((err) => {
-				console.error('Fetch error:', err);
-				showLoading(false);
-				isLoading = false;
-				document.getElementById('scannerMessage').className = 'status-error';
-				document.getElementById('scannerMessage').innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}`;
-			});
+			Promise.all([fetchAttendanceLogs(), fetchMembersList()])
+				.then(() => {
+					showLoading(false);
+					isLoading = false;
+					updateStats();
+				})
+				.catch((err) => {
+					console.error(err);
+					showLoading(false);
+					isLoading = false;
+					document.getElementById('scannerMessage').className = 'status-error';
+					document.getElementById('scannerMessage').innerHTML = `<i class="fa fa-exclamation-triangle"></i> Matrix Connect Error: ${err.message}`;
+				});
 		}
 
 		function fetchAttendanceLogs() {
 			return new Promise((resolve, reject) => {
 				fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getAttendanceLogs`)
-					.then(response => {
-						if (!response.ok) throw new Error(`HTTP ${response.status}`);
-						return response.json();
-					})
+					.then(res => res.ok ? res.json() : Promise.reject(res))
 					.then(data => {
 						masterAttendanceData = Array.isArray(data) ? data : [];
 						filteredAttendance = [...masterAttendanceData];
 						renderAttendanceTable();
 						resolve();
-					})
-					.catch(err => {
-						console.error('Attendance fetch error:', err);
-						masterAttendanceData = [];
-						filteredAttendance = [];
-						renderAttendanceTable();
-						reject(err);
-					});
+					}).catch(e => reject(e));
 			});
 		}
 
 		function fetchMembersList() {
 			return new Promise((resolve, reject) => {
 				fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getMembers`)
-					.then(response => {
-						if (!response.ok) throw new Error(`HTTP ${response.status}`);
-						return response.json();
-					})
+					.then(res => res.ok ? res.json() : Promise.reject(res))
 					.then(data => {
 						masterMembersData = Array.isArray(data) ? data : [];
 						filteredMembers = [...masterMembersData];
 						renderMembersTable();
 						resolve();
-					})
-					.catch(err => {
-						console.error('Members fetch error:', err);
-						masterMembersData = [];
-						filteredMembers = [];
-						renderMembersTable();
-						reject(err);
-					});
+					}).catch(e => reject(e));
 			});
 		}
 
-		// ============================================
-		// LOADING OVERLAY
-		// ============================================
 		function showLoading(show) {
 			document.getElementById('loadingOverlay').classList.toggle('active', show);
 		}
 
-		// ============================================
-		// UPDATE STATS
-		// ============================================
 		function updateStats() {
-			document.getElementById('totalMembers').textContent = masterMembersData.length || 0;
-			document.getElementById('totalAttendance').textContent = masterAttendanceData.length || 0;
+			document.getElementById('totalMembers').textContent = masterMembersData.length;
+			document.getElementById('totalAttendance').textContent = masterAttendanceData.length;
 
-			const today = new Date().toISOString().split('T')[0];
-			const todayCount = masterAttendanceData.filter(row => {
-				return row.timestamp && row.timestamp.startsWith(today);
-			}).length || 0;
+			const todayStr = new Date().toISOString().split('T')[0];
+			const todayCount = masterAttendanceData.filter(r => r.timestamp && r.timestamp.startsWith(todayStr)).length;
 			document.getElementById('todayAttendance').textContent = todayCount;
 
-			const pending = masterMembersData.filter(m => m.status === 'Pending Verification').length || 0;
-			document.getElementById('pendingMembers').textContent = pending;
+			const pendingCount = masterMembersData.filter(m => m.status === 'Pending Verification').length;
+			document.getElementById('pendingMembers').textContent = pendingCount;
 
-			document.getElementById('attendanceCount').textContent = masterAttendanceData.length || 0;
-			document.getElementById('membersCount').textContent = masterMembersData.length || 0;
+			document.getElementById('attendanceCount').textContent = masterAttendanceData.length;
+			// Safe injection fallback verification logic check UI handling
+			const membersBadge = document.getElementById('membersCount');
+			if (membersBadge) membersBadge.textContent = masterMembersData.length;
 		}
 
 		// ============================================
-		// FILTERS - Synchronized Date Range & Text
+		// INTEGRATED SEARCH FILTERS ARCHITECTURE
 		// ============================================
 		function applyFilters() {
 			const searchText = document.getElementById('filterSearch').value.toLowerCase().trim();
 			const dateFrom = document.getElementById('filterDateFrom').value;
 			const dateTo = document.getElementById('filterDateTo').value;
 
-			// Filter Attendance Logs
 			filteredAttendance = masterAttendanceData.filter(row => {
-				let match = true;
-
+				let matchesText = true, matchesDate = true;
 				if (searchText) {
-					const content = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
-					if (!content.includes(searchText)) match = false;
+					const dataMatrix = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
+					if (!dataMatrix.includes(searchText)) matchesText = false;
 				}
-
 				if (row.timestamp) {
-					const rowDateStr = row.timestamp.split(' ')[0]; // YYYY-MM-DD
-					if (dateFrom && rowDateStr < dateFrom) match = false;
-					if (dateTo && rowDateStr > dateTo) match = false;
+					const targetISO = row.timestamp.split(' ')[0];
+					if (dateFrom && targetISO < dateFrom) matchesDate = false;
+					if (dateTo && targetISO > dateTo) matchesDate = false;
 				} else if (dateFrom || dateTo) {
-					match = false;
+					matchesDate = false;
 				}
-
-				return match;
+				return matchesText && matchesDate;
 			});
 
-			// Filter Members List
 			filteredMembers = masterMembersData.filter(row => {
 				if (!searchText) return true;
-				const content = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
-				return content.includes(searchText);
+				return `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase().includes(searchText);
 			});
 
 			attendanceCurrentPage = 1;
@@ -878,270 +694,275 @@
 		}
 
 		// ============================================
-		// RENDER TABLES
+		// COMPONENT RENDER SYSTEM (WITH PAGINATION)
 		// ============================================
 		function renderAttendanceTable() {
 			const tbody = document.getElementById('attendanceTableBody');
-			const total = filteredAttendance.length || 0;
+			const total = filteredAttendance.length;
 			const totalPages = Math.ceil(total / rowsPerPage) || 1;
 			if (attendanceCurrentPage > totalPages) attendanceCurrentPage = totalPages;
 
 			const start = (attendanceCurrentPage - 1) * rowsPerPage;
 			const end = Math.min(start + rowsPerPage, total);
-			const pageData = filteredAttendance.slice(start, end);
+			const viewBuffer = filteredAttendance.slice(start, end);
 
 			if (total === 0) {
-				tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4"><i class="fa fa-inbox"></i> No attendance records found</td></tr>`;
+				tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4"><i class="fa fa-folder-open-o"></i> No dynamic scan log profiles mapped within memory space.</td></tr>`;
 			} else {
-				tbody.innerHTML = pageData.map((row, idx) => `
-					<tr>
-						<td>${start + idx + 1}</td>
-						<td><span class="badge badge-dark text-success">${row.timestamp || 'N/A'}</span></td>
-						<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
-						<td>${row.name || 'Unknown'}</td>
-						<td>${row.mobile || 'N/A'}</td>
-					</tr>
-				`).join('');
+				tbody.innerHTML = viewBuffer.map((row, idx) => `
+						<tr>
+							<td>${start + idx + 1}</td>
+							<td><span class="badge badge-dark text-success font-weight-bold">${row.timestamp || 'N/A'}</span></td>
+							<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
+							<td>${row.name || 'Anonymous Matrix ID'}</td>
+							<td>${row.mobile || 'N/A'}</td>
+						</tr>
+					`).join('');
 			}
-
-			document.getElementById('attendancePaginationInfo').textContent = `Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} entries`;
-			renderPagination('attendancePagination', totalPages, attendanceCurrentPage, 'attendance');
+			document.getElementById('attendancePaginationInfo').textContent = `Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} datasets`;
+			buildPaginationControls('attendancePagination', totalPages, attendanceCurrentPage, 'attendance');
 		}
 
 		function renderMembersTable() {
 			const tbody = document.getElementById('membersTableBody');
-			const total = filteredMembers.length || 0;
+			const total = filteredMembers.length;
 			const totalPages = Math.ceil(total / rowsPerPage) || 1;
 			if (membersCurrentPage > totalPages) membersCurrentPage = totalPages;
 
 			const start = (membersCurrentPage - 1) * rowsPerPage;
 			const end = Math.min(start + rowsPerPage, total);
-			const pageData = filteredMembers.slice(start, end);
+			const viewBuffer = filteredMembers.slice(start, end);
 
 			if (total === 0) {
-				tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4"><i class="fa fa-inbox"></i> No members found</td></tr>`;
+				tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted py-4"><i class="fa fa-user-times"></i> Empty record set return matches.</td></tr>`;
 			} else {
-				tbody.innerHTML = pageData.map((row, idx) => {
-					const statusClass = row.status === 'Verified' ? 'badge-success-custom' :
-						row.status === 'Pending Verification' ? 'badge-warning-custom' : 'badge-danger-custom';
+				tbody.innerHTML = viewBuffer.map((row, idx) => {
+					const secureLabel = row.status === 'Verified' ? 'badge-success' :
+						row.status === 'Pending Verification' ? 'badge-warning text-dark' : 'badge-danger';
 					return `
-						<tr>
-							<td>${start + idx + 1}</td>
-							<td><strong class="text-teal">${row.memberId || 'N/A'}</strong></td>
-							<td>${row.name || 'Unknown'}</td>
-							<td>${row.mobile || 'N/A'}</td>
-							<td>${row.age || 'N/A'}</td>
-							<td>${row.state || 'N/A'}</td>
-							<td>${row.district || 'N/A'}</td>
-							<td><span class="badge badge-status ${statusClass}">${row.status || 'Pending'}</span></td>
-						</tr>
-					`;
+							<tr>
+								<td>${start + idx + 1}</td>
+								<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
+								<td class="font-weight-bold">${row.name || 'Unknown Index'}</td>
+								<td>${row.mobile || 'N/A'}</td>
+								<td>${row.age || 'N/A'}</td>
+								<td>${row.state || 'N/A'}</td>
+								<td>${row.district || 'N/A'}</td>
+								<td><span class="badge badge-pill ${secureLabel}">${row.status || 'Unresolved State'}</span></td>
+								<td class="text-center">
+									<button class="btn btn-action-secondary btn-sm py-1 font-weight-bold" style="font-size:0.75rem; border-radius:4px;"
+										onclick="spawnQRCodeCanvas('${row.memberId}', '${escape(row.name)}')">
+										<i class="fa fa-qrcode"></i> View QR
+									</button>
+								</td>
+							</tr>
+						`;
 				}).join('');
 			}
-
-			document.getElementById('membersPaginationInfo').textContent = `Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} entries`;
-			renderPagination('membersPagination', totalPages, membersCurrentPage, 'members');
+			document.getElementById('membersPaginationInfo').textContent = `Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} profiles`;
+			buildPaginationControls('membersPagination', totalPages, membersCurrentPage, 'members');
 		}
 
-		function renderPagination(containerId, totalPages, currentPage, type) {
-			const container = document.getElementById(containerId);
-			if (!container) return;
-			if (totalPages <= 1) { container.innerHTML = ''; return; }
+		function buildPaginationControls(targetId, totalPages, currentPage, coreContext) {
+			const wrapper = document.getElementById(targetId);
+			if (!wrapper) return;
+			if (totalPages <= 1) { wrapper.innerHTML = ''; return; }
 
-			let html = `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="goToPage(${currentPage - 1}, '${type}')">&laquo;</a></li>`;
-			const startPage = Math.max(1, currentPage - 2);
-			const endPage = Math.min(totalPages, currentPage + 2);
+			let dynamicDOM = `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="handlePageSwitch(${currentPage - 1}, '${coreContext}')">&laquo;</a></li>`;
 
-			if (startPage > 1) {
-				html += `<li class="page-item"><a class="page-link" href="#" onclick="goToPage(1, '${type}')">1</a></li>`;
-				if (startPage > 2) html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+			for (let pageIdx = 1; pageIdx <= totalPages; pageIdx++) {
+				if (pageIdx === 1 || pageIdx === totalPages || (pageIdx >= currentPage - 1 && pageIdx <= currentPage + 1)) {
+					dynamicDOM += `<li class="page-item ${pageIdx === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="handlePageSwitch(${pageIdx}, '${coreContext}')">${pageIdx}</a></li>`;
+				} else if (pageIdx === currentPage - 2 || pageIdx === currentPage + 2) {
+					dynamicDOM += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+				}
 			}
-			for (let i = startPage; i <= endPage; i++) {
-				html += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="goToPage(${i}, '${type}')">${i}</a></li>`;
-			}
-			if (endPage < totalPages) {
-				if (endPage < totalPages - 1) html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-				html += `<li class="page-item"><a class="page-link" href="#" onclick="goToPage(${totalPages}, '${type}')">${totalPages}</a></li>`;
-			}
-			html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}"><a class="page-link" href="#" onclick="goToPage(${currentPage + 1}, '${type}')">&raquo;</a></li>`;
-			container.innerHTML = html;
+
+			dynamicDOM += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}"><a class="page-link" href="#" onclick="handlePageSwitch(${currentPage + 1}, '${coreContext}')">&raquo;</a></li>`;
+			wrapper.innerHTML = dynamicDOM;
 		}
 
-		function goToPage(page, type) {
-			if (type === 'attendance') {
-				attendanceCurrentPage = page;
-				renderAttendanceTable();
-			} else if (type === 'members') {
-				membersCurrentPage = page;
-				renderMembersTable();
+		function handlePageSwitch(targetPageIndex, coreContext) {
+			if (coreContext === 'attendance') {
+				attendanceCurrentPage = targetPageIndex; renderAttendanceTable();
+			} else {
+				membersCurrentPage = targetPageIndex; renderMembersTable();
 			}
 		}
 
 		// ============================================
-		// CAMERA SCANNER ENGINE
+		// LIVE SCANNER INFRASTRUCTURE INTERACTION
 		// ============================================
 		function startScannerEngine() {
 			const statusMsg = document.getElementById('scannerMessage');
-			if (html5QrcodeScanner) {
-				try { html5QrcodeScanner.clear(); } catch (e) { }
-				html5QrcodeScanner = null;
-			}
+			if (html5QrcodeScanner) { try { html5QrcodeScanner.clear(); } catch (e) { } }
+
 			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Initializing camera...';
+			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Initializing Native CMOS Drivers...';
 
 			try {
-				html5QrcodeScanner = new Html5QrcodeScanner('reader', {
-					fps: 10,
-					qrbox: 250,
-					aspectRatio: 1.0,
-					showTorchButtonIfSupported: true
-				});
-				html5QrcodeScanner.render(onScanSuccess, onScanError);
+				html5QrcodeScanner = new Html5QrcodeScanner('reader', { fps: 12, qrbox: 240, aspectRatio: 1.0 });
+				html5QrcodeScanner.render(onVerificationSuccess, () => { });
 				isScannerRunning = true;
 				statusMsg.className = 'status-processing scanning';
-				statusMsg.innerHTML = '<i class="fa fa-camera"></i> Scanner active - Scanning for QR codes...';
+				statusMsg.innerHTML = '<i class="fa fa-camera"></i> Live Scan Driver Matrix Active...';
 			} catch (err) {
 				statusMsg.className = 'status-error';
-				statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}`;
+				statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Device Init Error: ${err.message}`;
 			}
 		}
 
 		function stopScannerEngine() {
 			if (html5QrcodeScanner) {
-				try {
-					html5QrcodeScanner.clear();
+				html5QrcodeScanner.clear().then(() => {
 					html5QrcodeScanner = null;
 					isScannerRunning = false;
 					document.getElementById('scannerMessage').className = 'status-waiting';
-					document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Scanner stopped';
-				} catch (err) {
-					console.error('Stop scanner error:', err);
-				}
+					document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Camera Driver Matrix Killed Safely.';
+				}).catch(e => console.error(e));
 			}
 		}
 
-		function onScanSuccess(decodedText, decodedResult) {
+		function onVerificationSuccess(decodedUID) {
 			const statusMsg = document.getElementById('scannerMessage');
 			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Submitting to cloud: <strong>${decodedText}</strong>`;
+			statusMsg.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Broad-Casting Target Token: <strong>${decodedUID}</strong>`;
 
-			const payload = {
-				action: 'markAttendance',
-				memberId: decodedText
-			};
+			// Payload mapping configuration parameters object array space
+			const transactionalPayload = { action: 'markAttendance', memberId: decodedUID };
 
-			// Fixed Content-Type header to eliminate CORS blocking issues on Google Script Web Apps
+			// Bypassing CORS standard restriction maps via text mapping plain formatting execution parameters
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: 'POST',
 				headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-				body: JSON.stringify(payload)
+				body: JSON.stringify(transactionalPayload)
 			})
-				.then(response => {
-					if (!response.ok) throw new Error(`HTTP ${response.status}`);
-					return response.json();
-				})
+				.then(res => res.ok ? res.json() : Promise.reject(new Error(`Server Response Code HTTP ${res.status}`)))
 				.then(data => {
 					if (data.status === 'SUCCESS') {
 						statusMsg.className = 'status-success';
-						statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> ✅ Attendance marked for: <strong>${data.memberName || decodedText}</strong>`;
+						statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> Success Checked: <strong>${data.memberName || decodedUID}</strong>`;
 						fetchAllData();
 					} else {
-						throw new Error(data.message || 'Verification Error');
+						throw new Error(data.message || 'Biometric Security Authorization Refused');
 					}
 				})
 				.catch(err => {
 					statusMsg.className = 'status-error';
-					statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> ❌ Error: ${err.message}`;
-					setTimeout(() => {
-						if (isScannerRunning) {
-							statusMsg.className = 'status-processing scanning';
-							statusMsg.innerHTML = '<i class="fa fa-camera"></i> Scanner active - Ready for next scan';
-						}
-					}, 3000);
+					statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Verification Fault: ${err.message}`;
 				});
 		}
 
-		function onScanError(error) { /* Silent logs to prevent console floods */ }
-
 		// ============================================
-		// IMAGE UPLOAD & QR DECODER
+		// LOCAL DIGITAL BITMAP IMAGE UPLOADER ENGINE
 		// ============================================
 		function handleImageUpload(event) {
-			const file = event.target.files[0];
-			if (!file) return;
+			const targetDescriptor = event.target.files[0];
+			if (!targetDescriptor) return;
 
-			qrImageFile = file;
-			const reader = new FileReader();
-			reader.onload = function (e) {
+			qrImageFile = targetDescriptor;
+			const streamReader = new FileReader();
+			streamReader.onload = function (e) {
 				qrImageData = e.target.result;
-				document.getElementById('imagePreview').src = qrImageData;
-				document.getElementById('imagePreview').style.display = 'block';
+				const preview = document.getElementById('imagePreview');
+				preview.src = qrImageData; preview.style.display = 'block';
 				document.getElementById('scannerMessage').className = 'status-processing';
-				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check-circle"></i> Image loaded! Click "Scan QR from Image"';
+				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check"></i> Image file loaded into memory.';
 			};
-			reader.readAsDataURL(file);
+			streamReader.readAsDataURL(targetDescriptor);
 		}
 
 		function scanFromImage() {
 			if (!qrImageFile) {
 				document.getElementById('scannerMessage').className = 'status-error';
-				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-exclamation-triangle"></i> Please upload an image first';
+				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-warning"></i> Upload an image first.';
 				return;
 			}
-
 			const statusMsg = document.getElementById('scannerMessage');
 			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Parsing QR metadata...';
+			statusMsg.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Parsing Raw Matrix Data Space...';
 
-			// Stop live engine cleanly to release node binds on the reader element container
-			if (html5QrcodeScanner) {
-				try { html5QrcodeScanner.clear(); html5QrcodeScanner = null; isScannerRunning = false; } catch (e) { }
-			}
+			if (html5QrcodeScanner) { try { html5QrcodeScanner.clear(); html5QrcodeScanner = null; isScannerRunning = false; } catch (e) { } }
 
 			setTimeout(() => {
-				const html5QrCode = new Html5Qrcode("reader");
-				html5QrCode.scanFile(qrImageFile, true)
-					.then(decodedText => {
+				const threadDecoder = new Html5Qrcode("reader");
+				threadDecoder.scanFile(qrImageFile, true)
+					.then(extractedToken => {
 						statusMsg.className = 'status-success';
-						statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> QR Decoded: <strong>${decodedText}</strong>`;
-						onScanSuccess(decodedText, null);
+						statusMsg.innerHTML = `<i class="fa fa-check-square"></i> Extracted Metadata Token Found!`;
+						onVerificationSuccess(extractedToken);
 					})
-					.catch(err => {
-						console.error(err);
+					.catch(() => {
 						statusMsg.className = 'status-error';
-						statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Decoding Failed. Make sure QR is clear.`;
+						statusMsg.innerHTML = `<i class="fa fa-times"></i> Matrix Decryption Failed. Check Image Contrast.`;
 					});
-			}, 300);
+			}, 250);
 		}
 
 		function clearImage() {
-			qrImageFile = null;
-			qrImageData = null;
-			document.getElementById('imagePreview').src = '';
+			qrImageFile = null; qrImageData = null;
 			document.getElementById('imagePreview').style.display = 'none';
 			document.getElementById('imageInput').value = '';
 			document.getElementById('scannerMessage').className = 'status-waiting';
-			document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Image cleared.';
+			document.getElementById('scannerMessage').innerHTML = 'Image pointer maps cleared.';
 		}
 
 		// ============================================
-		// EXPORT SYSTEM
+		// QR DYNAMIC CANVAS RENDERER & DOWNLOAD SYSTEM
+		// ============================================
+		function spawnQRCodeCanvas(targetUID, rawEscapedProfileName) {
+			const realProfileName = unescape(rawEscapedProfileName);
+			document.getElementById('modalMemberId').textContent = targetUID;
+			document.getElementById('modalMemberName').textContent = realProfileName;
+
+			const canvasWrapper = document.getElementById('modalQrCanvas');
+			canvasWrapper.innerHTML = ''; // Flushing historical canvas memory layers
+
+			// Instantiating clean standalone client rendering pipeline properties target space
+			new QRCode(canvasWrapper, {
+				text: targetUID,
+				width: 200,
+				height: 200,
+				colorDark: "#000000",
+				colorLight: "#ffffff",
+				correctLevel: QRCode.CorrectLevel.H
+			});
+
+			$('#qrModal').modal('show');
+		}
+
+		function downloadGeneratedQRImage() {
+			const qrTargetImg = document.querySelector('#modalQrCanvas img');
+			if (!qrTargetImg) { alert('Dynamic render element buffer fault.'); return; }
+
+			const targetUID = document.getElementById('modalMemberId').textContent;
+
+			const exportAnchor = document.createElement('a');
+			exportAnchor.href = qrTargetImg.src;
+			exportAnchor.download = `QR_Key_${targetUID}.png`;
+			document.body.appendChild(exportAnchor);
+			exportAnchor.click();
+			document.body.removeChild(exportAnchor);
+		}
+
+		// ============================================
+		// EXCEL MATRIX WRITER ENGINE
 		// ============================================
 		function exportDataToExcelEngine() {
-			const dataToExport = filteredAttendance.length > 0 ? filteredAttendance : masterAttendanceData;
-			if (dataToExport.length === 0) { alert('No data available to export!'); return; }
+			const targetDataSet = filteredAttendance.length > 0 ? filteredAttendance : masterAttendanceData;
+			if (targetDataSet.length === 0) { alert('Operation aborted: Target records array space empty.'); return; }
 
-			const excelData = dataToExport.map(row => ({
-				'Scan Date & Time': row.timestamp || 'N/A',
-				'Member ID': row.memberId || 'N/A',
-				'Name': row.name || 'Unknown',
+			const structuralMapping = targetDataSet.map(row => ({
+				'Stamp': row.timestamp || 'N/A',
+				'UID Key': row.memberId || 'N/A',
+				'Name': row.name || 'N/A',
 				'Mobile': row.mobile || 'N/A'
 			}));
 
-			const wb = XLSX.utils.book_new();
-			const ws = XLSX.utils.json_to_sheet(excelData);
-			XLSX.utils.book_append_sheet(wb, ws, 'Attendance');
-			XLSX.writeFile(wb, `Attendance_Report_${new Date().toISOString().split('T')[0]}.xlsx`);
+			const workbook = XLSX.utils.book_new();
+			const worksheet = XLSX.utils.json_to_sheet(structuralMapping);
+			XLSX.utils.book_append_sheet(workbook, worksheet, 'Logs Ecosystem Data');
+			XLSX.writeFile(workbook, `System_Logs_${new Date().toISOString().split('T')[0]}.xlsx`);
 		}
 	</script>
 </body>
