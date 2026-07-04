@@ -548,7 +548,7 @@
 		// ============================================
 		// CORE ENDPOINT PROPERTIES CONFIG
 		// ============================================
-		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZqtk1nIy55bi73JAxBksEhbcnhy5IUhn2eLJL09k7RGrYK2VDFTzCHozeegdE1HE/exec";
+		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby59hjqyHHf5gKHuCDF4jCR4cfIC3H64WsL2RNfoPRy98E8KfMDnqGgTrLR8iuY7Bhp/exec";
 
 		// ============================================
 		// STATE SPACE VARIABLES
@@ -826,25 +826,22 @@
 		function onVerificationSuccess(decodedUID) {
 			const statusMsg = document.getElementById('scannerMessage');
 			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Broad-Casting Target Token: <strong>${decodedUID}</strong>`;
+			statusMsg.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Submitting Token: <strong>${decodedUID}</strong>`;
 
-			// Payload mapping configuration parameters object array space
-			const transactionalPayload = { action: 'markAttendance', memberId: decodedUID };
+			// Converting to simple URL parameters to completely avoid preflight/action payload matching errors
+			const targetUrl = `${GOOGLE_APPS_SCRIPT_URL}?action=markAttendance&memberId=${encodeURIComponent(decodedUID)}`;
 
-			// Bypassing CORS standard restriction maps via text mapping plain formatting execution parameters
-			fetch(GOOGLE_APPS_SCRIPT_URL, {
-				method: 'POST',
-				headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-				body: JSON.stringify(transactionalPayload)
+			fetch(targetUrl, {
+				method: 'GET'
 			})
 				.then(res => res.ok ? res.json() : Promise.reject(new Error(`Server Response Code HTTP ${res.status}`)))
 				.then(data => {
-					if (data.status === 'SUCCESS') {
+					if (data.status === 'SUCCESS' || data.status === 'OK') {
 						statusMsg.className = 'status-success';
 						statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> Success Checked: <strong>${data.memberName || decodedUID}</strong>`;
 						fetchAllData();
 					} else {
-						throw new Error(data.message || 'Biometric Security Authorization Refused');
+						throw new Error(data.message || 'Verification Error');
 					}
 				})
 				.catch(err => {
