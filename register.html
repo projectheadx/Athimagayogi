@@ -115,7 +115,19 @@
 						<a id="whatsappBtn" href="#" target="_blank" class="btn btn-outline-success btn-block">
 							<i class="fa fa-whatsapp"></i> Submit to Bot Verification
 						</a>
+						<!-- வாட்ஸ்அப் பட்டனுக்கு கீழே இதை போடு மச்சி -->
+						<a id="whatsappBtn" href="#" target="_blank" class="btn btn-outline-success btn-block">
+							<i class="fa fa-whatsapp"></i> Submit to Bot Verification
+						</a>
 
+						<!-- புதிய டவுன்லோட் பட்டன் -->
+						<button id="downloadBtn" class="btn btn-success btn-block mt-2" onclick="downloadQR()">
+							<i class="fa fa-download"></i> Download QR Code
+						</button>
+
+						<button class="btn btn-outline-secondary btn-block mt-2" onclick="resetForm()">
+							<i class="fa fa-refresh"></i> Register Another Member
+						</button>
 						<button class="btn btn-outline-secondary btn-block mt-2" onclick="resetForm()">
 							<i class="fa fa-refresh"></i> Register Another Member
 						</button>
@@ -124,6 +136,8 @@
 			</div>
 		</div>
 	</div>
+
+
 
 	<script>
 		// ========================================================
@@ -279,6 +293,47 @@
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 	</script>
+
+
+
+	<script>
+
+		function downloadQR() {
+			// QR கோடு ஜெனரேட் ஆன பிறகு இருக்கும் <canvas> அல்லது <img> டேகை எடுக்கிறோம்
+			const qrContainer = document.getElementById("qrcode");
+			const canvas = qrContainer.querySelector("canvas");
+			const img = qrContainer.querySelector("img");
+
+			let imageSrc = "";
+
+			if (canvas) {
+				// Canvas-ஆக இருந்தால் அதை Base64 Image டேட்டாவாக மாற்றும்
+				imageSrc = canvas.toDataURL("image/png");
+			} else if (img && img.src) {
+				// ஒருவேளை அது நேரடியாக Image டேகாக இருந்தால் அதன் சோர்ஸை எடுக்கும்
+				imageSrc = img.src;
+			} else {
+				alert("⚠️ QR Code still generating or not found!");
+				return;
+			}
+
+			const memberName = document.getElementById("generatedMemberName").innerText || "Member";
+			const memberId = document.getElementById("generatedMemberId").innerText || "QR";
+
+			// தற்காலிகமாக ஒரு லிங்க் உருவாக்கி டவுன்லோட் செய்ய வைக்கிறோம்
+			const downloadLink = document.createElement("a");
+			downloadLink.href = imageSrc;
+			downloadLink.download = `${memberName}_${memberId}.png`; // ஃபைல் நேம் செட் பண்றோம்
+			document.body.appendChild(downloadLink);
+			downloadLink.click();
+			document.body.removeChild(downloadLink);
+		}
+
+
+
+	</script>
+
+
 </body>
 
 </html>
