@@ -305,7 +305,6 @@
 			}
 		}
 
-		/* Custom QR Modal Configuration Styles */
 		.modal-custom-content {
 			background: #111625;
 			color: #e4e6eb;
@@ -319,6 +318,19 @@
 			border-radius: 12px;
 			display: inline-block;
 			margin: 15px 0;
+		}
+
+		.badge-success {
+			background-color: #2eb85c;
+		}
+
+		.text-success {
+			color: #2eb85c !important;
+		}
+
+		.btn-danger {
+			background: #dc3545;
+			border: none;
 		}
 	</style>
 </head>
@@ -452,7 +464,7 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="members-tab" data-toggle="tab" href="#membersPane" role="tab">
-						<i class="fa fa-users"></i> Registered Members Matrix <span class="badge badge-success ml-2" id="membersCount text-white">0</span>
+						<i class="fa fa-users"></i> Registered Members Matrix <span class="badge badge-success ml-2" id="membersCount">0</span>
 					</a>
 				</li>
 			</ul>
@@ -565,6 +577,7 @@
 		let qrImageFile = null;
 		let qrImageData = null;
 		let isLoading = false;
+		let isProcessingScan = false;
 
 		$(document).ready(function () {
 			fetchAllData();
@@ -585,7 +598,7 @@
 					updateStats();
 				})
 				.catch((err) => {
-					console.error(err);
+					console.error('Fetch Error:', err);
 					showLoading(false);
 					isLoading = false;
 					document.getElementById('scannerMessage').className = 'status-error';
@@ -595,27 +608,49 @@
 
 		function fetchAttendanceLogs() {
 			return new Promise((resolve, reject) => {
-				fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getAttendanceLogs`)
-					.then(res => res.ok ? res.json() : Promise.reject(res))
+				const url = `${GOOGLE_APPS_SCRIPT_URL}?action=getAttendanceLogs`;
+				console.log('Fetching attendance from:', url);
+
+				fetch(url)
+					.then(res => {
+						if (!res.ok) throw new Error(`HTTP ${res.status}`);
+						return res.json();
+					})
 					.then(data => {
+						console.log('Attendance data received:', data);
 						masterAttendanceData = Array.isArray(data) ? data : [];
 						filteredAttendance = [...masterAttendanceData];
 						renderAttendanceTable();
 						resolve();
-					}).catch(e => reject(e));
+					})
+					.catch(e => {
+						console.error('Attendance fetch error:', e);
+						reject(e);
+					});
 			});
 		}
 
 		function fetchMembersList() {
 			return new Promise((resolve, reject) => {
-				fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getMembers`)
-					.then(res => res.ok ? res.json() : Promise.reject(res))
+				const url = `${GOOGLE_APPS_SCRIPT_URL}?action=getMembers`;
+				console.log('Fetching members from:', url);
+
+				fetch(url)
+					.then(res => {
+						if (!res.ok) throw new Error(`HTTP ${res.status}`);
+						return res.json();
+					})
 					.then(data => {
+						console.log('Members data received:', data);
 						masterMembersData = Array.isArray(data) ? data : [];
 						filteredMembers = [...masterMembersData];
 						renderMembersTable();
 						resolve();
-					}).catch(e => reject(e));
+					})
+					.catch(e => {
+						console.error('Members fetch error:', e);
+						reject(e);
+					});
 			});
 		}
 
@@ -635,9 +670,7 @@
 			document.getElementById('pendingMembers').textContent = pendingCount;
 
 			document.getElementById('attendanceCount').textContent = masterAttendanceData.length;
-			// Safe injection fallback verification logic check UI handling
-			const membersBadge = document.getElementById('membersCount');
-			if (membersBadge) membersBadge.textContent = masterMembersData.length;
+			document.getElementById('membersCount').textContent = masterMembersData.length;
 		}
 
 		// ============================================
@@ -710,14 +743,14 @@
 				tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4"><i class="fa fa-folder-open-o"></i> No dynamic scan log profiles mapped within memory space.</td></tr>`;
 			} else {
 				tbody.innerHTML = viewBuffer.map((row, idx) => `
-						<tr>
-							<td>${start + idx + 1}</td>
-							<td><span class="badge badge-dark text-success font-weight-bold">${row.timestamp || 'N/A'}</span></td>
-							<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
-							<td>${row.name || 'Anonymous Matrix ID'}</td>
-							<td>${row.mobile || 'N/A'}</td>
-						</tr>
-					`).join('');
+							<tr>
+								<td>${start + idx + 1}</td>
+								<td><span class="badge badge-dark text-success font-weight-bold">${row.timestamp || 'N/A'}</span></td>
+								<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
+								<td>${row.name || 'Anonymous Matrix ID'}</td>
+								<td>${row.mobile || 'N/A'}</td>
+							</tr>
+						`).join('');
 			}
 			document.getElementById('attendancePaginationInfo').textContent = `Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} datasets`;
 			buildPaginationControls('attendancePagination', totalPages, attendanceCurrentPage, 'attendance');
@@ -740,23 +773,23 @@
 					const secureLabel = row.status === 'Verified' ? 'badge-success' :
 						row.status === 'Pending Verification' ? 'badge-warning text-dark' : 'badge-danger';
 					return `
-							<tr>
-								<td>${start + idx + 1}</td>
-								<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
-								<td class="font-weight-bold">${row.name || 'Unknown Index'}</td>
-								<td>${row.mobile || 'N/A'}</td>
-								<td>${row.age || 'N/A'}</td>
-								<td>${row.state || 'N/A'}</td>
-								<td>${row.district || 'N/A'}</td>
-								<td><span class="badge badge-pill ${secureLabel}">${row.status || 'Unresolved State'}</span></td>
-								<td class="text-center">
-									<button class="btn btn-action-secondary btn-sm py-1 font-weight-bold" style="font-size:0.75rem; border-radius:4px;"
-										onclick="spawnQRCodeCanvas('${row.memberId}', '${escape(row.name)}')">
-										<i class="fa fa-qrcode"></i> View QR
-									</button>
-								</td>
-							</tr>
-						`;
+								<tr>
+									<td>${start + idx + 1}</td>
+									<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
+									<td class="font-weight-bold">${row.name || 'Unknown Index'}</td>
+									<td>${row.mobile || 'N/A'}</td>
+									<td>${row.age || 'N/A'}</td>
+									<td>${row.state || 'N/A'}</td>
+									<td>${row.district || 'N/A'}</td>
+									<td><span class="badge badge-pill ${secureLabel}">${row.status || 'Unresolved State'}</span></td>
+									<td class="text-center">
+										<button class="btn btn-action-secondary btn-sm py-1 font-weight-bold" style="font-size:0.75rem; border-radius:4px;"
+											onclick="spawnQRCodeCanvas('${row.memberId}', '${escape(row.name)}')">
+											<i class="fa fa-qrcode"></i> View QR
+										</button>
+									</td>
+								</tr>
+							`;
 				}).join('');
 			}
 			document.getElementById('membersPaginationInfo').textContent = `Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total} profiles`;
@@ -795,21 +828,42 @@
 		// ============================================
 		function startScannerEngine() {
 			const statusMsg = document.getElementById('scannerMessage');
-			if (html5QrcodeScanner) { try { html5QrcodeScanner.clear(); } catch (e) { } }
+			if (html5QrcodeScanner) {
+				try {
+					html5QrcodeScanner.clear();
+					html5QrcodeScanner = null;
+				} catch (e) {
+					console.warn('Clear error:', e);
+				}
+			}
 
 			statusMsg.className = 'status-processing';
 			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Initializing Native CMOS Drivers...';
 
 			try {
-				html5QrcodeScanner = new Html5QrcodeScanner('reader', { fps: 12, qrbox: 240, aspectRatio: 1.0 });
-				html5QrcodeScanner.render(onVerificationSuccess, () => { });
+				const readerElement = document.getElementById('reader');
+				readerElement.innerHTML = '';
+
+				html5QrcodeScanner = new Html5QrcodeScanner('reader', {
+					fps: 15,
+					qrbox: { width: 250, height: 250 },
+					aspectRatio: 1.0
+				});
+
+				html5QrcodeScanner.render(onVerificationSuccess, onScanError);
 				isScannerRunning = true;
-				statusMsg.className = 'status-processing scanning';
-				statusMsg.innerHTML = '<i class="fa fa-camera"></i> Live Scan Driver Matrix Active...';
+				statusMsg.className = 'status-processing';
+				statusMsg.innerHTML = '<i class="fa fa-camera"></i> Live Scan Driver Matrix Active. Scanning for QR codes...';
 			} catch (err) {
+				console.error('Scanner init error:', err);
 				statusMsg.className = 'status-error';
 				statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Device Init Error: ${err.message}`;
 			}
+		}
+
+		function onScanError(err) {
+			// Don't log every frame error - it's too noisy
+			// console.warn('Scan error:', err);
 		}
 
 		function stopScannerEngine() {
@@ -817,36 +871,82 @@
 				html5QrcodeScanner.clear().then(() => {
 					html5QrcodeScanner = null;
 					isScannerRunning = false;
+					document.getElementById('reader').innerHTML = '';
 					document.getElementById('scannerMessage').className = 'status-waiting';
 					document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Camera Driver Matrix Killed Safely.';
-				}).catch(e => console.error(e));
+				}).catch(e => {
+					console.error('Stop error:', e);
+					html5QrcodeScanner = null;
+					isScannerRunning = false;
+				});
 			}
 		}
 
 		function onVerificationSuccess(decodedUID) {
+			// Prevent multiple simultaneous scans
+			if (isProcessingScan) {
+				console.log('Already processing a scan, ignoring...');
+				return;
+			}
+
 			const statusMsg = document.getElementById('scannerMessage');
+			const cleanUID = decodedUID.trim();
+
+			console.log('QR Code Decoded:', cleanUID);
 			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Submitting Token: <strong>${decodedUID}</strong>`;
+			statusMsg.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Processing Token: <strong>${cleanUID}</strong>`;
 
-			// Converting to simple URL parameters to completely avoid preflight/action payload matching errors
-			const targetUrl = `${GOOGLE_APPS_SCRIPT_URL}?action=markAttendance&memberId=${encodeURIComponent(decodedUID)}`;
+			isProcessingScan = true;
 
-			fetch(targetUrl, {
-				method: 'GET'
+			// Step 1: Find member details first
+			const member = masterMembersData.find(m => m.memberId === cleanUID);
+
+			if (!member) {
+				statusMsg.className = 'status-error';
+				statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Member not found! UID: <strong>${cleanUID}</strong>`;
+				isProcessingScan = false;
+				return;
+			}
+
+			// Step 2: Mark attendance using POST
+			const payload = {
+				action: 'markAttendance',
+				memberId: cleanUID,
+				name: member.name || 'Unknown',
+				mobile: member.mobile || ''
+			};
+
+			console.log('Marking attendance with payload:', payload);
+
+			fetch(GOOGLE_APPS_SCRIPT_URL, {
+				method: 'POST',
+				mode: 'no-cors',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(payload)
 			})
-				.then(res => res.ok ? res.json() : Promise.reject(new Error(`Server Response Code HTTP ${res.status}`)))
-				.then(data => {
-					if (data.status === 'SUCCESS' || data.status === 'OK') {
-						statusMsg.className = 'status-success';
-						statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> Success Checked: <strong>${data.memberName || decodedUID}</strong>`;
+				.then(() => {
+					// With no-cors, we can't read the response, so we assume success
+					console.log('Attendance mark request sent successfully');
+					statusMsg.className = 'status-success';
+					statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> Attendance marked for: <strong>${member.name || cleanUID}</strong>`;
+
+					// Refresh data after a delay to let server process
+					setTimeout(() => {
 						fetchAllData();
-					} else {
-						throw new Error(data.message || 'Verification Error');
-					}
+					}, 1500);
 				})
 				.catch(err => {
+					console.error('Mark attendance error:', err);
 					statusMsg.className = 'status-error';
-					statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Verification Fault: ${err.message}`;
+					statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Mark Error: ${err.message}`;
+				})
+				.finally(() => {
+					// Reset processing flag after a delay
+					setTimeout(() => {
+						isProcessingScan = false;
+					}, 2000);
 				});
 		}
 
@@ -862,7 +962,8 @@
 			streamReader.onload = function (e) {
 				qrImageData = e.target.result;
 				const preview = document.getElementById('imagePreview');
-				preview.src = qrImageData; preview.style.display = 'block';
+				preview.src = qrImageData;
+				preview.style.display = 'block';
 				document.getElementById('scannerMessage').className = 'status-processing';
 				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check"></i> Image file loaded into memory.';
 			};
@@ -875,33 +976,52 @@
 				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-warning"></i> Upload an image first.';
 				return;
 			}
+
 			const statusMsg = document.getElementById('scannerMessage');
 			statusMsg.className = 'status-processing';
 			statusMsg.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Parsing Raw Matrix Data Space...';
 
-			if (html5QrcodeScanner) { try { html5QrcodeScanner.clear(); html5QrcodeScanner = null; isScannerRunning = false; } catch (e) { } }
+			// Stop any running scanner
+			if (html5QrcodeScanner) {
+				try {
+					html5QrcodeScanner.clear();
+					html5QrcodeScanner = null;
+					isScannerRunning = false;
+				} catch (e) { }
+			}
 
-			setTimeout(() => {
-				const threadDecoder = new Html5Qrcode("reader");
-				threadDecoder.scanFile(qrImageFile, true)
-					.then(extractedToken => {
-						statusMsg.className = 'status-success';
-						statusMsg.innerHTML = `<i class="fa fa-check-square"></i> Extracted Metadata Token Found!`;
-						onVerificationSuccess(extractedToken);
-					})
-					.catch(() => {
-						statusMsg.className = 'status-error';
-						statusMsg.innerHTML = `<i class="fa fa-times"></i> Matrix Decryption Failed. Check Image Contrast.`;
-					});
-			}, 250);
+			// Create a temporary scanner for the image
+			const tempReader = document.getElementById('reader');
+			tempReader.innerHTML = '';
+			const threadDecoder = new Html5Qrcode("reader");
+
+			threadDecoder.scanFile(qrImageFile, true)
+				.then(extractedToken => {
+					statusMsg.className = 'status-success';
+					statusMsg.innerHTML = `<i class="fa fa-check-square"></i> Extracted Token: <strong>${extractedToken}</strong>`;
+					onVerificationSuccess(extractedToken);
+				})
+				.catch(err => {
+					console.error('Scan file error:', err);
+					statusMsg.className = 'status-error';
+					statusMsg.innerHTML = `<i class="fa fa-times"></i> Matrix Decryption Failed. Check Image Contrast. Error: ${err}`;
+				})
+				.finally(() => {
+					// Clean up temporary scanner
+					try {
+						threadDecoder.clear();
+					} catch (e) { }
+				});
 		}
 
 		function clearImage() {
-			qrImageFile = null; qrImageData = null;
+			qrImageFile = null;
+			qrImageData = null;
 			document.getElementById('imagePreview').style.display = 'none';
+			document.getElementById('imagePreview').src = '';
 			document.getElementById('imageInput').value = '';
 			document.getElementById('scannerMessage').className = 'status-waiting';
-			document.getElementById('scannerMessage').innerHTML = 'Image pointer maps cleared.';
+			document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Image pointer maps cleared.';
 		}
 
 		// ============================================
@@ -913,9 +1033,8 @@
 			document.getElementById('modalMemberName').textContent = realProfileName;
 
 			const canvasWrapper = document.getElementById('modalQrCanvas');
-			canvasWrapper.innerHTML = ''; // Flushing historical canvas memory layers
+			canvasWrapper.innerHTML = '';
 
-			// Instantiating clean standalone client rendering pipeline properties target space
 			new QRCode(canvasWrapper, {
 				text: targetUID,
 				width: 200,
@@ -930,7 +1049,10 @@
 
 		function downloadGeneratedQRImage() {
 			const qrTargetImg = document.querySelector('#modalQrCanvas img');
-			if (!qrTargetImg) { alert('Dynamic render element buffer fault.'); return; }
+			if (!qrTargetImg) {
+				alert('Dynamic render element buffer fault.');
+				return;
+			}
 
 			const targetUID = document.getElementById('modalMemberId').textContent;
 
@@ -947,7 +1069,10 @@
 		// ============================================
 		function exportDataToExcelEngine() {
 			const targetDataSet = filteredAttendance.length > 0 ? filteredAttendance : masterAttendanceData;
-			if (targetDataSet.length === 0) { alert('Operation aborted: Target records array space empty.'); return; }
+			if (targetDataSet.length === 0) {
+				alert('Operation aborted: Target records array space empty.');
+				return;
+			}
 
 			const structuralMapping = targetDataSet.map(row => ({
 				'Stamp': row.timestamp || 'N/A',
@@ -960,6 +1085,21 @@
 			const worksheet = XLSX.utils.json_to_sheet(structuralMapping);
 			XLSX.utils.book_append_sheet(workbook, worksheet, 'Logs Ecosystem Data');
 			XLSX.writeFile(workbook, `System_Logs_${new Date().toISOString().split('T')[0]}.xlsx`);
+		}
+
+		// ============================================
+		// ESCAPE HELPER
+		// ============================================
+		function escape(str) {
+			if (!str) return '';
+			return str.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+		}
+
+		function unescape(str) {
+			if (!str) return '';
+			return str.replace(/\\['"]/g, function (match) {
+				return match.replace('\\', '');
+			});
 		}
 	</script>
 </body>
