@@ -33,7 +33,6 @@
 			padding: 0 5px;
 		}
 
-		/* Mobile First Design */
 		.yoga-card {
 			background: linear-gradient(145deg, #111625, #0a0d18);
 			border: 1px solid rgba(40, 167, 69, 0.15);
@@ -43,10 +42,6 @@
 			margin-bottom: 15px;
 			transition: all 0.3s ease;
 		}
-
-			.yoga-card:hover {
-				border-color: rgba(40, 167, 69, 0.35);
-			}
 
 		.section-title {
 			font-size: 1rem;
@@ -58,7 +53,6 @@
 			gap: 8px;
 		}
 
-		/* Scanner Styling */
 		#reader {
 			width: 100%;
 			max-width: 100%;
@@ -113,7 +107,6 @@
 			border: 1px solid rgba(229,83,83,0.2);
 		}
 
-		/* Buttons - Mobile Optimized */
 		.btn {
 			font-size: 0.85rem;
 			padding: 8px 14px;
@@ -175,7 +168,6 @@
 			padding: 5px 10px;
 		}
 
-		/* Stats - Mobile Optimized */
 		.stat-box {
 			background: rgba(17, 22, 37, 0.6);
 			border-radius: 10px;
@@ -196,7 +188,6 @@
 				margin-top: 2px;
 			}
 
-		/* Table - Mobile Optimized */
 		.table-container {
 			overflow-x: auto;
 			-webkit-overflow-scrolling: touch;
@@ -232,7 +223,6 @@
 				background: rgba(46, 184, 92, 0.04);
 			}
 
-		/* Form Controls */
 		.form-control-yoga {
 			background: #090d1a;
 			border: 1px solid #2f354a;
@@ -250,7 +240,6 @@
 				box-shadow: 0 0 0 3px rgba(46, 184, 92, 0.15);
 			}
 
-		/* Nav Tabs - Mobile */
 		.nav-tabs-custom {
 			border-bottom: 2px solid #1c2235;
 			margin-bottom: 15px;
@@ -276,7 +265,6 @@
 					background: transparent;
 				}
 
-		/* Upload Area */
 		.upload-area {
 			border: 2px dashed #2f354a;
 			border-radius: 10px;
@@ -299,7 +287,6 @@
 			display: none;
 		}
 
-		/* Pagination */
 		.pagination-yoga .page-link {
 			background: #111625;
 			color: #e4e6eb;
@@ -320,7 +307,6 @@
 			color: white;
 		}
 
-		/* Loading Overlay */
 		.loading-overlay {
 			display: none;
 			position: fixed;
@@ -358,7 +344,6 @@
 			}
 		}
 
-		/* Modal */
 		.modal-custom-content {
 			background: #111625;
 			color: #e4e6eb;
@@ -394,7 +379,6 @@
 					margin-right: 0;
 				}
 
-		/* Mobile Specific */
 		@media (max-width: 576px) {
 			body {
 				padding: 5px;
@@ -792,9 +776,9 @@
 		let membersCurrentPage = 1;
 		const rowsPerPage = 8;
 		let qrImageFile = null;
-		let qrImageData = null;
 		let isLoading = false;
 		let isProcessingScan = false;
+		let manualEntryCount = 0;
 
 		$(document).ready(function () {
 			fetchAllData();
@@ -965,18 +949,18 @@
 
 			if (total === 0) {
 				tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-3">
-						<i class="fa fa-folder-open-o"></i> No attendance records found
-					</td></tr>`;
+							<i class="fa fa-folder-open-o"></i> No attendance records found
+						</td></tr>`;
 			} else {
 				tbody.innerHTML = viewBuffer.map((row, idx) => `
-						<tr>
-							<td>${start + idx + 1}</td>
-							<td><span class="badge badge-dark text-success">${row.timestamp || 'N/A'}</span></td>
-							<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
-							<td>${row.name || 'Unknown'}</td>
-							<td>${row.mobile || 'N/A'}</td>
-						</tr>
-					`).join('');
+							<tr>
+								<td>${start + idx + 1}</td>
+								<td><span class="badge badge-dark text-success">${row.timestamp || 'N/A'}</span></td>
+								<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
+								<td>${row.name || 'Unknown'}</td>
+								<td>${row.mobile || 'N/A'}</td>
+							</tr>
+						`).join('');
 			}
 			document.getElementById('attendancePaginationInfo').textContent =
 				`Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total}`;
@@ -995,27 +979,27 @@
 
 			if (total === 0) {
 				tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-3">
-						<i class="fa fa-user-times"></i> No members found
-					</td></tr>`;
+							<i class="fa fa-user-times"></i> No members found
+						</td></tr>`;
 			} else {
 				tbody.innerHTML = viewBuffer.map((row, idx) => {
 					const statusClass = row.status === 'Verified' ? 'badge-success' :
 						row.status === 'Pending' ? 'badge-warning text-dark' : 'badge-danger';
 					return `
-							<tr>
-								<td>${start + idx + 1}</td>
-								<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
-								<td>${row.name || 'Unknown'}</td>
-								<td>${row.mobile || 'N/A'}</td>
-								<td><span class="badge badge-pill ${statusClass}">${row.status || 'N/A'}</span></td>
-								<td class="text-center">
-									<button class="btn btn-action-secondary btn-sm"
-										onclick="spawnQRCodeCanvas('${row.memberId}', '${escape(row.name || '')}')">
-										<i class="fa fa-qrcode"></i>
-									</button>
-								</td>
-							</tr>
-						`;
+								<tr>
+									<td>${start + idx + 1}</td>
+									<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
+									<td>${row.name || 'Unknown'}</td>
+									<td>${row.mobile || 'N/A'}</td>
+									<td><span class="badge badge-pill ${statusClass}">${row.status || 'N/A'}</span></td>
+									<td class="text-center">
+										<button class="btn btn-action-secondary btn-sm"
+											onclick="spawnQRCodeCanvas('${row.memberId}', '${escape(row.name || '')}')">
+											<i class="fa fa-qrcode"></i>
+										</button>
+									</td>
+								</tr>
+							`;
 				}).join('');
 			}
 			document.getElementById('membersPaginationInfo').textContent =
@@ -1029,22 +1013,22 @@
 			if (totalPages <= 1) { wrapper.innerHTML = ''; return; }
 
 			let html = `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-					<a class="page-link" href="#" onclick="handlePageSwitch(${currentPage - 1}, '${coreContext}')">&laquo;</a>
-				</li>`;
+						<a class="page-link" href="#" onclick="handlePageSwitch(${currentPage - 1}, '${coreContext}')">&laquo;</a>
+					</li>`;
 
 			for (let i = 1; i <= totalPages; i++) {
 				if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
 					html += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-							<a class="page-link" href="#" onclick="handlePageSwitch(${i}, '${coreContext}')">${i}</a>
-						</li>`;
+								<a class="page-link" href="#" onclick="handlePageSwitch(${i}, '${coreContext}')">${i}</a>
+							</li>`;
 				} else if (i === currentPage - 2 || i === currentPage + 2) {
 					html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
 				}
 			}
 
 			html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-					<a class="page-link" href="#" onclick="handlePageSwitch(${currentPage + 1}, '${coreContext}')">&raquo;</a>
-				</li>`;
+						<a class="page-link" href="#" onclick="handlePageSwitch(${currentPage + 1}, '${coreContext}')">&raquo;</a>
+					</li>`;
 			wrapper.innerHTML = html;
 		}
 
@@ -1117,6 +1101,9 @@
 			}
 		}
 
+		// ============================================
+		// CORE FIX: MARK ATTENDANCE WITH PROPER DATA
+		// ============================================
 		function onScanSuccess(decodedUID) {
 			if (isProcessingScan) {
 				console.log('Already processing...');
@@ -1142,15 +1129,28 @@
 				return;
 			}
 
-			// Mark attendance
-			const payload = {
-				action: 'markAttendance',
-				memberId: cleanUID,
-				name: member.name || 'Unknown',
-				mobile: member.mobile || ''
+			// Get current timestamp
+			const now = new Date();
+			const timestamp = now.toISOString().replace('T', ' ').slice(0, 19);
+
+			// Create attendance record
+			const attendanceRecord = {
+				timestamp: timestamp,
+				memberId: member.memberId,
+				name: member.name,
+				mobile: member.mobile
 			};
 
-			console.log('Marking attendance:', payload);
+			console.log('Marking attendance:', attendanceRecord);
+
+			// Method 1: POST with JSON
+			const payload = {
+				action: 'markAttendance',
+				memberId: member.memberId,
+				name: member.name,
+				mobile: member.mobile,
+				timestamp: timestamp
+			};
 
 			fetch(GOOGLE_APPS_SCRIPT_URL, {
 				method: 'POST',
@@ -1161,18 +1161,38 @@
 				body: JSON.stringify(payload)
 			})
 				.then(() => {
+					console.log('Attendance POST sent successfully');
+
+					// Method 2: Also try GET as fallback
+					const getUrl = `${GOOGLE_APPS_SCRIPT_URL}?action=markAttendance&memberId=${encodeURIComponent(member.memberId)}&name=${encodeURIComponent(member.name)}&mobile=${encodeURIComponent(member.mobile)}&timestamp=${encodeURIComponent(timestamp)}`;
+					return fetch(getUrl);
+				})
+				.then(() => {
 					console.log('Attendance marked for:', member.name);
 					statusMsg.className = 'status-success';
 					statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> ✅ ${member.name} checked in!`;
 
+					// Add to local data immediately
+					masterAttendanceData.unshift(attendanceRecord);
+					filteredAttendance = [...masterAttendanceData];
+					renderAttendanceTable();
+					updateStats();
+
+					// Refresh from server after delay
 					setTimeout(() => {
 						fetchAllData();
-					}, 1000);
+					}, 2000);
 				})
 				.catch(err => {
 					console.error('Mark error:', err);
 					statusMsg.className = 'status-error';
 					statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}`;
+
+					// Still add to local data even if server fails
+					masterAttendanceData.unshift(attendanceRecord);
+					filteredAttendance = [...masterAttendanceData];
+					renderAttendanceTable();
+					updateStats();
 				})
 				.finally(() => {
 					setTimeout(() => {
@@ -1191,9 +1211,8 @@
 			qrImageFile = file;
 			const reader = new FileReader();
 			reader.onload = function (e) {
-				qrImageData = e.target.result;
 				const preview = document.getElementById('imagePreview');
-				preview.src = qrImageData;
+				preview.src = e.target.result;
 				preview.style.display = 'block';
 				document.getElementById('scannerMessage').className = 'status-processing';
 				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check"></i> Image loaded. Click "Scan Image"';
@@ -1245,7 +1264,6 @@
 
 		function clearImage() {
 			qrImageFile = null;
-			qrImageData = null;
 			document.getElementById('imagePreview').style.display = 'none';
 			document.getElementById('imagePreview').src = '';
 			document.getElementById('imageInput').value = '';
