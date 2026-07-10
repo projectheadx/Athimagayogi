@@ -1,1352 +1,559 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
-	<title>Aga Oli Attendance Hub</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Aga Oli - Registration & Scan System</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-
-	<script src="https://unpkg.com/html5-qrcode"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 	<style>
-		* {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-		}
-
 		body {
-			background: #060913;
-			color: #e4e6eb;
 			font-family: 'Montserrat', sans-serif;
-			padding: 10px;
-			min-height: 100vh;
+			background: #f0ebe3;
 		}
 
-		.container-custom {
-			max-width: 100%;
-			padding: 0 5px;
+		.gradient-header {
+			background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+			color: #fff;
+			padding: 20px 0;
+			margin-bottom: 30px;
 		}
 
-		.yoga-card {
-			background: linear-gradient(145deg, #111625, #0a0d18);
-			border: 1px solid rgba(40, 167, 69, 0.15);
-			border-radius: 12px;
-			box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-			padding: 15px;
-			margin-bottom: 15px;
-			transition: all 0.3s ease;
+		.card {
+			border-radius: 15px;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+			border: none;
+			margin-bottom: 30px;
 		}
 
-		.section-title {
-			font-size: 1rem;
-			font-weight: 700;
-			color: #2eb85c;
-			margin-bottom: 12px;
-			display: flex;
-			align-items: center;
-			gap: 8px;
+		.card-header {
+			background: #2c3e50;
+			color: #fff;
+			border-radius: 15px 15px 0 0;
+			padding: 15px 20px;
 		}
 
-		#reader {
-			width: 100%;
-			max-width: 100%;
-			margin: 0 auto;
-			background: #000;
-			border-radius: 10px;
-			overflow: hidden;
-			border: 2px solid #2eb85c;
-			min-height: 300px;
-		}
-
-			#reader video {
-				width: 100% !important;
-				height: auto !important;
-			}
-
-		#reader__scan_region {
-			min-height: 300px;
-		}
-
-		#scannerMessage {
-			padding: 10px 12px;
-			border-radius: 8px;
-			font-weight: 600;
-			font-size: 0.85rem;
-			margin-top: 10px;
-			text-align: center;
-			word-break: break-word;
-		}
-
-		.status-waiting {
-			background: #1b1e2e;
-			color: #f9b115;
-			border: 1px solid rgba(249,177,21,0.2);
-		}
-
-		.status-processing {
-			background: #0f2638;
-			color: #39f;
-			border: 1px solid rgba(51,153,255,0.2);
-		}
-
-		.status-success {
-			background: #0f2d19;
-			color: #2eb85c;
-			border: 1px solid rgba(46,184,92,0.2);
-		}
-
-		.status-error {
-			background: #351616;
-			color: #e55353;
-			border: 1px solid rgba(229,83,83,0.2);
-		}
-
-		.btn {
-			font-size: 0.85rem;
-			padding: 8px 14px;
-			border-radius: 8px;
-			font-weight: 600;
-			transition: all 0.2s ease;
-			white-space: nowrap;
-		}
-
-		.btn-action-primary {
-			background: linear-gradient(135deg, #2eb85c, #1b8a3f);
-			color: white;
+		.btn-success {
+			background: #27ae60;
 			border: none;
 		}
 
-			.btn-action-primary:hover {
-				transform: translateY(-1px);
-				box-shadow: 0 4px 12px rgba(46, 184, 92, 0.3);
-				color: white;
-			}
-
-		.btn-action-secondary {
-			background: linear-gradient(135deg, #39f, #1f6acc);
-			color: white;
+		.btn-primary {
+			background: #2980b9;
 			border: none;
 		}
 
-			.btn-action-secondary:hover {
-				transform: translateY(-1px);
-				box-shadow: 0 4px 12px rgba(51, 153, 255, 0.3);
-				color: white;
-			}
-
-		.btn-outline-custom {
-			background: transparent;
-			color: #e4e6eb;
-			border: 1px solid #2f354a;
-		}
-
-			.btn-outline-custom:hover {
-				background: #1b2030;
-				color: white;
-				border-color: #4f5d75;
-			}
-
-		.btn-danger {
-			background: #dc3545;
-			border: none;
-			color: white;
-		}
-
-			.btn-danger:hover {
-				background: #c82333;
-				color: white;
-			}
-
-		.btn-sm {
-			font-size: 0.75rem;
-			padding: 5px 10px;
-		}
-
-		.stat-box {
-			background: rgba(17, 22, 37, 0.6);
+		.qr-box {
+			background: #fff;
+			padding: 20px;
 			border-radius: 10px;
-			padding: 12px;
-			border: 1px solid #1c2235;
 			text-align: center;
+			border: 2px dashed #2c3e50;
 		}
 
-			.stat-box .number {
-				font-size: 1.3rem;
-				font-weight: 700;
-				color: #2eb85c;
-			}
-
-			.stat-box .label {
-				font-size: 0.65rem;
-				color: #8a92a8;
-				margin-top: 2px;
-			}
-
-		.table-container {
-			overflow-x: auto;
-			-webkit-overflow-scrolling: touch;
-		}
-
-		.table-yoga {
-			color: #e4e6eb;
-			margin-bottom: 0;
-			font-size: 0.8rem;
-			min-width: 500px;
-		}
-
-			.table-yoga thead th {
-				background: #1b2032;
-				color: #2eb85c;
-				border: none;
-				font-weight: 600;
-				padding: 10px 8px;
-				font-size: 0.7rem;
-				text-transform: uppercase;
-				letter-spacing: 0.3px;
-				white-space: nowrap;
-			}
-
-			.table-yoga td {
-				border-top: 1px solid #1c2235;
-				padding: 8px 8px;
-				vertical-align: middle;
-				word-break: break-word;
-			}
-
-			.table-yoga tbody tr:hover {
-				background: rgba(46, 184, 92, 0.04);
-			}
-
-		.form-control-yoga {
-			background: #090d1a;
-			border: 1px solid #2f354a;
-			color: #e4e6eb;
-			border-radius: 8px;
-			padding: 8px 12px;
-			font-size: 0.85rem;
-			width: 100%;
-		}
-
-			.form-control-yoga:focus {
-				background: #090d1a;
-				border-color: #2eb85c;
-				color: #e4e6eb;
-				box-shadow: 0 0 0 3px rgba(46, 184, 92, 0.15);
-			}
-
-		.nav-tabs-custom {
-			border-bottom: 2px solid #1c2235;
-			margin-bottom: 15px;
-			overflow-x: auto;
-			-webkit-overflow-scrolling: touch;
-			display: flex;
-			flex-wrap: nowrap;
-		}
-
-			.nav-tabs-custom .nav-link {
-				color: #8a92a8;
-				font-weight: 600;
-				border: none;
-				padding: 10px 14px;
-				background: transparent;
-				font-size: 0.8rem;
-				white-space: nowrap;
-			}
-
-				.nav-tabs-custom .nav-link.active {
-					color: #2eb85c;
-					border-bottom: 3px solid #2eb85c;
-					background: transparent;
-				}
-
-		.upload-area {
-			border: 2px dashed #2f354a;
-			border-radius: 10px;
-			padding: 15px;
-			text-align: center;
-			cursor: pointer;
-			background: rgba(9, 13, 26, 0.4);
-		}
-
-			.upload-area:hover {
-				border-color: #2eb85c;
-				background: rgba(46, 184, 92, 0.03);
-			}
-
-		#imagePreview {
-			max-width: 100%;
-			max-height: 150px;
-			border-radius: 8px;
-			margin-top: 10px;
-			display: none;
-		}
-
-		.pagination-yoga .page-link {
-			background: #111625;
-			color: #e4e6eb;
-			border: 1px solid #2f354a;
-			padding: 4px 10px;
-			font-size: 0.8rem;
-		}
-
-			.pagination-yoga .page-link:hover {
-				background: #2eb85c;
-				color: white;
-				border-color: #2eb85c;
-			}
-
-		.pagination-yoga .page-item.active .page-link {
-			background: #2eb85c;
-			border-color: #2eb85c;
-			color: white;
-		}
-
-		.loading-overlay {
-			display: none;
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: rgba(6, 9, 19, 0.95);
-			z-index: 9999;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-		}
-
-			.loading-overlay.active {
-				display: flex;
-			}
-
-			.loading-overlay .spinner {
-				width: 40px;
-				height: 40px;
-				border: 3px solid #1c2235;
-				border-top: 3px solid #2eb85c;
-				border-radius: 50%;
-				animation: spin 1s linear infinite;
-			}
-
-		@keyframes spin {
-			0% {
-				transform: rotate(0deg);
-			}
-
-			100% {
-				transform: rotate(360deg);
-			}
-		}
-
-		.modal-custom-content {
-			background: #111625;
-			color: #e4e6eb;
-			border: 1px solid #2f354a;
-			border-radius: 16px;
-		}
-
-		.qr-wrapper {
-			background: white;
-			padding: 12px;
-			border-radius: 10px;
+		.member-id {
+			font-size: 16px;
+			font-weight: bold;
+			color: #2c3e50;
+			background: #ecf0f1;
+			padding: 8px 15px;
+			border-radius: 20px;
 			display: inline-block;
-			margin: 10px 0;
 		}
 
-		.badge-success {
-			background-color: #2eb85c;
+		.badge-present {
+			background: #27ae60;
+			color: #fff;
+			padding: 5px 15px;
+			border-radius: 20px;
 		}
 
-		.text-success {
-			color: #2eb85c !important;
+		.scanner-area {
+			border: 3px dashed #2980b9;
+			padding: 30px;
+			border-radius: 15px;
+			background: #f8f9fa;
 		}
 
-		.gap-2 {
-			gap: 8px;
+			.scanner-area input {
+				width: 100%;
+				padding: 15px;
+				font-size: 18px;
+				text-align: center;
+				border-radius: 10px;
+			}
+
+		.pagination .page-link {
+			color: #2c3e50;
 		}
 
-			.gap-2 > * {
-				margin-right: 4px;
-			}
-
-				.gap-2 > *:last-child {
-					margin-right: 0;
-				}
-
-		@media (max-width: 576px) {
-			body {
-				padding: 5px;
-			}
-
-			.yoga-card {
-				padding: 10px;
-			}
-
-			.section-title {
-				font-size: 0.9rem;
-			}
-
-			.stat-box .number {
-				font-size: 1.1rem;
-			}
-
-			.stat-box .label {
-				font-size: 0.6rem;
-			}
-
-			.btn {
-				font-size: 0.75rem;
-				padding: 6px 10px;
-			}
-
-			.btn-sm {
-				font-size: 0.65rem;
-				padding: 4px 8px;
-			}
-
-			.table-yoga {
-				font-size: 0.7rem;
-				min-width: 400px;
-			}
-
-				.table-yoga thead th {
-					font-size: 0.6rem;
-					padding: 6px 4px;
-				}
-
-				.table-yoga td {
-					padding: 5px 4px;
-				}
-
-			.nav-tabs-custom .nav-link {
-				font-size: 0.7rem;
-				padding: 8px 10px;
-			}
-
-			#reader {
-				min-height: 200px;
-			}
-
-			#reader__scan_region {
-				min-height: 200px;
-			}
-
-			.form-control-yoga {
-				font-size: 0.75rem;
-				padding: 6px 10px;
-			}
-
-			.h2 {
-				font-size: 1.2rem !important;
-			}
-
-			.h4 {
-				font-size: 1rem !important;
-			}
-
-			.h5 {
-				font-size: 0.9rem !important;
-			}
-
-			.small {
-				font-size: 0.65rem !important;
-			}
-
-			.pagination-yoga .page-link {
-				padding: 3px 8px;
-				font-size: 0.7rem;
-			}
-
-			.qr-wrapper {
-				padding: 8px;
-			}
-
-				.qr-wrapper img {
-					width: 150px !important;
-					height: 150px !important;
-				}
-
-			.modal-dialog {
-				margin: 10px;
-			}
-
-			#scannerMessage {
-				font-size: 0.75rem;
-				padding: 8px 10px;
-			}
+		.pagination .page-item.active .page-link {
+			background: #2c3e50;
+			border-color: #2c3e50;
 		}
 
-		@media (max-width: 400px) {
-			.stat-box {
-				padding: 8px;
+		.footer {
+			background: #1a2a3a;
+			color: #ccc;
+			padding: 20px 0;
+			margin-top: 40px;
+			text-align: center;
+		}
+
+		.nav-pills .nav-link {
+			color: #2c3e50;
+			border-radius: 30px;
+			margin: 0 5px;
+		}
+
+			.nav-pills .nav-link.active {
+				background: #2c3e50;
+				color: #fff;
 			}
 
-				.stat-box .number {
-					font-size: 0.9rem;
-				}
+		.export-btn {
+			margin: 5px;
+		}
 
-			.table-yoga {
-				min-width: 320px;
-				font-size: 0.65rem;
-			}
+		.filter-row {
+			background: #ecf0f1;
+			padding: 15px;
+			border-radius: 10px;
+			margin-bottom: 20px;
+		}
 
-				.table-yoga thead th {
-					font-size: 0.55rem;
-					padding: 4px 3px;
-				}
+		.scan-result {
+			margin-top: 15px;
+			font-size: 16px;
+		}
 
-				.table-yoga td {
-					padding: 4px 3px;
-				}
+		.table-responsive {
+			min-height: 400px;
 		}
 	</style>
 </head>
-
 <body>
 
-	<div class="loading-overlay" id="loadingOverlay">
-		<div class="spinner"></div>
-		<p class="mt-2 font-weight-bold small"><i class="fa fa-database"></i> Connecting...</p>
+	<!-- ===== HEADER ===== -->
+	<div class="gradient-header text-center">
+		<h1><i class="fa fa-leaf"></i> Aga Oli Meignana Yogam</h1>
+		<p class="lead">Member Registration & Attendance System</p>
 	</div>
 
-	<div class="container-custom">
+	<div class="container">
+		<!-- Navigation Pills -->
+		<ul class="nav nav-pills justify-content-center mb-4" id="mainTabs">
+			<li class="nav-item"><a class="nav-link active" id="registerTab" data-toggle="pill" href="#registerSection"><i class="fa fa-user-plus"></i> Registration</a></li>
+			<li class="nav-item"><a class="nav-link" id="scanTab" data-toggle="pill" href="#scanSection"><i class="fa fa-qrcode"></i> Scan Entry</a></li>
+		</ul>
 
-		<!-- Header -->
-		<div class="yoga-card" style="border-left: 4px solid #2eb85c;">
-			<div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-				<div class="text-center text-md-left">
-					<h2 class="font-weight-bold mb-0 text-success" style="font-size: 1.3rem;">
-						<i class="fa fa-universal-access"></i> Aga Oli Attendance
-					</h2>
-					<p class="text-muted small mb-0"><i class="fa fa-link"></i> Live QR Scan System</p>
-				</div>
-				<div class="mt-2 mt-md-0 d-flex gap-2 flex-wrap justify-content-center">
-					<button class="btn btn-action-secondary btn-sm" onclick="fetchAllData()">
-						<i class="fa fa-refresh"></i> Refresh
-					</button>
-					<button class="btn btn-outline-custom btn-sm" onclick="window.location.reload()">
-						<i class="fa fa-power-off"></i> Reset
-					</button>
-				</div>
-			</div>
-		</div>
-
-		<!-- Stats -->
-		<div class="row mb-3">
-			<div class="col-3 col-md-3 mb-2">
-				<div class="stat-box">
-					<div class="number" id="totalMembers">0</div>
-					<div class="label">Members</div>
-				</div>
-			</div>
-			<div class="col-3 col-md-3 mb-2">
-				<div class="stat-box">
-					<div class="number" id="totalAttendance">0</div>
-					<div class="label">Total Scans</div>
-				</div>
-			</div>
-			<div class="col-3 col-md-3 mb-2">
-				<div class="stat-box">
-					<div class="number" id="todayAttendance">0</div>
-					<div class="label">Today</div>
-				</div>
-			</div>
-			<div class="col-3 col-md-3 mb-2">
-				<div class="stat-box">
-					<div class="number" id="pendingMembers">0</div>
-					<div class="label">Pending</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Scanner & Controls -->
-		<div class="row">
-			<div class="col-12 col-lg-5 mb-3">
-				<div class="yoga-card">
-					<div class="section-title"><i class="fa fa-qrcode"></i> QR Scanner</div>
-
-					<div id="reader"></div>
-					<div id="scannerMessage" class="status-waiting">
-						<i class="fa fa-info-circle"></i> Click "Start Scanner" to begin
-					</div>
-
-					<div class="d-flex gap-2 mt-2 flex-wrap">
-						<button class="btn btn-action-primary flex-grow-1" onclick="startScannerEngine()">
-							<i class="fa fa-video-camera"></i> Start Scanner
-						</button>
-						<button class="btn btn-danger flex-grow-1" onclick="stopScannerEngine()">
-							<i class="fa fa-stop"></i> Stop
-						</button>
-					</div>
-
-					<hr style="border-color: #1c2235; margin: 12px 0;">
-
-					<div class="section-title" style="font-size: 0.9rem;">
-						<i class="fa fa-image"></i> Scan from Image
-					</div>
-					<div class="upload-area" onclick="document.getElementById('imageInput').click()">
-						<i class="fa fa-cloud-upload text-success"></i>
-						<p class="mb-0 small">Upload QR Code Image</p>
-					</div>
-					<input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="handleImageUpload(event)">
-					<div class="text-center"><img id="imagePreview" alt="Preview"></div>
-
-					<div class="d-flex gap-2 mt-2 flex-wrap">
-						<button class="btn btn-action-secondary flex-grow-1" onclick="scanFromImage()">
-							<i class="fa fa-search"></i> Scan Image
-						</button>
-						<button class="btn btn-outline-custom" onclick="clearImage()">
-							<i class="fa fa-times"></i> Clear
-						</button>
-					</div>
-				</div>
-			</div>
-
-			<!-- Filters -->
-			<div class="col-12 col-lg-7 mb-3">
-				<div class="yoga-card">
-					<div class="section-title"><i class="fa fa-sliders"></i> Filters & Controls</div>
-
-					<div class="mb-2">
-						<label class="text-muted small font-weight-bold">Search</label>
-						<input type="text" id="filterSearch" class="form-control form-control-yoga"
-							   placeholder="Search by Name, ID, Mobile..." onkeyup="applyFilters()">
-					</div>
-
-					<div class="mb-2">
-						<label class="text-muted small font-weight-bold d-block">Date Range</label>
-						<div class="d-flex flex-wrap gap-2">
-							<input type="date" id="filterDateFrom" class="form-control form-control-yoga" style="flex:1;min-width:100px;" onchange="applyFilters()">
-							<span class="text-muted small align-self-center">to</span>
-							<input type="date" id="filterDateTo" class="form-control form-control-yoga" style="flex:1;min-width:100px;" onchange="applyFilters()">
-							<button class="btn btn-outline-custom btn-sm" onclick="clearDateFilter()">
-								<i class="fa fa-times"></i> Reset
-							</button>
+		<!-- ============================================================ -->
+		<!-- TAB 1: REGISTRATION (Separate) -->
+		<!-- ============================================================ -->
+		<div class="tab-content">
+			<div class="tab-pane fade show active" id="registerSection">
+				<div class="row">
+					<div class="col-lg-7">
+						<div class="card">
+							<div class="card-header"><i class="fa fa-user-plus"></i> Become a Member</div>
+							<div class="card-body">
+								<form id="registerForm">
+									<div class="row">
+										<div class="col-md-6"><div class="form-group"><label>Full Name</label><input type="text" class="form-control" id="regName" placeholder="Enter full name" required></div></div>
+										<div class="col-md-6"><div class="form-group"><label>Mobile Number</label><input type="tel" class="form-control" id="regMobile" placeholder="10 digit mobile" pattern="[0-9]{10}" required></div></div>
+										<div class="col-md-4"><div class="form-group"><label>Age</label><input type="number" class="form-control" id="regAge" placeholder="Age" required></div></div>
+										<div class="col-md-4"><div class="form-group"><label>State</label><input type="text" class="form-control" id="regState" placeholder="Tamil Nadu" required></div></div>
+										<div class="col-md-4"><div class="form-group"><label>District</label><input type="text" class="form-control" id="regDistrict" placeholder="District" required></div></div>
+										<div class="col-12"><button type="submit" class="btn btn-success btn-lg btn-block"><i class="fa fa-id-card"></i> Register & Generate QR</button></div>
+									</div>
+								</form>
+								<hr>
+								<div id="qrResult" style="display:none;" class="mt-3">
+									<div class="row">
+										<div class="col-md-5">
+											<div class="qr-box">
+												<h5><i class="fa fa-qrcode"></i> Your QR Code</h5>
+												<div id="qrCodeContainer"></div>
+												<p class="member-id mt-2" id="displayMemberId"></p>
+												<button class="btn btn-sm btn-outline-secondary" onclick="downloadQR()"><i class="fa fa-download"></i> Download QR</button>
+											</div>
+										</div>
+										<div class="col-md-7">
+											<div class="alert alert-success">
+												<h5><i class="fa fa-check-circle"></i> Registration Successful!</h5>
+												<p><strong>Member ID:</strong> <span id="displayMemberId2"></span></p>
+												<p><strong>Name:</strong> <span id="displayName"></span></p>
+												<p>Show this QR at the entrance for daily attendance.</p>
+												<button class="btn btn-primary btn-sm" onclick="resetForm()"><i class="fa fa-plus"></i> Register Another</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-
-					<div class="d-flex gap-2 flex-wrap">
-						<button class="btn btn-action-secondary flex-grow-1" onclick="exportDataToExcelEngine()">
-							<i class="fa fa-file-excel-o"></i> Export Excel
-						</button>
-						<button class="btn btn-outline-custom" onclick="clearAllFilters()">
-							<i class="fa fa-eraser"></i> Clear Filters
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Attendance & Members Tabs -->
-		<div class="yoga-card">
-			<ul class="nav nav-tabs nav-tabs-custom" id="tabEngine" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" id="attendance-tab" data-toggle="tab" href="#attendancePane" role="tab">
-						<i class="fa fa-list-alt"></i> Attendance
-						<span class="badge badge-success ml-1" id="attendanceCount">0</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="members-tab" data-toggle="tab" href="#membersPane" role="tab">
-						<i class="fa fa-users"></i> Members
-						<span class="badge badge-success ml-1" id="membersCount">0</span>
-					</a>
-				</li>
-			</ul>
-
-			<div class="tab-content">
-				<div class="tab-pane fade show active" id="attendancePane" role="tabpanel">
-					<div class="table-container">
-						<table class="table table-yoga">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Date & Time</th>
-									<th>Member ID</th>
-									<th>Name</th>
-									<th>Mobile</th>
-								</tr>
-							</thead>
-							<tbody id="attendanceTableBody">
-								<tr>
-									<td colspan="5" class="text-center text-muted py-3">
-										<i class="fa fa-spinner fa-spin"></i> Loading...
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-2">
-						<div class="small text-muted" id="attendancePaginationInfo">Showing 0 records</div>
-						<nav><ul class="pagination pagination-yoga mb-0" id="attendancePagination"></ul></nav>
-					</div>
-				</div>
-
-				<div class="tab-pane fade" id="membersPane" role="tabpanel">
-					<div class="table-container">
-						<table class="table table-yoga">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>UID</th>
-									<th>Name</th>
-									<th>Mobile</th>
-									<th>Status</th>
-									<th>QR</th>
-								</tr>
-							</thead>
-							<tbody id="membersTableBody">
-								<tr>
-									<td colspan="6" class="text-center text-muted py-3">
-										<i class="fa fa-spinner fa-spin"></i> Loading...
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-2">
-						<div class="small text-muted" id="membersPaginationInfo">Showing 0 records</div>
-						<nav><ul class="pagination pagination-yoga mb-0" id="membersPagination"></ul></nav>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- QR Modal -->
-	<div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content modal-custom-content">
-				<div class="modal-header border-0">
-					<h5 class="modal-title font-weight-bold text-success">
-						<i class="fa fa-id-card"></i> QR Code
-					</h5>
-					<button type="button" class="close text-white" data-dismiss="modal">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body text-center">
-					<p class="mb-1 text-muted small">Member ID:</p>
-					<h4 id="modalMemberId" class="text-white font-weight-bold mb-2"></h4>
-					<p class="mb-0 text-muted small">Name:</p>
-					<h5 id="modalMemberName" class="text-success font-weight-bold"></h5>
-
-					<div class="text-center">
-						<div class="qr-wrapper">
-							<div id="modalQrCanvas"></div>
+					<div class="col-lg-5">
+						<div class="card">
+							<div class="card-header"><i class="fa fa-users"></i> Recent Members</div>
+							<div class="card-body" style="max-height: 450px; overflow-y: auto;">
+								<div id="recentMembersList"></div>
+							</div>
 						</div>
 					</div>
-					<p class="text-muted small px-2">Scan this QR to mark attendance</p>
 				</div>
-				<div class="modal-footer border-0 d-flex justify-content-between">
-					<button type="button" class="btn btn-outline-custom btn-sm" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-action-primary btn-sm" onclick="downloadGeneratedQRImage()">
-						<i class="fa fa-download"></i> Download
-					</button>
+			</div>
+
+			<!-- ============================================================ -->
+			<!-- TAB 2: SCAN ENTRY (Separate with Pagination) -->
+			<!-- ============================================================ -->
+			<div class="tab-pane fade" id="scanSection">
+				<div class="card">
+					<div class="card-header"><i class="fa fa-qrcode"></i> Class Entry Scanner</div>
+					<div class="card-body">
+						<!-- Scanner Area -->
+						<div class="scanner-area text-center">
+							<h5><i class="fa fa-camera"></i> Scan QR Code</h5>
+							<p>Enter the Member ID manually or scan QR</p>
+							<div class="row justify-content-center">
+								<div class="col-md-8">
+									<input type="text" class="form-control" id="scanInput" placeholder="Paste or type Member ID" />
+									<button class="btn btn-success btn-lg mt-3" onclick="markAttendance()"><i class="fa fa-check"></i> Mark Present</button>
+									<div id="scanResult" class="scan-result"></div>
+								</div>
+							</div>
+						</div>
+
+						<hr>
+
+						<!-- Attendance Table with Pagination -->
+						<div class="mt-4">
+							<h5><i class="fa fa-calendar-check-o"></i> Attendance Records</h5>
+							<div class="filter-row row">
+								<div class="col-md-4"><input type="date" class="form-control" id="filterDate" /></div>
+								<div class="col-md-4"><input type="text" class="form-control" id="filterSearch" placeholder="Search by Name or ID" /></div>
+								<div class="col-md-4">
+									<button class="btn btn-primary btn-sm" onclick="applyFilters()"><i class="fa fa-search"></i> Filter</button>
+									<button class="btn btn-secondary btn-sm" onclick="resetFilters()"><i class="fa fa-refresh"></i> Reset</button>
+									<button class="btn btn-success btn-sm" onclick="exportToExcel()"><i class="fa fa-file-excel-o"></i> Excel</button>
+								</div>
+							</div>
+
+							<div class="table-responsive">
+								<table class="table table-bordered table-hover" id="attendanceTable">
+									<thead><tr><th>Date</th><th>Member ID</th><th>Name</th><th>Status</th><th>Time</th></tr></thead>
+									<tbody id="attendanceBody"></tbody>
+								</table>
+							</div>
+
+							<!-- Pagination -->
+							<nav aria-label="Attendance pagination">
+								<ul class="pagination justify-content-center" id="paginationControls"></ul>
+							</nav>
+							<div class="text-center text-muted small">
+								Showing <span id="pageInfo">0</span> records
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<!-- ===== FOOTER ===== -->
+	<div class="footer">
+		<p>&copy; 2026 Aga Oli Meignana Yogam - Athimagayogi | <i class="fa fa-heart" style="color:#e74c3c;"></i> Spread the Light</p>
+	</div>
+
+	<!-- ===== SCRIPTS ===== -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 	<script>
-		// ============================================
-		// CONFIGURATION
-		// ============================================
-		const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUIjcWvD2gA7JofN3PrHBvi5lff46Md0Ithbo3P6jyCnOw0eVZ-PsiYRhTLRYnCemC/exec";
+		// ============================================================
+		// DATA STORE
+		// ============================================================
+		let members = JSON.parse(localStorage.getItem('yogamMembers')) || [];
+		let attendance = JSON.parse(localStorage.getItem('yogamAttendance')) || [];
 
-		// ============================================
-		// STATE
-		// ============================================
-		let html5QrcodeScanner = null;
-		let isScannerRunning = false;
-		let masterAttendanceData = [];
-		let masterMembersData = [];
-		let filteredAttendance = [];
-		let filteredMembers = [];
-		let attendanceCurrentPage = 1;
-		let membersCurrentPage = 1;
-		const rowsPerPage = 8;
-		let qrImageFile = null;
-		let isLoading = false;
-		let isProcessingScan = false;
-		let manualEntryCount = 0;
+		// Pagination variables
+		let currentPage = 1;
+		const recordsPerPage = 5;
+		let filteredData = [];
 
-		$(document).ready(function () {
-			fetchAllData();
+		// ============================================================
+		// SAVE FUNCTIONS
+		// ============================================================
+		function saveMembers() { localStorage.setItem('yogamMembers', JSON.stringify(members)); }
+		function saveAttendance() { localStorage.setItem('yogamAttendance', JSON.stringify(attendance)); }
+
+		// ============================================================
+		// GENERATE UNIQUE ID
+		// ============================================================
+		function generateMemberId() {
+			const prefix = 'AY';
+			const num = String(members.length + 1).padStart(4, '0');
+			return prefix + num + String(Date.now()).slice(-4);
+		}
+
+		// ============================================================
+		// REGISTRATION (Separate)
+		// ============================================================
+		document.getElementById('registerForm').addEventListener('submit', function (e) {
+			e.preventDefault();
+			const name = document.getElementById('regName').value.trim();
+			const mobile = document.getElementById('regMobile').value.trim();
+			const age = parseInt(document.getElementById('regAge').value);
+			const state = document.getElementById('regState').value.trim();
+			const district = document.getElementById('regDistrict').value.trim();
+
+			if (!name || !mobile || !age || !state || !district) {
+				alert('Please fill all fields.');
+				return;
+			}
+			if (mobile.length !== 10) {
+				alert('Mobile number must be 10 digits.');
+				return;
+			}
+
+			const memberId = generateMemberId();
+			const newMember = { id: memberId, name, mobile, age, state, district, registered: new Date().toISOString() };
+			members.push(newMember);
+			saveMembers();
+
+			// Generate QR
+			const qrContainer = document.getElementById('qrCodeContainer');
+			qrContainer.innerHTML = '';
+			new QRCode(qrContainer, { text: memberId, width: 150, height: 150 });
+
+			document.getElementById('displayMemberId').textContent = memberId;
+			document.getElementById('displayMemberId2').textContent = memberId;
+			document.getElementById('displayName').textContent = name;
+			document.getElementById('qrResult').style.display = 'block';
+			document.getElementById('registerForm').reset();
+
+			loadRecentMembers();
+			// Switch to scan tab to show new member
+			$('#scanTab').tab('show');
 		});
 
-		// ============================================
-		// FETCH DATA
-		// ============================================
-		function fetchAllData() {
-			if (isLoading) return;
-			isLoading = true;
-			showLoading(true);
-
-			Promise.all([fetchAttendanceLogs(), fetchMembersList()])
-				.then(() => {
-					showLoading(false);
-					isLoading = false;
-					updateStats();
-				})
-				.catch((err) => {
-					console.error('Fetch Error:', err);
-					showLoading(false);
-					isLoading = false;
-					document.getElementById('scannerMessage').className = 'status-error';
-					document.getElementById('scannerMessage').innerHTML =
-						`<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}`;
-				});
+		function resetForm() {
+			document.getElementById('qrResult').style.display = 'none';
+			document.getElementById('registerForm').reset();
 		}
 
-		function fetchAttendanceLogs() {
-			return new Promise((resolve, reject) => {
-				const url = `${GOOGLE_APPS_SCRIPT_URL}?action=getAttendanceLogs`;
-				console.log('Fetching attendance...');
-
-				fetch(url)
-					.then(res => {
-						if (!res.ok) throw new Error(`HTTP ${res.status}`);
-						return res.json();
-					})
-					.then(data => {
-						console.log('Attendance received:', data);
-						masterAttendanceData = Array.isArray(data) ? data : [];
-						filteredAttendance = [...masterAttendanceData];
-						renderAttendanceTable();
-						resolve();
-					})
-					.catch(e => {
-						console.error('Attendance fetch error:', e);
-						masterAttendanceData = [];
-						filteredAttendance = [];
-						renderAttendanceTable();
-						reject(e);
-					});
-			});
-		}
-
-		function fetchMembersList() {
-			return new Promise((resolve, reject) => {
-				const url = `${GOOGLE_APPS_SCRIPT_URL}?action=getMembers`;
-				console.log('Fetching members...');
-
-				fetch(url)
-					.then(res => {
-						if (!res.ok) throw new Error(`HTTP ${res.status}`);
-						return res.json();
-					})
-					.then(data => {
-						console.log('Members received:', data);
-						masterMembersData = Array.isArray(data) ? data : [];
-						filteredMembers = [...masterMembersData];
-						renderMembersTable();
-						resolve();
-					})
-					.catch(e => {
-						console.error('Members fetch error:', e);
-						masterMembersData = [];
-						filteredMembers = [];
-						renderMembersTable();
-						reject(e);
-					});
-			});
-		}
-
-		function showLoading(show) {
-			document.getElementById('loadingOverlay').classList.toggle('active', show);
-		}
-
-		function updateStats() {
-			document.getElementById('totalMembers').textContent = masterMembersData.length;
-			document.getElementById('totalAttendance').textContent = masterAttendanceData.length;
-
-			const todayStr = new Date().toISOString().split('T')[0];
-			const todayCount = masterAttendanceData.filter(r => r.timestamp && r.timestamp.startsWith(todayStr)).length;
-			document.getElementById('todayAttendance').textContent = todayCount;
-
-			const pendingCount = masterMembersData.filter(m => m.status === 'Pending').length;
-			document.getElementById('pendingMembers').textContent = pendingCount;
-
-			document.getElementById('attendanceCount').textContent = masterAttendanceData.length;
-			document.getElementById('membersCount').textContent = masterMembersData.length;
-		}
-
-		// ============================================
-		// FILTERS
-		// ============================================
-		function applyFilters() {
-			const searchText = document.getElementById('filterSearch').value.toLowerCase().trim();
-			const dateFrom = document.getElementById('filterDateFrom').value;
-			const dateTo = document.getElementById('filterDateTo').value;
-
-			filteredAttendance = masterAttendanceData.filter(row => {
-				let matchesText = true, matchesDate = true;
-				if (searchText) {
-					const dataMatrix = `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase();
-					if (!dataMatrix.includes(searchText)) matchesText = false;
-				}
-				if (row.timestamp) {
-					const targetISO = row.timestamp.split(' ')[0];
-					if (dateFrom && targetISO < dateFrom) matchesDate = false;
-					if (dateTo && targetISO > dateTo) matchesDate = false;
-				} else if (dateFrom || dateTo) {
-					matchesDate = false;
-				}
-				return matchesText && matchesDate;
-			});
-
-			filteredMembers = masterMembersData.filter(row => {
-				if (!searchText) return true;
-				return `${row.memberId || ''} ${row.name || ''} ${row.mobile || ''}`.toLowerCase().includes(searchText);
-			});
-
-			attendanceCurrentPage = 1;
-			membersCurrentPage = 1;
-			renderAttendanceTable();
-			renderMembersTable();
-		}
-
-		function clearDateFilter() {
-			document.getElementById('filterDateFrom').value = '';
-			document.getElementById('filterDateTo').value = '';
-			applyFilters();
-		}
-
-		function clearAllFilters() {
-			document.getElementById('filterSearch').value = '';
-			document.getElementById('filterDateFrom').value = '';
-			document.getElementById('filterDateTo').value = '';
-			filteredAttendance = [...masterAttendanceData];
-			filteredMembers = [...masterMembersData];
-			attendanceCurrentPage = 1;
-			membersCurrentPage = 1;
-			renderAttendanceTable();
-			renderMembersTable();
-		}
-
-		// ============================================
-		// RENDER TABLES
-		// ============================================
-		function renderAttendanceTable() {
-			const tbody = document.getElementById('attendanceTableBody');
-			const total = filteredAttendance.length;
-			const totalPages = Math.ceil(total / rowsPerPage) || 1;
-			if (attendanceCurrentPage > totalPages) attendanceCurrentPage = totalPages;
-
-			const start = (attendanceCurrentPage - 1) * rowsPerPage;
-			const end = Math.min(start + rowsPerPage, total);
-			const viewBuffer = filteredAttendance.slice(start, end);
-
-			if (total === 0) {
-				tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-3">
-							<i class="fa fa-folder-open-o"></i> No attendance records found
-						</td></tr>`;
+		function downloadQR() {
+			const canvas = document.querySelector('#qrCodeContainer canvas');
+			if (canvas) {
+				const link = document.createElement('a');
+				link.download = 'member_qr.png';
+				link.href = canvas.toDataURL('image/png');
+				link.click();
 			} else {
-				tbody.innerHTML = viewBuffer.map((row, idx) => `
-							<tr>
-								<td>${start + idx + 1}</td>
-								<td><span class="badge badge-dark text-success">${row.timestamp || 'N/A'}</span></td>
-								<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
-								<td>${row.name || 'Unknown'}</td>
-								<td>${row.mobile || 'N/A'}</td>
-							</tr>
-						`).join('');
-			}
-			document.getElementById('attendancePaginationInfo').textContent =
-				`Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total}`;
-			buildPaginationControls('attendancePagination', totalPages, attendanceCurrentPage, 'attendance');
-		}
-
-		function renderMembersTable() {
-			const tbody = document.getElementById('membersTableBody');
-			const total = filteredMembers.length;
-			const totalPages = Math.ceil(total / rowsPerPage) || 1;
-			if (membersCurrentPage > totalPages) membersCurrentPage = totalPages;
-
-			const start = (membersCurrentPage - 1) * rowsPerPage;
-			const end = Math.min(start + rowsPerPage, total);
-			const viewBuffer = filteredMembers.slice(start, end);
-
-			if (total === 0) {
-				tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-3">
-							<i class="fa fa-user-times"></i> No members found
-						</td></tr>`;
-			} else {
-				tbody.innerHTML = viewBuffer.map((row, idx) => {
-					const statusClass = row.status === 'Verified' ? 'badge-success' :
-						row.status === 'Pending' ? 'badge-warning text-dark' : 'badge-danger';
-					return `
-								<tr>
-									<td>${start + idx + 1}</td>
-									<td><strong class="text-info">${row.memberId || 'N/A'}</strong></td>
-									<td>${row.name || 'Unknown'}</td>
-									<td>${row.mobile || 'N/A'}</td>
-									<td><span class="badge badge-pill ${statusClass}">${row.status || 'N/A'}</span></td>
-									<td class="text-center">
-										<button class="btn btn-action-secondary btn-sm"
-											onclick="spawnQRCodeCanvas('${row.memberId}', '${escape(row.name || '')}')">
-											<i class="fa fa-qrcode"></i>
-										</button>
-									</td>
-								</tr>
-							`;
-				}).join('');
-			}
-			document.getElementById('membersPaginationInfo').textContent =
-				`Showing ${total > 0 ? start + 1 : 0} to ${end} of ${total}`;
-			buildPaginationControls('membersPagination', totalPages, membersCurrentPage, 'members');
-		}
-
-		function buildPaginationControls(targetId, totalPages, currentPage, coreContext) {
-			const wrapper = document.getElementById(targetId);
-			if (!wrapper) return;
-			if (totalPages <= 1) { wrapper.innerHTML = ''; return; }
-
-			let html = `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-						<a class="page-link" href="#" onclick="handlePageSwitch(${currentPage - 1}, '${coreContext}')">&laquo;</a>
-					</li>`;
-
-			for (let i = 1; i <= totalPages; i++) {
-				if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
-					html += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-								<a class="page-link" href="#" onclick="handlePageSwitch(${i}, '${coreContext}')">${i}</a>
-							</li>`;
-				} else if (i === currentPage - 2 || i === currentPage + 2) {
-					html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-				}
-			}
-
-			html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-						<a class="page-link" href="#" onclick="handlePageSwitch(${currentPage + 1}, '${coreContext}')">&raquo;</a>
-					</li>`;
-			wrapper.innerHTML = html;
-		}
-
-		function handlePageSwitch(targetPageIndex, coreContext) {
-			if (coreContext === 'attendance') {
-				attendanceCurrentPage = targetPageIndex;
-				renderAttendanceTable();
-			} else {
-				membersCurrentPage = targetPageIndex;
-				renderMembersTable();
+				alert('QR not generated yet.');
 			}
 		}
 
-		// ============================================
-		// SCANNER
-		// ============================================
-		function startScannerEngine() {
-			const statusMsg = document.getElementById('scannerMessage');
-
-			if (html5QrcodeScanner) {
-				try {
-					html5QrcodeScanner.clear();
-					html5QrcodeScanner = null;
-				} catch (e) {
-					console.warn('Clear error:', e);
-				}
+		function loadRecentMembers() {
+			const container = document.getElementById('recentMembersList');
+			if (members.length === 0) {
+				container.innerHTML = '<p class="text-muted text-center">No members yet.</p>';
+				return;
 			}
-
-			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Initializing camera...';
-
-			try {
-				const readerElement = document.getElementById('reader');
-				readerElement.innerHTML = '';
-
-				html5QrcodeScanner = new Html5QrcodeScanner('reader', {
-					fps: 15,
-					qrbox: { width: 250, height: 250 },
-					aspectRatio: 1.0
-				});
-
-				html5QrcodeScanner.render(onScanSuccess, onScanError);
-				isScannerRunning = true;
-				statusMsg.className = 'status-processing';
-				statusMsg.innerHTML = '<i class="fa fa-camera"></i> Scanner active. Show QR code to scan.';
-			} catch (err) {
-				console.error('Scanner init error:', err);
-				statusMsg.className = 'status-error';
-				statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}`;
-			}
+			const recent = members.slice(-5).reverse();
+			container.innerHTML = recent.map(m => `
+			<div class="d-flex justify-content-between align-items-center border-bottom py-2">
+				<div><strong>${m.name}</strong><br><small class="text-muted">${m.id}</small></div>
+				<span class="badge badge-success">${m.mobile}</span>
+			</div>
+		`).join('');
 		}
 
-		function onScanError(err) {
-			// Silent error handling
-		}
+		// ============================================================
+		// SCAN & ATTENDANCE (Separate)
+		// ============================================================
+		function markAttendance() {
+			const id = document.getElementById('scanInput').value.trim();
+			const resultDiv = document.getElementById('scanResult');
 
-		function stopScannerEngine() {
-			if (html5QrcodeScanner) {
-				html5QrcodeScanner.clear().then(() => {
-					html5QrcodeScanner = null;
-					isScannerRunning = false;
-					document.getElementById('reader').innerHTML = '';
-					document.getElementById('scannerMessage').className = 'status-waiting';
-					document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Scanner stopped.';
-				}).catch(e => {
-					console.error('Stop error:', e);
-					html5QrcodeScanner = null;
-					isScannerRunning = false;
-				});
-			}
-		}
-
-		// ============================================
-		// CORE FIX: MARK ATTENDANCE WITH PROPER DATA
-		// ============================================
-		function onScanSuccess(decodedUID) {
-			if (isProcessingScan) {
-				console.log('Already processing...');
+			if (!id) {
+				resultDiv.innerHTML = '<div class="alert alert-danger">Please enter Member ID.</div>';
 				return;
 			}
 
-			const statusMsg = document.getElementById('scannerMessage');
-			const cleanUID = decodedUID.trim();
-
-			console.log('QR Scanned:', cleanUID);
-			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = `<i class="fa fa-spinner fa-spin"></i> Processing: ${cleanUID}`;
-
-			isProcessingScan = true;
-
-			// Find member
-			const member = masterMembersData.find(m => m.memberId === cleanUID);
-
+			const member = members.find(m => m.id === id);
 			if (!member) {
-				statusMsg.className = 'status-error';
-				statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Member not found: ${cleanUID}`;
-				isProcessingScan = false;
+				resultDiv.innerHTML = '<div class="alert alert-danger">Member not found! Please register first.</div>';
 				return;
 			}
 
-			// Get current timestamp
+			const today = new Date().toISOString().split('T')[0];
+			const already = attendance.find(a => a.memberId === id && a.date === today);
+
+			if (already) {
+				resultDiv.innerHTML = `<div class="alert alert-warning">${member.name} already marked present today at ${already.time}.</div>`;
+				return;
+			}
+
 			const now = new Date();
-			const timestamp = now.toISOString().replace('T', ' ').slice(0, 19);
+			const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+			attendance.push({ memberId: id, name: member.name, date: today, time: timeStr, status: 'Present' });
+			saveAttendance();
 
-			// Create attendance record
-			const attendanceRecord = {
-				timestamp: timestamp,
-				memberId: member.memberId,
-				name: member.name,
-				mobile: member.mobile
-			};
+			resultDiv.innerHTML = `<div class="alert alert-success"><i class="fa fa-check"></i> ${member.name} (${member.id}) marked Present at ${timeStr}!</div>`;
+			document.getElementById('scanInput').value = '';
 
-			console.log('Marking attendance:', attendanceRecord);
-
-			// Method 1: POST with JSON
-			const payload = {
-				action: 'markAttendance',
-				memberId: member.memberId,
-				name: member.name,
-				mobile: member.mobile,
-				timestamp: timestamp
-			};
-
-			fetch(GOOGLE_APPS_SCRIPT_URL, {
-				method: 'POST',
-				mode: 'no-cors',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(payload)
-			})
-				.then(() => {
-					console.log('Attendance POST sent successfully');
-
-					// Method 2: Also try GET as fallback
-					const getUrl = `${GOOGLE_APPS_SCRIPT_URL}?action=markAttendance&memberId=${encodeURIComponent(member.memberId)}&name=${encodeURIComponent(member.name)}&mobile=${encodeURIComponent(member.mobile)}&timestamp=${encodeURIComponent(timestamp)}`;
-					return fetch(getUrl);
-				})
-				.then(() => {
-					console.log('Attendance marked for:', member.name);
-					statusMsg.className = 'status-success';
-					statusMsg.innerHTML = `<i class="fa fa-check-circle"></i> ✅ ${member.name} checked in!`;
-
-					// Add to local data immediately
-					masterAttendanceData.unshift(attendanceRecord);
-					filteredAttendance = [...masterAttendanceData];
-					renderAttendanceTable();
-					updateStats();
-
-					// Refresh from server after delay
-					setTimeout(() => {
-						fetchAllData();
-					}, 2000);
-				})
-				.catch(err => {
-					console.error('Mark error:', err);
-					statusMsg.className = 'status-error';
-					statusMsg.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Error: ${err.message}`;
-
-					// Still add to local data even if server fails
-					masterAttendanceData.unshift(attendanceRecord);
-					filteredAttendance = [...masterAttendanceData];
-					renderAttendanceTable();
-					updateStats();
-				})
-				.finally(() => {
-					setTimeout(() => {
-						isProcessingScan = false;
-					}, 2000);
-				});
+			// Reload attendance with pagination
+			filteredData = [...attendance];
+			currentPage = 1;
+			renderAttendanceTable();
 		}
 
-		// ============================================
-		// IMAGE SCAN
-		// ============================================
-		function handleImageUpload(event) {
-			const file = event.target.files[0];
-			if (!file) return;
+		// ============================================================
+		// ATTENDANCE TABLE WITH PAGINATION
+		// ============================================================
+		function renderAttendanceTable() {
+			const tbody = document.getElementById('attendanceBody');
+			const data = filteredData.length > 0 ? filteredData : attendance;
 
-			qrImageFile = file;
-			const reader = new FileReader();
-			reader.onload = function (e) {
-				const preview = document.getElementById('imagePreview');
-				preview.src = e.target.result;
-				preview.style.display = 'block';
-				document.getElementById('scannerMessage').className = 'status-processing';
-				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-check"></i> Image loaded. Click "Scan Image"';
-			};
-			reader.readAsDataURL(file);
-		}
-
-		function scanFromImage() {
-			if (!qrImageFile) {
-				document.getElementById('scannerMessage').className = 'status-error';
-				document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-warning"></i> Please upload an image first.';
+			if (data.length === 0) {
+				tbody.innerHTML = '<tr><td colspan="5" class="text-center">No attendance records yet.</td></tr>';
+				document.getElementById('paginationControls').innerHTML = '';
+				document.getElementById('pageInfo').textContent = '0';
 				return;
 			}
 
-			const statusMsg = document.getElementById('scannerMessage');
-			statusMsg.className = 'status-processing';
-			statusMsg.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Scanning image...';
+			// Sort by date descending (newest first)
+			const sorted = [...data].sort((a, b) => b.date.localeCompare(a.date) || b.time.localeCompare(a.time));
 
-			// Stop scanner
-			if (html5QrcodeScanner) {
-				try {
-					html5QrcodeScanner.clear();
-					html5QrcodeScanner = null;
-					isScannerRunning = false;
-				} catch (e) { }
+			const totalRecords = sorted.length;
+			const totalPages = Math.ceil(totalRecords / recordsPerPage);
+
+			// Ensure current page is valid
+			if (currentPage > totalPages) currentPage = totalPages;
+			if (currentPage < 1) currentPage = 1;
+
+			const startIndex = (currentPage - 1) * recordsPerPage;
+			const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
+			const pageData = sorted.slice(startIndex, endIndex);
+
+			tbody.innerHTML = pageData.map(a => `
+			<tr>
+				<td>${a.date}</td>
+				<td><strong>${a.memberId}</strong></td>
+				<td>${a.name}</td>
+				<td><span class="badge-present"><i class="fa fa-check"></i> ${a.status}</span></td>
+				<td>${a.time}</td>
+			</tr>
+		`).join('');
+
+			document.getElementById('pageInfo').textContent = `${startIndex + 1} - ${endIndex} of ${totalRecords}`;
+
+			// Build pagination
+			let paginationHtml = '';
+			if (totalPages > 1) {
+				paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+				<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a></li>`;
+
+				for (let i = 1; i <= totalPages; i++) {
+					paginationHtml += `<li class="page-item ${i === currentPage ? 'active' : ''}">
+					<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`;
+				}
+
+				paginationHtml += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+				<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a></li>`;
 			}
-
-			const tempReader = document.getElementById('reader');
-			tempReader.innerHTML = '';
-			const decoder = new Html5Qrcode("reader");
-
-			decoder.scanFile(qrImageFile, true)
-				.then(extractedToken => {
-					statusMsg.className = 'status-success';
-					statusMsg.innerHTML = `<i class="fa fa-check-square"></i> Found: ${extractedToken}`;
-					onScanSuccess(extractedToken);
-				})
-				.catch(err => {
-					console.error('Scan error:', err);
-					statusMsg.className = 'status-error';
-					statusMsg.innerHTML = `<i class="fa fa-times"></i> Could not read QR code. Try a clearer image.`;
-				})
-				.finally(() => {
-					try {
-						decoder.clear();
-					} catch (e) { }
-				});
+			document.getElementById('paginationControls').innerHTML = paginationHtml;
 		}
 
-		function clearImage() {
-			qrImageFile = null;
-			document.getElementById('imagePreview').style.display = 'none';
-			document.getElementById('imagePreview').src = '';
-			document.getElementById('imageInput').value = '';
-			document.getElementById('scannerMessage').className = 'status-waiting';
-			document.getElementById('scannerMessage').innerHTML = '<i class="fa fa-info-circle"></i> Image cleared.';
+		function changePage(page) {
+			const data = filteredData.length > 0 ? filteredData : attendance;
+			const totalPages = Math.ceil(data.length / recordsPerPage);
+			if (page < 1 || page > totalPages) return;
+			currentPage = page;
+			renderAttendanceTable();
 		}
 
-		// ============================================
-		// QR CODE GENERATOR
-		// ============================================
-		function spawnQRCodeCanvas(targetUID, rawEscapedProfileName) {
-			const realProfileName = unescape(rawEscapedProfileName);
-			document.getElementById('modalMemberId').textContent = targetUID;
-			document.getElementById('modalMemberName').textContent = realProfileName || 'Unknown';
+		// ============================================================
+		// FILTERS
+		// ============================================================
+		function applyFilters() {
+			const date = document.getElementById('filterDate').value;
+			const search = document.getElementById('filterSearch').value.toLowerCase();
 
-			const canvasWrapper = document.getElementById('modalQrCanvas');
-			canvasWrapper.innerHTML = '';
-
-			new QRCode(canvasWrapper, {
-				text: targetUID,
-				width: 200,
-				height: 200,
-				colorDark: "#000000",
-				colorLight: "#ffffff",
-				correctLevel: QRCode.CorrectLevel.H
+			filteredData = attendance.filter(a => {
+				let match = true;
+				if (date) match = match && (a.date === date);
+				if (search) match = match && (a.name.toLowerCase().includes(search) || a.memberId.toLowerCase().includes(search));
+				return match;
 			});
 
-			$('#qrModal').modal('show');
+			currentPage = 1;
+			renderAttendanceTable();
 		}
 
-		function downloadGeneratedQRImage() {
-			const qrImg = document.querySelector('#modalQrCanvas img');
-			if (!qrImg) {
-				alert('QR image not ready.');
-				return;
-			}
-
-			const targetUID = document.getElementById('modalMemberId').textContent;
-			const link = document.createElement('a');
-			link.href = qrImg.src;
-			link.download = `QR_${targetUID}.png`;
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
+		function resetFilters() {
+			document.getElementById('filterDate').value = '';
+			document.getElementById('filterSearch').value = '';
+			filteredData = [];
+			currentPage = 1;
+			renderAttendanceTable();
 		}
 
-		// ============================================
-		// EXPORT EXCEL
-		// ============================================
-		function exportDataToExcelEngine() {
-			const data = filteredAttendance.length > 0 ? filteredAttendance : masterAttendanceData;
-			if (data.length === 0) {
-				alert('No data to export.');
-				return;
-			}
-
-			const exportData = data.map(row => ({
-				'Timestamp': row.timestamp || 'N/A',
-				'Member ID': row.memberId || 'N/A',
-				'Name': row.name || 'N/A',
-				'Mobile': row.mobile || 'N/A'
+		// ============================================================
+		// EXPORT TO EXCEL
+		// ============================================================
+		function exportToExcel() {
+			const data = attendance.length === 0 ? [] : attendance.map(a => ({
+				'Date': a.date,
+				'Member ID': a.memberId,
+				'Name': a.name,
+				'Status': a.status,
+				'Time': a.time
 			}));
 
-			const workbook = XLSX.utils.book_new();
-			const worksheet = XLSX.utils.json_to_sheet(exportData);
-			XLSX.utils.book_append_sheet(workbook, worksheet, 'Attendance');
-			XLSX.writeFile(workbook, `Attendance_${new Date().toISOString().split('T')[0]}.xlsx`);
+			if (data.length === 0) {
+				alert('No attendance data to export.');
+				return;
+			}
+
+			const wb = XLSX.utils.book_new();
+			const ws = XLSX.utils.json_to_sheet(data);
+			XLSX.utils.book_append_sheet(wb, ws, 'Attendance');
+			XLSX.writeFile(wb, 'Attendance_Report.xlsx');
 		}
 
-		// ============================================
-		// HELPERS
-		// ============================================
-		function escape(str) {
-			if (!str) return '';
-			return str.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+		// ============================================================
+		// KEYBOARD SHORTCUT FOR SCAN
+		// ============================================================
+		document.getElementById('scanInput').addEventListener('keyup', function (e) {
+			if (e.key === 'Enter') {
+				markAttendance();
+			}
+		});
+
+		// ============================================================
+		// INIT
+		// ============================================================
+		function init() {
+			loadRecentMembers();
+			// Set today's date in filter
+			document.getElementById('filterDate').value = new Date().toISOString().split('T')[0];
+			// Load attendance with pagination
+			filteredData = [];
+			currentPage = 1;
+			renderAttendanceTable();
+
+			console.log('Aga Oli System Loaded.');
+			console.log('Members:', members.length);
+			console.log('Attendance:', attendance.length);
 		}
 
-		function unescape(str) {
-			if (!str) return '';
-			return str.replace(/\\['"]/g, function (match) {
-				return match.replace('\\', '');
-			});
-		}
+		init();
 	</script>
+
 </body>
 </html>
