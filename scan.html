@@ -44,6 +44,11 @@
 			border: none;
 		}
 
+		.btn-danger {
+			background: #e74c3c;
+			border: none;
+		}
+
 		.qr-box {
 			background: #fff;
 			padding: 15px;
@@ -65,6 +70,13 @@
 
 		.badge-present {
 			background: #27ae60;
+			color: #fff;
+			padding: 5px 15px;
+			border-radius: 20px;
+		}
+
+		.badge-absent {
+			background: #e74c3c;
 			color: #fff;
 			padding: 5px 15px;
 			border-radius: 20px;
@@ -187,6 +199,49 @@
 			.modal-qr #modalQrContainer {
 				display: inline-block;
 			}
+
+		.filter-btn-group {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+			.filter-btn-group .btn {
+				flex: 1;
+				min-width: 80px;
+			}
+
+		.clear-filter-btn {
+			cursor: pointer;
+			color: #e74c3c;
+		}
+
+			.clear-filter-btn:hover {
+				color: #c0392b;
+			}
+
+		.search-input-group {
+			display: flex;
+			gap: 10px;
+		}
+
+			.search-input-group input {
+				flex: 1;
+			}
+
+			.search-input-group button {
+				white-space: nowrap;
+			}
+
+		@media (max-width: 768px) {
+			.filter-btn-group .btn {
+				flex: 1 1 100%;
+			}
+
+			.search-input-group {
+				flex-direction: column;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -262,7 +317,7 @@
 			</div>
 
 			<!-- ============================================================ -->
-			<!-- TAB 2: SCAN ENTRY (with QR Scanner) -->
+			<!-- TAB 2: SCAN ENTRY (with QR Scanner & Working Filters) -->
 			<!-- ============================================================ -->
 			<div class="tab-pane fade" id="scanSection">
 				<div class="card">
@@ -297,17 +352,32 @@
 
 						<hr>
 
-						<!-- Attendance Table with Pagination -->
+						<!-- Attendance Table with Pagination & Working Filters -->
 						<div class="mt-4">
 							<h5><i class="fa fa-calendar-check-o"></i> Attendance Records</h5>
-							<div class="filter-row row">
-								<div class="col-md-4"><input type="date" class="form-control" id="filterDate" /></div>
-								<div class="col-md-4"><input type="text" class="form-control" id="filterSearch" placeholder="Search by Name or ID" /></div>
-								<div class="col-md-4">
-									<button class="btn btn-primary btn-sm" onclick="applyFilters()"><i class="fa fa-search"></i> Filter</button>
-									<button class="btn btn-secondary btn-sm" onclick="resetFilters()"><i class="fa fa-refresh"></i> Reset</button>
-									<button class="btn btn-success btn-sm" onclick="exportToExcel()"><i class="fa fa-file-excel-o"></i> Excel</button>
+							<div class="filter-row">
+								<div class="row">
+									<div class="col-md-4">
+										<label><i class="fa fa-calendar"></i> Date</label>
+										<input type="date" class="form-control" id="filterDate" />
+									</div>
+									<div class="col-md-4">
+										<label><i class="fa fa-search"></i> Search</label>
+										<div class="search-input-group">
+											<input type="text" class="form-control" id="filterSearch" placeholder="Name or ID" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<label>&nbsp;</label>
+										<div class="filter-btn-group">
+											<button class="btn btn-primary" onclick="applyFilters()"><i class="fa fa-search"></i> Search</button>
+											<button class="btn btn-secondary" onclick="resetFilters()"><i class="fa fa-refresh"></i> Reset</button>
+											<button class="btn btn-success" onclick="exportToExcel()"><i class="fa fa-file-excel-o"></i> Excel</button>
+										</div>
+									</div>
 								</div>
+								<!-- Active filters display -->
+								<div id="activeFilters" class="mt-2 small text-muted"></div>
 							</div>
 
 							<div class="table-responsive">
@@ -537,17 +607,14 @@
 		}
 
 		function onScanSuccess(decodedText) {
-			// decodedText is the member ID
 			document.getElementById('scanInput').value = decodedText;
 			markAttendance();
-			// Vibrate if supported
 			if (navigator.vibrate) navigator.vibrate(200);
-			// Auto stop scanner after successful scan
 			stopScanner();
 		}
 
 		function onScanError(err) {
-			// Ignore - just keep scanning
+			// Ignore - keep scanning
 		}
 
 		// ============================================================
@@ -584,26 +651,35 @@
 			resultDiv.innerHTML = `<div class="alert alert-success"><i class="fa fa-check"></i> ${member.name} (${member.id}) marked Present at ${timeStr}!</div>`;
 			document.getElementById('scanInput').value = '';
 
-			filteredData = [...attendance];
+			// Reset filters and show all data
+			filteredData = [];
+			document.getElementById('filterDate').value = '';
+			document.getElementById('filterSearch').value = '';
+			document.getElementById('activeFilters').innerHTML = '';
 			currentPage = 1;
 			renderAttendanceTable();
 		}
 
 		// ============================================================
-		// ATTENDANCE TABLE WITH PAGINATION
+		// ATTENDANCE TABLE WITH PAGINATION & WORKING FILTERS
 		// ============================================================
 		function renderAttendanceTable() {
 			const tbody = document.getElementById('attendanceBody');
 			const data = filteredData.length > 0 ? filteredData : attendance;
 
 			if (data.length === 0) {
-				tbody.innerHTML = '<tr><td colspan="5" class="text-center">No attendance records yet.</td></tr>';
+				tbody.innerHTML = '<tr><td colspan="5" class="text-center">No attendance records found.</td></tr>';
 				document.getElementById('paginationControls').innerHTML = '';
 				document.getElementById('pageInfo').textContent = '0';
 				return;
 			}
 
-			const sorted = [...data].sort((a, b) => b.date.localeCompare(a.date) || b.time.localeCompare(a.time));
+			// Sort by date descending (newest first)
+			const sorted = [...data].sort((a, b) => {
+				if (a.date !== b.date) return b.date.localeCompare(a.date);
+				return b.time.localeCompare(a.time);
+			});
+
 			const totalRecords = sorted.length;
 			const totalPages = Math.ceil(totalRecords / recordsPerPage);
 			if (currentPage > totalPages) currentPage = totalPages;
@@ -648,19 +724,44 @@
 		}
 
 		// ============================================================
-		// FILTERS
+		// FILTERS - NOW WORKING PROPERLY WITH SEARCH BUTTON
 		// ============================================================
 		function applyFilters() {
 			const date = document.getElementById('filterDate').value;
-			const search = document.getElementById('filterSearch').value.toLowerCase();
-			filteredData = attendance.filter(a => {
-				let match = true;
-				if (date) match = match && (a.date === date);
-				if (search) match = match && (a.name.toLowerCase().includes(search) || a.memberId.toLowerCase().includes(search));
-				return match;
-			});
+			const search = document.getElementById('filterSearch').value.toLowerCase().trim();
+
+			// Start with all attendance
+			let result = [...attendance];
+
+			// Apply date filter
+			if (date) {
+				result = result.filter(a => a.date === date);
+			}
+
+			// Apply search filter (name or ID)
+			if (search) {
+				result = result.filter(a =>
+					a.name.toLowerCase().includes(search) ||
+					a.memberId.toLowerCase().includes(search)
+				);
+			}
+
+			filteredData = result;
 			currentPage = 1;
+
+			// Show active filters
+			let filterText = '';
+			if (date) filterText += `<span class="badge badge-primary mr-1">Date: ${date}</span>`;
+			if (search) filterText += `<span class="badge badge-info mr-1">Search: "${search}"</span>`;
+			if (!date && !search) filterText = 'Showing all records';
+			document.getElementById('activeFilters').innerHTML = filterText;
+
 			renderAttendanceTable();
+
+			// Show result count
+			if (result.length === 0) {
+				document.getElementById('activeFilters').innerHTML += ' <span class="text-danger">(No results found)</span>';
+			}
 		}
 
 		function resetFilters() {
@@ -668,6 +769,7 @@
 			document.getElementById('filterSearch').value = '';
 			filteredData = [];
 			currentPage = 1;
+			document.getElementById('activeFilters').innerHTML = 'Showing all records';
 			renderAttendanceTable();
 		}
 
@@ -701,7 +803,7 @@
 			const endIndex = Math.min(startIndex + memberRecordsPerPage, totalRecords);
 			const pageData = filtered.slice(startIndex, endIndex);
 
-			tbody.innerHTML = pageData.map((m, idx) => `
+			tbody.innerHTML = pageData.map((m) => `
 			<tr>
 				<td>
 					<div class="member-list-qr">
@@ -791,7 +893,6 @@
 		}
 
 		function downloadMemberQR(memberId) {
-			// Create a temporary container, generate QR, download
 			const tempDiv = document.createElement('div');
 			tempDiv.style.position = 'absolute';
 			tempDiv.style.left = '-9999px';
@@ -872,11 +973,17 @@
 		}
 
 		// ============================================================
-		// KEYBOARD SHORTCUT FOR SCAN
+		// KEYBOARD SHORTCUTS
 		// ============================================================
 		document.getElementById('scanInput').addEventListener('keyup', function (e) {
 			if (e.key === 'Enter') {
 				markAttendance();
+			}
+		});
+
+		document.getElementById('filterSearch').addEventListener('keyup', function (e) {
+			if (e.key === 'Enter') {
+				applyFilters();
 			}
 		});
 
@@ -888,6 +995,7 @@
 			document.getElementById('filterDate').value = new Date().toISOString().split('T')[0];
 			filteredData = [];
 			currentPage = 1;
+			document.getElementById('activeFilters').innerHTML = 'Showing all records';
 			renderAttendanceTable();
 			renderMemberList();
 			console.log('Aga Oli System Loaded.');
