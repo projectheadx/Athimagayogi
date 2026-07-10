@@ -46,10 +46,11 @@
 
 		.qr-box {
 			background: #fff;
-			padding: 20px;
+			padding: 15px;
 			border-radius: 10px;
 			text-align: center;
 			border: 2px dashed #2c3e50;
+			display: inline-block;
 		}
 
 		.member-id {
@@ -71,7 +72,7 @@
 
 		.scanner-area {
 			border: 3px dashed #2980b9;
-			padding: 30px;
+			padding: 20px;
 			border-radius: 15px;
 			background: #f8f9fa;
 		}
@@ -112,10 +113,6 @@
 				color: #fff;
 			}
 
-		.export-btn {
-			margin: 5px;
-		}
-
 		.filter-row {
 			background: #ecf0f1;
 			padding: 15px;
@@ -131,6 +128,65 @@
 		.table-responsive {
 			min-height: 400px;
 		}
+
+		.member-qr-small {
+			width: 50px;
+			height: 50px;
+			cursor: pointer;
+		}
+
+			.member-qr-small canvas {
+				width: 50px !important;
+				height: 50px !important;
+			}
+
+		.qr-download-btn {
+			font-size: 12px;
+			padding: 2px 8px;
+		}
+
+		.scanner-container {
+			position: relative;
+		}
+
+		#reader {
+			width: 100%;
+			max-width: 500px;
+			margin: 0 auto;
+		}
+
+			#reader video {
+				border-radius: 10px;
+			}
+
+		.scan-toggle-btn {
+			margin: 10px 0;
+		}
+
+		.member-list-qr {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+			.member-list-qr .qr-small {
+				width: 40px;
+				height: 40px;
+			}
+
+				.member-list-qr .qr-small canvas {
+					width: 40px !important;
+					height: 40px !important;
+				}
+
+		.modal-qr {
+			text-align: center;
+			padding: 20px;
+		}
+
+			.modal-qr #modalQrContainer {
+				display: inline-block;
+			}
 	</style>
 </head>
 <body>
@@ -146,10 +202,11 @@
 		<ul class="nav nav-pills justify-content-center mb-4" id="mainTabs">
 			<li class="nav-item"><a class="nav-link active" id="registerTab" data-toggle="pill" href="#registerSection"><i class="fa fa-user-plus"></i> Registration</a></li>
 			<li class="nav-item"><a class="nav-link" id="scanTab" data-toggle="pill" href="#scanSection"><i class="fa fa-qrcode"></i> Scan Entry</a></li>
+			<li class="nav-item"><a class="nav-link" id="membersTab" data-toggle="pill" href="#membersSection"><i class="fa fa-users"></i> Member List</a></li>
 		</ul>
 
 		<!-- ============================================================ -->
-		<!-- TAB 1: REGISTRATION (Separate) -->
+		<!-- TAB 1: REGISTRATION -->
 		<!-- ============================================================ -->
 		<div class="tab-content">
 			<div class="tab-pane fade show active" id="registerSection">
@@ -205,7 +262,7 @@
 			</div>
 
 			<!-- ============================================================ -->
-			<!-- TAB 2: SCAN ENTRY (Separate with Pagination) -->
+			<!-- TAB 2: SCAN ENTRY (with QR Scanner) -->
 			<!-- ============================================================ -->
 			<div class="tab-pane fade" id="scanSection">
 				<div class="card">
@@ -214,11 +271,25 @@
 						<!-- Scanner Area -->
 						<div class="scanner-area text-center">
 							<h5><i class="fa fa-camera"></i> Scan QR Code</h5>
-							<p>Enter the Member ID manually or scan QR</p>
+							<p>Use camera to scan QR or enter Member ID manually</p>
+
 							<div class="row justify-content-center">
 								<div class="col-md-8">
-									<input type="text" class="form-control" id="scanInput" placeholder="Paste or type Member ID" />
-									<button class="btn btn-success btn-lg mt-3" onclick="markAttendance()"><i class="fa fa-check"></i> Mark Present</button>
+									<!-- QR Scanner -->
+									<div id="scannerContainer" style="display:none;">
+										<div id="reader"></div>
+										<button class="btn btn-danger btn-sm mt-2" onclick="stopScanner()"><i class="fa fa-stop"></i> Stop Scanner</button>
+									</div>
+									<button class="btn btn-primary scan-toggle-btn" id="toggleScannerBtn" onclick="toggleScanner()">
+										<i class="fa fa-camera"></i> Open QR Scanner
+									</button>
+									<hr>
+									<div class="input-group">
+										<input type="text" class="form-control" id="scanInput" placeholder="Or type Member ID here" />
+										<div class="input-group-append">
+											<button class="btn btn-success" onclick="markAttendance()"><i class="fa fa-check"></i> Mark Present</button>
+										</div>
+									</div>
 									<div id="scanResult" class="scan-result"></div>
 								</div>
 							</div>
@@ -257,6 +328,52 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- ============================================================ -->
+			<!-- TAB 3: MEMBER LIST with QR & Download -->
+			<!-- ============================================================ -->
+			<div class="tab-pane fade" id="membersSection">
+				<div class="card">
+					<div class="card-header"><i class="fa fa-users"></i> All Members with QR Codes</div>
+					<div class="card-body">
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<input type="text" class="form-control" id="memberSearch" placeholder="Search by name, ID or mobile" onkeyup="renderMemberList()" />
+							</div>
+							<div class="col-md-6 text-right">
+								<button class="btn btn-success" onclick="exportMembersExcel()"><i class="fa fa-file-excel-o"></i> Export Members</button>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover" id="membersTable">
+								<thead><tr><th>QR Code</th><th>Member ID</th><th>Name</th><th>Mobile</th><th>Age</th><th>State</th><th>District</th><th>Action</th></tr></thead>
+								<tbody id="membersBody"></tbody>
+							</table>
+						</div>
+						<nav aria-label="Member pagination">
+							<ul class="pagination justify-content-center" id="memberPaginationControls"></ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ===== QR MODAL ===== -->
+	<div class="modal fade" id="qrModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="fa fa-qrcode"></i> Member QR Code</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body modal-qr">
+					<div id="modalQrContainer"></div>
+					<p class="mt-2"><strong id="modalMemberName"></strong></p>
+					<p class="member-id" id="modalMemberId"></p>
+					<button class="btn btn-primary btn-sm" onclick="downloadModalQR()"><i class="fa fa-download"></i> Download QR</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -271,6 +388,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+	<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 	<script>
 		// ============================================================
@@ -283,6 +401,12 @@
 		let currentPage = 1;
 		const recordsPerPage = 5;
 		let filteredData = [];
+		let memberCurrentPage = 1;
+		const memberRecordsPerPage = 5;
+
+		// QR Scanner
+		let html5QrCode = null;
+		let isScannerRunning = false;
 
 		// ============================================================
 		// SAVE FUNCTIONS
@@ -300,7 +424,7 @@
 		}
 
 		// ============================================================
-		// REGISTRATION (Separate)
+		// REGISTRATION
 		// ============================================================
 		document.getElementById('registerForm').addEventListener('submit', function (e) {
 			e.preventDefault();
@@ -336,8 +460,7 @@
 			document.getElementById('registerForm').reset();
 
 			loadRecentMembers();
-			// Switch to scan tab to show new member
-			$('#scanTab').tab('show');
+			renderMemberList();
 		});
 
 		function resetForm() {
@@ -357,30 +480,85 @@
 			}
 		}
 
-		function loadRecentMembers() {
-			const container = document.getElementById('recentMembersList');
-			if (members.length === 0) {
-				container.innerHTML = '<p class="text-muted text-center">No members yet.</p>';
-				return;
+		// ============================================================
+		// QR SCANNER FUNCTIONS
+		// ============================================================
+		function toggleScanner() {
+			if (isScannerRunning) {
+				stopScanner();
+			} else {
+				startScanner();
 			}
-			const recent = members.slice(-5).reverse();
-			container.innerHTML = recent.map(m => `
-			<div class="d-flex justify-content-between align-items-center border-bottom py-2">
-				<div><strong>${m.name}</strong><br><small class="text-muted">${m.id}</small></div>
-				<span class="badge badge-success">${m.mobile}</span>
-			</div>
-		`).join('');
+		}
+
+		function startScanner() {
+			const scannerContainer = document.getElementById('scannerContainer');
+			scannerContainer.style.display = 'block';
+			document.getElementById('toggleScannerBtn').innerHTML = '<i class="fa fa-stop"></i> Stop Scanner';
+			document.getElementById('toggleScannerBtn').className = 'btn btn-danger scan-toggle-btn';
+
+			if (html5QrCode) {
+				html5QrCode.clear();
+				html5QrCode = null;
+			}
+
+			html5QrCode = new Html5Qrcode("reader");
+			const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+			html5QrCode.start(
+				{ facingMode: "environment" },
+				config,
+				onScanSuccess,
+				onScanError
+			).then(() => {
+				isScannerRunning = true;
+			}).catch(err => {
+				console.error("Scanner error:", err);
+				alert("Camera access denied or not available. Please use manual entry.");
+				stopScanner();
+			});
+		}
+
+		function stopScanner() {
+			if (html5QrCode) {
+				html5QrCode.stop().then(() => {
+					html5QrCode.clear();
+					isScannerRunning = false;
+					document.getElementById('scannerContainer').style.display = 'none';
+					document.getElementById('toggleScannerBtn').innerHTML = '<i class="fa fa-camera"></i> Open QR Scanner';
+					document.getElementById('toggleScannerBtn').className = 'btn btn-primary scan-toggle-btn';
+				}).catch(err => console.error("Stop error:", err));
+			} else {
+				isScannerRunning = false;
+				document.getElementById('scannerContainer').style.display = 'none';
+				document.getElementById('toggleScannerBtn').innerHTML = '<i class="fa fa-camera"></i> Open QR Scanner';
+				document.getElementById('toggleScannerBtn').className = 'btn btn-primary scan-toggle-btn';
+			}
+		}
+
+		function onScanSuccess(decodedText) {
+			// decodedText is the member ID
+			document.getElementById('scanInput').value = decodedText;
+			markAttendance();
+			// Vibrate if supported
+			if (navigator.vibrate) navigator.vibrate(200);
+			// Auto stop scanner after successful scan
+			stopScanner();
+		}
+
+		function onScanError(err) {
+			// Ignore - just keep scanning
 		}
 
 		// ============================================================
-		// SCAN & ATTENDANCE (Separate)
+		// MARK ATTENDANCE
 		// ============================================================
 		function markAttendance() {
 			const id = document.getElementById('scanInput').value.trim();
 			const resultDiv = document.getElementById('scanResult');
 
 			if (!id) {
-				resultDiv.innerHTML = '<div class="alert alert-danger">Please enter Member ID.</div>';
+				resultDiv.innerHTML = '<div class="alert alert-danger">Please enter Member ID or scan QR.</div>';
 				return;
 			}
 
@@ -406,7 +584,6 @@
 			resultDiv.innerHTML = `<div class="alert alert-success"><i class="fa fa-check"></i> ${member.name} (${member.id}) marked Present at ${timeStr}!</div>`;
 			document.getElementById('scanInput').value = '';
 
-			// Reload attendance with pagination
 			filteredData = [...attendance];
 			currentPage = 1;
 			renderAttendanceTable();
@@ -426,13 +603,9 @@
 				return;
 			}
 
-			// Sort by date descending (newest first)
 			const sorted = [...data].sort((a, b) => b.date.localeCompare(a.date) || b.time.localeCompare(a.time));
-
 			const totalRecords = sorted.length;
 			const totalPages = Math.ceil(totalRecords / recordsPerPage);
-
-			// Ensure current page is valid
 			if (currentPage > totalPages) currentPage = totalPages;
 			if (currentPage < 1) currentPage = 1;
 
@@ -452,17 +625,14 @@
 
 			document.getElementById('pageInfo').textContent = `${startIndex + 1} - ${endIndex} of ${totalRecords}`;
 
-			// Build pagination
 			let paginationHtml = '';
 			if (totalPages > 1) {
 				paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
 				<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a></li>`;
-
 				for (let i = 1; i <= totalPages; i++) {
 					paginationHtml += `<li class="page-item ${i === currentPage ? 'active' : ''}">
 					<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`;
 				}
-
 				paginationHtml += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
 				<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a></li>`;
 			}
@@ -483,14 +653,12 @@
 		function applyFilters() {
 			const date = document.getElementById('filterDate').value;
 			const search = document.getElementById('filterSearch').value.toLowerCase();
-
 			filteredData = attendance.filter(a => {
 				let match = true;
 				if (date) match = match && (a.date === date);
 				if (search) match = match && (a.name.toLowerCase().includes(search) || a.memberId.toLowerCase().includes(search));
 				return match;
 			});
-
 			currentPage = 1;
 			renderAttendanceTable();
 		}
@@ -504,7 +672,144 @@
 		}
 
 		// ============================================================
-		// EXPORT TO EXCEL
+		// MEMBER LIST with QR
+		// ============================================================
+		function renderMemberList() {
+			const search = document.getElementById('memberSearch').value.toLowerCase();
+			let filtered = members;
+			if (search) {
+				filtered = members.filter(m =>
+					m.name.toLowerCase().includes(search) ||
+					m.id.toLowerCase().includes(search) ||
+					m.mobile.includes(search)
+				);
+			}
+
+			const tbody = document.getElementById('membersBody');
+			if (filtered.length === 0) {
+				tbody.innerHTML = '<tr><td colspan="8" class="text-center">No members found.</td></tr>';
+				document.getElementById('memberPaginationControls').innerHTML = '';
+				return;
+			}
+
+			const totalRecords = filtered.length;
+			const totalPages = Math.ceil(totalRecords / memberRecordsPerPage);
+			if (memberCurrentPage > totalPages) memberCurrentPage = totalPages;
+			if (memberCurrentPage < 1) memberCurrentPage = 1;
+
+			const startIndex = (memberCurrentPage - 1) * memberRecordsPerPage;
+			const endIndex = Math.min(startIndex + memberRecordsPerPage, totalRecords);
+			const pageData = filtered.slice(startIndex, endIndex);
+
+			tbody.innerHTML = pageData.map((m, idx) => `
+			<tr>
+				<td>
+					<div class="member-list-qr">
+						<div class="qr-small" id="qr_${m.id}"></div>
+					</div>
+				</td>
+				<td><strong>${m.id}</strong></td>
+				<td>${m.name}</td>
+				<td>${m.mobile}</td>
+				<td>${m.age}</td>
+				<td>${m.state}</td>
+				<td>${m.district}</td>
+				<td>
+					<button class="btn btn-primary btn-sm" onclick="showQRModal('${m.id}')"><i class="fa fa-qrcode"></i></button>
+					<button class="btn btn-success btn-sm" onclick="downloadMemberQR('${m.id}')"><i class="fa fa-download"></i></button>
+				</td>
+			</tr>
+		`).join('');
+
+			// Generate QR for each member in the current page
+			pageData.forEach(m => {
+				const container = document.getElementById(`qr_${m.id}`);
+				if (container) {
+					container.innerHTML = '';
+					new QRCode(container, { text: m.id, width: 40, height: 40 });
+				}
+			});
+
+			// Pagination
+			let paginationHtml = '';
+			if (totalPages > 1) {
+				paginationHtml += `<li class="page-item ${memberCurrentPage === 1 ? 'disabled' : ''}">
+				<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage - 1}); return false;">Previous</a></li>`;
+				for (let i = 1; i <= totalPages; i++) {
+					paginationHtml += `<li class="page-item ${i === memberCurrentPage ? 'active' : ''}">
+					<a class="page-link" href="#" onclick="changeMemberPage(${i}); return false;">${i}</a></li>`;
+				}
+				paginationHtml += `<li class="page-item ${memberCurrentPage === totalPages ? 'disabled' : ''}">
+				<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage + 1}); return false;">Next</a></li>`;
+			}
+			document.getElementById('memberPaginationControls').innerHTML = paginationHtml;
+		}
+
+		function changeMemberPage(page) {
+			const search = document.getElementById('memberSearch').value.toLowerCase();
+			let filtered = members;
+			if (search) {
+				filtered = members.filter(m =>
+					m.name.toLowerCase().includes(search) ||
+					m.id.toLowerCase().includes(search) ||
+					m.mobile.includes(search)
+				);
+			}
+			const totalPages = Math.ceil(filtered.length / memberRecordsPerPage);
+			if (page < 1 || page > totalPages) return;
+			memberCurrentPage = page;
+			renderMemberList();
+		}
+
+		// ============================================================
+		// QR MODAL
+		// ============================================================
+		let currentModalMemberId = '';
+
+		function showQRModal(memberId) {
+			const member = members.find(m => m.id === memberId);
+			if (!member) return;
+
+			currentModalMemberId = memberId;
+			const container = document.getElementById('modalQrContainer');
+			container.innerHTML = '';
+			new QRCode(container, { text: memberId, width: 200, height: 200 });
+
+			document.getElementById('modalMemberName').textContent = member.name;
+			document.getElementById('modalMemberId').textContent = memberId;
+			$('#qrModal').modal('show');
+		}
+
+		function downloadModalQR() {
+			const canvas = document.querySelector('#modalQrContainer canvas');
+			if (canvas) {
+				const link = document.createElement('a');
+				link.download = `member_${currentModalMemberId}_qr.png`;
+				link.href = canvas.toDataURL('image/png');
+				link.click();
+			}
+		}
+
+		function downloadMemberQR(memberId) {
+			// Create a temporary container, generate QR, download
+			const tempDiv = document.createElement('div');
+			tempDiv.style.position = 'absolute';
+			tempDiv.style.left = '-9999px';
+			document.body.appendChild(tempDiv);
+
+			const qr = new QRCode(tempDiv, { text: memberId, width: 200, height: 200 });
+			const canvas = tempDiv.querySelector('canvas');
+			if (canvas) {
+				const link = document.createElement('a');
+				link.download = `member_${memberId}_qr.png`;
+				link.href = canvas.toDataURL('image/png');
+				link.click();
+			}
+			document.body.removeChild(tempDiv);
+		}
+
+		// ============================================================
+		// EXPORT FUNCTIONS
 		// ============================================================
 		function exportToExcel() {
 			const data = attendance.length === 0 ? [] : attendance.map(a => ({
@@ -526,6 +831,46 @@
 			XLSX.writeFile(wb, 'Attendance_Report.xlsx');
 		}
 
+		function exportMembersExcel() {
+			if (members.length === 0) {
+				alert('No members to export.');
+				return;
+			}
+
+			const data = members.map(m => ({
+				'Member ID': m.id,
+				'Name': m.name,
+				'Mobile': m.mobile,
+				'Age': m.age,
+				'State': m.state,
+				'District': m.district,
+				'Registered': m.registered
+			}));
+
+			const wb = XLSX.utils.book_new();
+			const ws = XLSX.utils.json_to_sheet(data);
+			XLSX.utils.book_append_sheet(wb, ws, 'Members');
+			XLSX.writeFile(wb, 'Members_List.xlsx');
+		}
+
+		// ============================================================
+		// RECENT MEMBERS
+		// ============================================================
+		function loadRecentMembers() {
+			const container = document.getElementById('recentMembersList');
+			if (members.length === 0) {
+				container.innerHTML = '<p class="text-muted text-center">No members yet.</p>';
+				return;
+			}
+			const recent = members.slice(-5).reverse();
+			container.innerHTML = recent.map(m => `
+			<div class="d-flex justify-content-between align-items-center border-bottom py-2">
+				<div><strong>${m.name}</strong><br><small class="text-muted">${m.id}</small></div>
+				<span class="badge badge-success">${m.mobile}</span>
+			</div>
+		`).join('');
+		}
+
 		// ============================================================
 		// KEYBOARD SHORTCUT FOR SCAN
 		// ============================================================
@@ -540,19 +885,24 @@
 		// ============================================================
 		function init() {
 			loadRecentMembers();
-			// Set today's date in filter
 			document.getElementById('filterDate').value = new Date().toISOString().split('T')[0];
-			// Load attendance with pagination
 			filteredData = [];
 			currentPage = 1;
 			renderAttendanceTable();
-
+			renderMemberList();
 			console.log('Aga Oli System Loaded.');
 			console.log('Members:', members.length);
 			console.log('Attendance:', attendance.length);
 		}
 
 		init();
+
+		// Clean up scanner when switching tabs
+		$('#mainTabs a').on('click', function () {
+			if (isScannerRunning) {
+				stopScanner();
+			}
+		});
 	</script>
 
 </body>
