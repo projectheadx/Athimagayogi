@@ -8,60 +8,288 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 	<style>
+		/* ============================================
+		   NEW COLOR THEME - GOLD & DARK GREEN
+		   Matching home page
+		   ============================================ */
 		body {
 			font-family: 'Montserrat', sans-serif;
-			background: #f0ebe3;
+			background: #f7f3eb;
 		}
 
+		/* HEADER - matching home page */
 		.gradient-header {
-			background: linear-gradient(135deg, #1a2a3a, #2c3e50);
-			color: #fff;
+			background: linear-gradient(135deg, #1a2b1a, #2d4a2d);
+			color: #e8d5a3;
 			padding: 20px 0;
 			margin-bottom: 30px;
+			border-bottom: 3px solid #c9a96e;
 		}
 
+			.gradient-header h1 {
+				color: #e8d5a3;
+				font-weight: 700;
+			}
+
+			.gradient-header .lead {
+				color: #d4d0c0;
+			}
+
+		/* SIDENAV - OPENS FROM RIGHT */
+		.sidenav {
+			height: 100%;
+			width: 0;
+			position: fixed;
+			z-index: 999;
+			top: 0;
+			right: 0;
+			background-color: #122012;
+			overflow-x: hidden;
+			transition: 0.3s;
+			padding-top: 80px;
+			box-shadow: -8px 0 30px rgba(0,0,0,0.7);
+		}
+
+			.sidenav a {
+				padding: 14px 32px;
+				text-decoration: none;
+				font-size: 18px;
+				font-weight: 500;
+				color: #c9c9b8;
+				display: block;
+				transition: 0.2s;
+				border-right: 4px solid transparent;
+				text-align: right;
+				letter-spacing: 0.5px;
+			}
+
+				.sidenav a:hover,
+				.sidenav a.active {
+					color: #e8d5a3;
+					border-right-color: #c9a96e;
+					background: #1f3a1f;
+				}
+
+			.sidenav .closebtn {
+				position: absolute;
+				top: 10px;
+				left: 25px;
+				font-size: 38px;
+				color: #c9a96e;
+				text-align: left;
+			}
+
+				.sidenav .closebtn:hover {
+					color: #e8d5a3;
+				}
+
+		/* NAVIGATION BAR - matching home page */
+		.top-nav {
+			background: #1a2b1a;
+			border-bottom: 2px solid #c9a96e;
+			padding: 10px 0;
+		}
+
+			.top-nav .left-side span {
+				color: #c9a96e;
+				font-weight: 500;
+			}
+
+			.top-nav .left-side p {
+				color: #e8e0d0;
+				margin-bottom: 0;
+			}
+
+			.top-nav .social-icons i {
+				color: #c9a96e;
+				font-size: 20px;
+				margin: 0 7px;
+				transition: 0.3s;
+				cursor: pointer;
+			}
+
+				.top-nav .social-icons i:hover {
+					color: #e8d5a3;
+					transform: scale(1.1);
+				}
+
+		.slide-menu i {
+			font-size: 30px;
+			color: #c9a96e;
+			transition: 0.3s;
+			cursor: pointer;
+		}
+
+			.slide-menu i:hover {
+				color: #e8d5a3;
+			}
+
+		.logo img {
+			max-height: 55px;
+		}
+
+		.border-img {
+			width: 100%;
+			display: block;
+		}
+
+		/* CARDS */
 		.card {
 			border-radius: 15px;
 			box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-			border: none;
+			border: 1px solid #eae8e0;
 			margin-bottom: 30px;
+			background: #fff;
 		}
 
 		.card-header {
-			background: #2c3e50;
-			color: #fff;
+			background: #1a2b1a;
+			color: #e8d5a3;
 			border-radius: 15px 15px 0 0;
 			padding: 15px 20px;
+			border-bottom: 2px solid #c9a96e;
+			font-weight: 600;
 		}
 
+			.card-header i {
+				color: #c9a96e;
+				margin-right: 8px;
+			}
+
+		/* BUTTONS - matching home page */
 		.btn-success {
-			background: #27ae60;
-			border: none;
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 10px 25px;
+			border-radius: 40px;
+			transition: 0.3s;
 		}
+
+			.btn-success:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(201,169,110,0.3);
+			}
 
 		.btn-primary {
-			background: #2980b9;
-			border: none;
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 10px 25px;
+			border-radius: 40px;
+			transition: 0.3s;
 		}
+
+			.btn-primary:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(201,169,110,0.3);
+			}
 
 		.btn-danger {
-			background: #e74c3c;
-			border: none;
+			background: #c0392b;
+			border-color: #a93226;
+			color: #fff;
+			font-weight: 600;
+			border-radius: 40px;
+			transition: 0.3s;
 		}
 
+			.btn-danger:hover {
+				background: #e74c3c;
+				border-color: #c0392b;
+				transform: translateY(-2px);
+			}
+
+		.btn-info {
+			background: #2c3e50;
+			border-color: #1a2a3a;
+			color: #fff;
+			font-weight: 600;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-info:hover {
+				background: #34495e;
+				border-color: #2c3e50;
+				color: #fff;
+				transform: translateY(-2px);
+			}
+
+		.btn-secondary {
+			background: #6b7f6a;
+			border-color: #5a6f5a;
+			color: #fff;
+			font-weight: 600;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-secondary:hover {
+				background: #7b8f7a;
+				border-color: #6b7f6a;
+				color: #fff;
+				transform: translateY(-2px);
+			}
+
+		.btn-warning {
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-warning:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+			}
+
+		/* NAV PILLS */
+		.nav-pills .nav-link {
+			color: #1a2b1a;
+			border-radius: 30px;
+			margin: 0 5px;
+			font-weight: 500;
+			transition: 0.3s;
+		}
+
+			.nav-pills .nav-link.active {
+				background: #1a2b1a;
+				color: #e8d5a3;
+				border-bottom: 2px solid #c9a96e;
+			}
+
+			.nav-pills .nav-link:hover {
+				background: #2d4a2d;
+				color: #e8d5a3;
+			}
+
+		/* QR BOX */
 		.qr-box {
 			background: #fff;
 			padding: 15px;
 			border-radius: 10px;
 			text-align: center;
-			border: 2px dashed #2c3e50;
+			border: 2px dashed #c9a96e;
 			display: inline-block;
 		}
 
 		.member-id {
 			font-size: 16px;
 			font-weight: bold;
-			color: #2c3e50;
+			color: #1a2b1a;
 			background: #ecf0f1;
 			padding: 8px 15px;
 			border-radius: 20px;
@@ -76,10 +304,10 @@
 		}
 
 		.scanner-area {
-			border: 3px dashed #2980b9;
+			border: 3px dashed #c9a96e;
 			padding: 20px;
 			border-radius: 15px;
-			background: #f8f9fa;
+			background: #f8f6f0;
 		}
 
 			.scanner-area input {
@@ -88,35 +316,28 @@
 				font-size: 18px;
 				text-align: center;
 				border-radius: 10px;
+				border: 2px solid #d4cbb8;
 			}
 
+				.scanner-area input:focus {
+					border-color: #c9a96e;
+					outline: none;
+				}
+
 		.pagination .page-link {
-			color: #2c3e50;
+			color: #1a2b1a;
 		}
 
 		.pagination .page-item.active .page-link {
-			background: #2c3e50;
-			border-color: #2c3e50;
+			background: #1a2b1a;
+			border-color: #c9a96e;
+			color: #e8d5a3;
 		}
 
-		.footer {
-			background: #1a2a3a;
-			color: #ccc;
-			padding: 20px 0;
-			margin-top: 40px;
-			text-align: center;
+		.pagination .page-link:hover {
+			background: #2d4a2d;
+			color: #e8d5a3;
 		}
-
-		.nav-pills .nav-link {
-			color: #2c3e50;
-			border-radius: 30px;
-			margin: 0 5px;
-		}
-
-			.nav-pills .nav-link.active {
-				background: #2c3e50;
-				color: #fff;
-			}
 
 		.filter-row {
 			background: #ecf0f1;
@@ -203,10 +424,6 @@
 				border: 1px solid #bee5eb;
 			}
 
-		.sync-btn {
-			margin: 5px;
-		}
-
 		#reader {
 			width: 100%;
 			max-width: 500px;
@@ -227,13 +444,54 @@
 		}
 
 		.url-highlight {
-			background: #fff3cd;
-			border: 2px solid #ffc107;
+			background: #f7f3eb;
+			border: 2px solid #c9a96e;
 			padding: 15px;
 			border-radius: 10px;
 			margin: 10px 0;
 		}
 
+		/* FOOTER - matching home page */
+		.footer {
+			background: #122012;
+			color: #a8b898;
+			padding: 20px 0;
+			margin-top: 40px;
+			text-align: center;
+			border-top: 2px solid #2a402a;
+		}
+
+			.footer i.fa-heart {
+				color: #c9a96e;
+			}
+
+		/* TABLE */
+		.table thead th {
+			background: #1a2b1a;
+			color: #e8d5a3;
+			border-bottom: 2px solid #c9a96e;
+		}
+
+		.table tbody tr:hover {
+			background: #f0ece0;
+		}
+
+		/* MODAL */
+		.modal-header {
+			background: #1a2b1a;
+			color: #e8d5a3;
+			border-bottom: 2px solid #c9a96e;
+		}
+
+			.modal-header .close {
+				color: #e8d5a3;
+			}
+
+				.modal-header .close:hover {
+					color: #fff;
+				}
+
+		/* RESPONSIVE */
 		@media (max-width: 768px) {
 			.filter-btn-group .btn {
 				flex: 1 1 100%;
@@ -242,18 +500,64 @@
 			.search-input-group {
 				flex-direction: column;
 			}
+
+			.top-nav .left-side span {
+				display: block;
+				margin-left: 0;
+			}
+
+			.logo img {
+				max-height: 40px;
+			}
 		}
 	</style>
 </head>
 <body>
 
-	<!-- ===== HEADER ===== -->
-	<div class="gradient-header text-center">
-		<h1><i class="fa fa-leaf"></i> Aga Oli Meignana Yogam</h1>
-		<p class="lead">Google Sheets Integrated System</p>
-	</div>
+	<!-- ===== HEADER WITH SIDENAV - MATCHING HOME PAGE ===== -->
+	<header class="top">
+		<!-- SIDENAV - OPENS FROM RIGHT -->
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="index.html">Home</a>
+			<a href="about.html">About Yogi</a>
+			<a href="about-gurunathar.html">About Gurunathar</a>
+			<a href="vasi-programs.html">Vasi Yoga Programs</a>
+			<a href="foundation-plan.html">Plan of the Foundation</a>
+			<a href="register.html">Become a Member</a>
+			<a href="scan.html"  class="active">Class Entry (Scanner)</a>
+			<a href="gallery.html">Gallery</a>
+			<a href="videos.html">Videos</a>
+		</div>
 
-	<div class="container">
+		<nav class="top-nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 col-md-5 align-self-center left-side">
+						<p>Love is Everything <span>Call: +91 63804 19470</span></p>
+					</div>
+					<div class="col-lg-2 col-md-2 col-5 align-self-center logo text-center">
+						<a href="index.html"><img src="images/nav-logo.png" alt="logo"></a>
+					</div>
+					<div class="col-lg-5 col-md-5 col-7 align-self-center right-side d-flex justify-content-end align-items-center">
+						<div class="social-icons another mb-0 mr-3">
+							<i class="fa fa-facebook-official" aria-hidden="true"></i>
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+							<i class="fa fa-pinterest" aria-hidden="true"></i>
+							<i class="fa fa-youtube" aria-hidden="true"></i>
+						</div>
+						<div class="social-icons square mb-0">
+							<span class="slide-menu" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<img class="border-img" src="images/border.png" width="100%" alt="">
+	</header>
+
+	<!-- ===== MAIN CONTENT ===== -->
+	<div class="container" style="margin-top: 30px;">
 		<!-- Google Sheets Status -->
 		<div id="syncStatus" class="sync-status info">
 			<i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...
@@ -297,7 +601,7 @@
 												<h5><i class="fa fa-qrcode"></i> Your QR Code</h5>
 												<div id="qrCodeContainer"></div>
 												<p class="member-id mt-2" id="displayMemberId"></p>
-												<button class="btn btn-sm btn-outline-secondary" onclick="downloadQR()"><i class="fa fa-download"></i> Download QR</button>
+												<button class="btn btn-sm btn-success" onclick="downloadQR()"><i class="fa fa-download"></i> Download QR</button>
 											</div>
 										</div>
 										<div class="col-md-7">
@@ -428,15 +732,14 @@
 			</div>
 
 			<!-- ============================================================ -->
-			<!-- TAB 4: SYNC - PASTE URL HERE -->
+			<!-- TAB 4: SYNC -->
 			<!-- ============================================================ -->
 			<div class="tab-pane fade" id="syncSection">
 				<div class="card">
 					<div class="card-header"><i class="fa fa-cloud-upload"></i> Google Sheets Sync</div>
 					<div class="card-body">
-						<!-- ====== THIS IS WHERE YOU PASTE THE URL ====== -->
 						<div class="url-highlight">
-							<h5><i class="fa fa-exclamation-triangle" style="color:#ffc107;"></i> <strong>PASTE YOUR GOOGLE SHEETS URL HERE</strong></h5>
+							<h5><i class="fa fa-exclamation-triangle" style="color:#c9a96e;"></i> <strong>PASTE YOUR GOOGLE SHEETS URL HERE</strong></h5>
 							<p class="mb-2">1. Get your Web App URL from Google Apps Script deployment</p>
 							<p class="mb-2">2. Paste it in the box below</p>
 							<p class="mb-2">3. Click "Save URL" button</p>
@@ -454,7 +757,7 @@
 									</div>
 									<small class="form-text text-muted">Example: https://script.google.com/macros/s/ABC123XYZ/exec</small>
 								</div>
-								<div class="alert alert-info">
+								<div class="alert alert-success">
 									<i class="fa fa-info-circle"></i> <strong>Current URL:</strong> <span id="currentSheetUrl" style="font-family: monospace; word-break: break-all;">Not set</span>
 								</div>
 							</div>
@@ -509,7 +812,7 @@
 						<div class="row mt-3">
 							<div class="col-12">
 								<h5><i class="fa fa-list"></i> Sync Log</h5>
-								<div id="syncLog" style="max-height: 200px; overflow-y: auto; background: #f8f9fa; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px;">
+								<div id="syncLog" style="max-height: 200px; overflow-y: auto; background: #f8f6f0; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; border: 1px solid #eae8e0;">
 									<div>Sync log will appear here...</div>
 								</div>
 							</div>
@@ -538,9 +841,9 @@
 		</div>
 	</div>
 
-	<!-- ===== FOOTER ===== -->
+	<!-- ===== FOOTER - MATCHING HOME PAGE ===== -->
 	<div class="footer">
-		<p>&copy; 2026 Aga Oli Meignana Yogam - Athimagayogi | <i class="fa fa-heart" style="color:#e74c3c;"></i> Spread the Light</p>
+		<p>&copy; 2026 Aga Oli Meignana Yogam - Athimagayogi | <i class="fa fa-heart"></i> Spread the Light</p>
 	</div>
 
 	<!-- ===== SCRIPTS ===== -->
@@ -553,37 +856,34 @@
 
 	<script>
 		// ============================================================
-		// ====== PASTE YOUR GOOGLE SHEETS WEB APP URL HERE ======
+		// SIDENAV FUNCTIONS
 		// ============================================================
-		// OPTION 1: Paste directly in this variable (hardcode)
-		// ============================================================
-		// let GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxuk82IftFT4Wsut7loMQXfBbvqImpufopVfYA9n8iELOGhRTo8t06Cu8VskOkP63dw/exec';
-		// ============================================================
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+		}
 
-		// OPTION 2: Use the UI to paste (recommended)
-		// The URL will be saved in localStorage
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+		}
+
+		// ============================================================
+		// GOOGLE SHEETS URL
+		// ============================================================
 		let GOOGLE_SHEET_URL = localStorage.getItem('googleSheetUrl') || '';
 
-		// ============================================================
-		// UPDATE URL FROM UI
-		// ============================================================
 		function updateSheetUrl() {
 			const url = document.getElementById('sheetUrlInput').value.trim();
 			if (url) {
-				// Validate URL format
 				if (!url.startsWith('https://script.google.com/macros/s/')) {
 					showSyncStatus('⚠️ Invalid URL format. It should start with: https://script.google.com/macros/s/', 'error');
 					addSyncLog('⚠️ Invalid URL format');
 					return;
 				}
-
 				GOOGLE_SHEET_URL = url;
 				localStorage.setItem('googleSheetUrl', url);
 				document.getElementById('currentSheetUrl').textContent = url;
 				showSyncStatus('✅ Google Sheets URL updated successfully!', 'success');
 				addSyncLog('✅ URL updated: ' + url);
-
-				// Auto test connection
 				setTimeout(testConnection, 1000);
 			} else {
 				showSyncStatus('⚠️ Please enter a valid Google Sheets Web App URL', 'error');
@@ -615,29 +915,19 @@
 					reject(new Error('❌ Google Sheets URL not configured. Please set it in the Sync tab.'));
 					return;
 				}
-
 				const url = new URL(GOOGLE_SHEET_URL);
 				Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-
 				console.log('Calling URL:', url.toString());
-
 				fetch(url.toString())
 					.then(response => {
-						if (!response.ok) {
-							throw new Error(`HTTP Error: ${response.status}`);
-						}
+						if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 						return response.json();
 					})
 					.then(data => {
-						if (data.success) {
-							resolve(data);
-						} else {
-							reject(new Error(data.message || 'Unknown error from Google Sheets'));
-						}
+						if (data.success) resolve(data);
+						else reject(new Error(data.message || 'Unknown error from Google Sheets'));
 					})
-					.catch(error => {
-						reject(new Error('Connection failed: ' + error.message));
-					});
+					.catch(error => reject(new Error('Connection failed: ' + error.message)));
 			});
 		}
 
@@ -650,17 +940,13 @@
 				addSyncLog('⚠️ No URL configured');
 				return;
 			}
-
 			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Testing connection...', 'info');
 			addSyncLog('Testing connection to Google Sheets...');
-
 			callGoogleSheets({ action: 'getMembers' })
 				.then(data => {
 					showSyncStatus('✅ Connected to Google Sheets successfully!', 'success');
 					addSyncLog('✅ Connection successful');
-					if (data.data) {
-						document.getElementById('sheetMemberCount').textContent = data.data.length;
-					}
+					if (data.data) document.getElementById('sheetMemberCount').textContent = data.data.length;
 					loadFromGoogleSheets();
 				})
 				.catch(error => {
@@ -695,10 +981,8 @@
 				showSyncStatus('⚠️ Please configure Google Sheets URL first', 'error');
 				return;
 			}
-
 			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Loading data from Google Sheets...', 'info');
 			addSyncLog('Loading data from Google Sheets...');
-
 			callGoogleSheets({ action: 'getMembers' })
 				.then(memberData => {
 					if (memberData.success) {
@@ -716,11 +1000,8 @@
 						addSyncLog(`✅ Loaded ${members.length} members from Google Sheets`);
 						renderMemberList();
 						loadRecentMembers();
-
 						return callGoogleSheets({ action: 'getAttendance' });
-					} else {
-						throw new Error('Failed to load members');
-					}
+					} else throw new Error('Failed to load members');
 				})
 				.then(attendanceData => {
 					if (attendanceData.success) {
@@ -736,9 +1017,7 @@
 						addSyncLog(`✅ Loaded ${attendance.length} attendance records from Google Sheets`);
 						renderAttendanceTable();
 						showSyncStatus(`✅ Loaded ${members.length} members and ${attendance.length} attendance records`, 'success');
-					} else {
-						throw new Error('Failed to load attendance');
-					}
+					} else throw new Error('Failed to load attendance');
 				})
 				.catch(error => {
 					showSyncStatus('❌ Load failed: ' + error.message, 'error');
@@ -755,18 +1034,14 @@
 				addSyncLog('⚠️ Sync failed: No URL configured');
 				return;
 			}
-
 			if (members.length === 0 && attendance.length === 0) {
 				showSyncStatus('⚠️ No data to sync', 'info');
 				addSyncLog('⚠️ No data to sync');
 				return;
 			}
-
 			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Syncing to Google Sheets...', 'info');
 			addSyncLog('Starting sync to Google Sheets...');
-
 			const syncPromises = [];
-
 			members.forEach(member => {
 				syncPromises.push(
 					saveToGoogleSheets('register', {
@@ -776,12 +1051,9 @@
 						age: member.age,
 						state: member.state,
 						district: member.district
-					}).catch(err => {
-						addSyncLog(`⚠️ Member ${member.id} sync failed: ${err.message}`);
-					})
+					}).catch(err => addSyncLog(`⚠️ Member ${member.id} sync failed: ${err.message}`))
 				);
 			});
-
 			attendance.forEach(att => {
 				syncPromises.push(
 					saveToGoogleSheets('markAttendance', {
@@ -790,12 +1062,9 @@
 						date: att.date,
 						time: att.time,
 						status: att.status
-					}).catch(err => {
-						addSyncLog(`⚠️ Attendance ${att.memberId} sync failed: ${err.message}`);
-					})
+					}).catch(err => addSyncLog(`⚠️ Attendance ${att.memberId} sync failed: ${err.message}`))
 				);
 			});
-
 			Promise.all(syncPromises)
 				.then(() => {
 					showSyncStatus(`✅ Sync complete! Synced ${members.length} members and ${attendance.length} attendance records`, 'success');
@@ -808,41 +1077,24 @@
 				});
 		}
 
-		function syncAndReload() {
-			syncToGoogleSheets();
-		}
+		function syncAndReload() { syncToGoogleSheets(); }
 
 		// ============================================================
 		// DATA STORE
 		// ============================================================
 		let members = JSON.parse(localStorage.getItem('yogamMembers')) || [];
 		let attendance = JSON.parse(localStorage.getItem('yogamAttendance')) || [];
-
-		// Pagination variables
 		let currentPage = 1;
 		const recordsPerPage = 5;
 		let filteredData = [];
 		let memberCurrentPage = 1;
 		const memberRecordsPerPage = 5;
-
-		// QR Scanner
 		let html5QrCode = null;
 		let isScannerRunning = false;
 
-		// ============================================================
-		// SAVE FUNCTIONS
-		// ============================================================
-		function saveMembers() {
-			localStorage.setItem('yogamMembers', JSON.stringify(members));
-		}
+		function saveMembers() { localStorage.setItem('yogamMembers', JSON.stringify(members)); }
+		function saveAttendance() { localStorage.setItem('yogamAttendance', JSON.stringify(attendance)); }
 
-		function saveAttendance() {
-			localStorage.setItem('yogamAttendance', JSON.stringify(attendance));
-		}
-
-		// ============================================================
-		// GENERATE UNIQUE ID
-		// ============================================================
 		function generateMemberId() {
 			const prefix = 'AY';
 			const num = String(members.length + 1).padStart(4, '0');
@@ -854,56 +1106,34 @@
 		// ============================================================
 		document.getElementById('registerForm').addEventListener('submit', async function (e) {
 			e.preventDefault();
-
 			if (!GOOGLE_SHEET_URL) {
 				alert('⚠️ Please configure Google Sheets URL first in the Sync tab!');
 				showSyncStatus('⚠️ Please configure Google Sheets URL first', 'error');
 				return;
 			}
-
 			const name = document.getElementById('regName').value.trim();
 			const mobile = document.getElementById('regMobile').value.trim();
 			const age = parseInt(document.getElementById('regAge').value);
 			const state = document.getElementById('regState').value.trim();
 			const district = document.getElementById('regDistrict').value.trim();
-
-			if (!name || !mobile || !age || !state || !district) {
-				alert('Please fill all fields.');
-				return;
-			}
-			if (mobile.length !== 10) {
-				alert('Mobile number must be 10 digits.');
-				return;
-			}
-
+			if (!name || !mobile || !age || !state || !district) { alert('Please fill all fields.'); return; }
+			if (mobile.length !== 10) { alert('Mobile number must be 10 digits.'); return; }
 			const memberId = generateMemberId();
 			const newMember = { id: memberId, name, mobile, age, state, district, registered: new Date().toISOString() };
-
 			try {
 				showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Saving to Google Sheets...', 'info');
-				await saveToGoogleSheets('register', {
-					memberId: memberId,
-					name: name,
-					mobile: mobile,
-					age: age,
-					state: state,
-					district: district
-				});
-
+				await saveToGoogleSheets('register', { memberId, name, mobile, age, state, district });
 				members.push(newMember);
 				saveMembers();
 				loadRecentMembers();
-
 				const qrContainer = document.getElementById('qrCodeContainer');
 				qrContainer.innerHTML = '';
 				new QRCode(qrContainer, { text: memberId, width: 150, height: 150 });
-
 				document.getElementById('displayMemberId').textContent = memberId;
 				document.getElementById('displayMemberId2').textContent = memberId;
 				document.getElementById('displayName').textContent = name;
 				document.getElementById('qrResult').style.display = 'block';
 				document.getElementById('registerForm').reset();
-
 				showSyncStatus(`✅ Member ${name} registered successfully!`, 'success');
 				renderMemberList();
 			} catch (error) {
@@ -924,20 +1154,15 @@
 				link.download = 'member_qr.png';
 				link.href = canvas.toDataURL('image/png');
 				link.click();
-			} else {
-				alert('QR not generated yet.');
-			}
+			} else alert('QR not generated yet.');
 		}
 
 		// ============================================================
-		// QR SCANNER FUNCTIONS
+		// QR SCANNER
 		// ============================================================
 		function toggleScanner() {
-			if (isScannerRunning) {
-				stopScanner();
-			} else {
-				startScanner();
-			}
+			if (isScannerRunning) stopScanner();
+			else startScanner();
 		}
 
 		function startScanner() {
@@ -945,27 +1170,19 @@
 			scannerContainer.style.display = 'block';
 			document.getElementById('toggleScannerBtn').innerHTML = '<i class="fa fa-stop"></i> Stop Scanner';
 			document.getElementById('toggleScannerBtn').className = 'btn btn-danger scan-toggle-btn';
-
 			if (html5QrCode) {
 				html5QrCode.clear();
 				html5QrCode = null;
 			}
-
 			html5QrCode = new Html5Qrcode("reader");
 			const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
-			html5QrCode.start(
-				{ facingMode: "environment" },
-				config,
-				onScanSuccess,
-				onScanError
-			).then(() => {
-				isScannerRunning = true;
-			}).catch(err => {
-				console.error("Scanner error:", err);
-				alert("Camera access denied or not available. Please use manual entry.");
-				stopScanner();
-			});
+			html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanError)
+				.then(() => { isScannerRunning = true; })
+				.catch(err => {
+					console.error("Scanner error:", err);
+					alert("Camera access denied. Use manual entry.");
+					stopScanner();
+				});
 		}
 
 		function stopScanner() {
@@ -992,9 +1209,7 @@
 			stopScanner();
 		}
 
-		function onScanError(err) {
-			// Ignore
-		}
+		function onScanError(err) { /* ignore */ }
 
 		// ============================================================
 		// MARK ATTENDANCE
@@ -1002,44 +1217,27 @@
 		async function markAttendance() {
 			const id = document.getElementById('scanInput').value.trim();
 			const resultDiv = document.getElementById('scanResult');
-
-			if (!id) {
-				resultDiv.innerHTML = '<div class="alert alert-danger">Please enter Member ID or scan QR.</div>';
-				return;
-			}
-
+			if (!id) { resultDiv.innerHTML = '<div class="alert alert-danger">Please enter Member ID or scan QR.</div>'; return; }
 			const member = members.find(m => m.id === id);
-			if (!member) {
-				resultDiv.innerHTML = '<div class="alert alert-danger">Member not found! Please register first.</div>';
-				return;
-			}
-
+			if (!member) { resultDiv.innerHTML = '<div class="alert alert-danger">Member not found! Please register first.</div>'; return; }
 			const today = new Date().toISOString().split('T')[0];
 			const already = attendance.find(a => a.memberId === id && a.date === today);
-
 			if (already) {
-				resultDiv.innerHTML = `<div class="alert alert-warning">${member.name} already marked present today at ${already.time}.</div>`;
-				return;
+				resultDiv.innerHTML =
+				`<div class="alert alert-warning">${member.name} already marked present today at ${already.time}.</div>`; return;
 			}
-
 			const now = new Date();
 			const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
 			try {
 				await saveToGoogleSheets('markAttendance', {
-					memberId: id,
-					name: member.name,
-					date: today,
-					time: timeStr,
+					memberId: id, name: member.name, date: today, time: timeStr,
 					status: 'Present'
 				});
-
 				attendance.push({ memberId: id, name: member.name, date: today, time: timeStr, status: 'Present' });
 				saveAttendance();
-
-				resultDiv.innerHTML = `<div class="alert alert-success"><i class="fa fa-check"></i> ${member.name} (${member.id}) marked Present at ${timeStr}! Saved to Google Sheets.</div>`;
+				resultDiv.innerHTML =
+					`<div class="alert alert-success"><i class="fa fa-check"></i> ${member.name} (${member.id}) marked Present at ${timeStr}! Saved to Google Sheets.</div>`;
 				document.getElementById('scanInput').value = '';
-
 				filteredData = [];
 				document.getElementById('filterDate').value = '';
 				document.getElementById('filterSearch').value = '';
@@ -1053,55 +1251,47 @@
 		}
 
 		// ============================================================
-		// ATTENDANCE TABLE WITH PAGINATION
+		// ATTENDANCE TABLE
 		// ============================================================
 		function renderAttendanceTable() {
 			const tbody = document.getElementById('attendanceBody');
 			const data = filteredData.length > 0 ? filteredData : attendance;
-
 			if (data.length === 0) {
 				tbody.innerHTML = '<tr><td colspan="5" class="text-center">No attendance records found.</td></tr>';
 				document.getElementById('paginationControls').innerHTML = '';
 				document.getElementById('pageInfo').textContent = '0';
 				return;
 			}
-
 			const sorted = [...data].sort((a, b) => {
 				if (a.date !== b.date) return b.date.localeCompare(a.date);
 				return b.time.localeCompare(a.time);
 			});
-
 			const totalRecords = sorted.length;
 			const totalPages = Math.ceil(totalRecords / recordsPerPage);
 			if (currentPage > totalPages) currentPage = totalPages;
 			if (currentPage < 1) currentPage = 1;
-
 			const startIndex = (currentPage - 1) * recordsPerPage;
 			const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
 			const pageData = sorted.slice(startIndex, endIndex);
-
 			tbody.innerHTML = pageData.map(a => `
-			<tr>
-				<td>${a.date}</td>
-				<td><strong>${a.memberId}</strong></td>
-				<td>${a.name}</td>
-				<td><span class="badge-present"><i class="fa fa-check"></i> ${a.status}</span></td>
-				<td>${a.time}</td>
-			</tr>
-		`).join('');
-
+				<tr>
+					<td>${a.date}</td>
+					<td><strong>${a.memberId}</strong></td>
+					<td>${a.name}</td>
+					<td><span class="badge-present"><i class="fa fa-check"></i> ${a.status}</span></td>
+					<td>${a.time}</td>
+				</tr>`).join('');
 			document.getElementById('pageInfo').textContent = `${startIndex + 1} - ${endIndex} of ${totalRecords}`;
-
 			let paginationHtml = '';
 			if (totalPages > 1) {
 				paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-				<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a></li>`;
+					<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a></li>`;
 				for (let i = 1; i <= totalPages; i++) {
 					paginationHtml += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-					<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`;
+						<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`;
 				}
 				paginationHtml += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-				<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a></li>`;
+					<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a></li>`;
 			}
 			document.getElementById('paginationControls').innerHTML = paginationHtml;
 		}
@@ -1114,40 +1304,23 @@
 			renderAttendanceTable();
 		}
 
-		// ============================================================
-		// FILTERS
-		// ============================================================
 		function applyFilters() {
 			const date = document.getElementById('filterDate').value;
 			const search = document.getElementById('filterSearch').value.toLowerCase().trim();
-
 			let result = [...attendance];
-
-			if (date) {
-				result = result.filter(a => a.date === date);
-			}
-
-			if (search) {
-				result = result.filter(a =>
-					a.name.toLowerCase().includes(search) ||
-					a.memberId.toLowerCase().includes(search)
-				);
-			}
-
+			if (date) result = result.filter(a => a.date === date);
+			if (search) result = result.filter(a => a.name.toLowerCase().includes(search) || a.memberId.toLowerCase().includes(
+				search));
 			filteredData = result;
 			currentPage = 1;
-
 			let filterText = '';
 			if (date) filterText += `<span class="badge badge-primary mr-1">Date: ${date}</span>`;
 			if (search) filterText += `<span class="badge badge-info mr-1">Search: "${search}"</span>`;
 			if (!date && !search) filterText = 'Showing all records';
 			document.getElementById('activeFilters').innerHTML = filterText;
-
 			renderAttendanceTable();
-
-			if (result.length === 0) {
-				document.getElementById('activeFilters').innerHTML += ' <span class="text-danger">(No results found)</span>';
-			}
+			if (result.length === 0) document.getElementById('activeFilters').innerHTML +=
+				' <span class="text-danger">(No results found)</span>';
 		}
 
 		function resetFilters() {
@@ -1165,50 +1338,35 @@
 		function renderMemberList() {
 			const search = document.getElementById('memberSearch').value.toLowerCase();
 			let filtered = members;
-			if (search) {
-				filtered = members.filter(m =>
-					m.name.toLowerCase().includes(search) ||
-					m.id.toLowerCase().includes(search) ||
-					m.mobile.includes(search)
-				);
-			}
-
+			if (search) filtered = members.filter(m => m.name.toLowerCase().includes(search) || m.id.toLowerCase().includes(
+				search) || m.mobile.includes(search));
 			const tbody = document.getElementById('membersBody');
 			if (filtered.length === 0) {
 				tbody.innerHTML = '<tr><td colspan="8" class="text-center">No members found.</td></tr>';
 				document.getElementById('memberPaginationControls').innerHTML = '';
 				return;
 			}
-
 			const totalRecords = filtered.length;
 			const totalPages = Math.ceil(totalRecords / memberRecordsPerPage);
 			if (memberCurrentPage > totalPages) memberCurrentPage = totalPages;
 			if (memberCurrentPage < 1) memberCurrentPage = 1;
-
 			const startIndex = (memberCurrentPage - 1) * memberRecordsPerPage;
 			const endIndex = Math.min(startIndex + memberRecordsPerPage, totalRecords);
 			const pageData = filtered.slice(startIndex, endIndex);
-
 			tbody.innerHTML = pageData.map((m) => `
-			<tr>
-				<td>
-					<div class="member-list-qr">
-						<div class="qr-small" id="qr_${m.id}"></div>
-					</div>
-				</td>
-				<td><strong>${m.id}</strong></td>
-				<td>${m.name}</td>
-				<td>${m.mobile}</td>
-				<td>${m.age}</td>
-				<td>${m.state}</td>
-				<td>${m.district}</td>
-				<td>
-					<button class="btn btn-primary btn-sm" onclick="showQRModal('${m.id}')"><i class="fa fa-qrcode"></i></button>
-					<button class="btn btn-success btn-sm" onclick="downloadMemberQR('${m.id}')"><i class="fa fa-download"></i></button>
-				</td>
-			</tr>
-		`).join('');
-
+				<tr>
+					<td><div class="member-list-qr"><div class="qr-small" id="qr_${m.id}"></div></div></td>
+					<td><strong>${m.id}</strong></td>
+					<td>${m.name}</td>
+					<td>${m.mobile}</td>
+					<td>${m.age}</td>
+					<td>${m.state}</td>
+					<td>${m.district}</td>
+					<td>
+						<button class="btn btn-primary btn-sm" onclick="showQRModal('${m.id}')"><i class="fa fa-qrcode"></i></button>
+						<button class="btn btn-success btn-sm" onclick="downloadMemberQR('${m.id}')"><i class="fa fa-download"></i></button>
+					</td>
+				</tr>`).join('');
 			pageData.forEach(m => {
 				const container = document.getElementById(`qr_${m.id}`);
 				if (container) {
@@ -1216,17 +1374,16 @@
 					new QRCode(container, { text: m.id, width: 40, height: 40 });
 				}
 			});
-
 			let paginationHtml = '';
 			if (totalPages > 1) {
 				paginationHtml += `<li class="page-item ${memberCurrentPage === 1 ? 'disabled' : ''}">
-				<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage - 1}); return false;">Previous</a></li>`;
+					<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage - 1}); return false;">Previous</a></li>`;
 				for (let i = 1; i <= totalPages; i++) {
 					paginationHtml += `<li class="page-item ${i === memberCurrentPage ? 'active' : ''}">
-					<a class="page-link" href="#" onclick="changeMemberPage(${i}); return false;">${i}</a></li>`;
+						<a class="page-link" href="#" onclick="changeMemberPage(${i}); return false;">${i}</a></li>`;
 				}
 				paginationHtml += `<li class="page-item ${memberCurrentPage === totalPages ? 'disabled' : ''}">
-				<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage + 1}); return false;">Next</a></li>`;
+					<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage + 1}); return false;">Next</a></li>`;
 			}
 			document.getElementById('memberPaginationControls').innerHTML = paginationHtml;
 		}
@@ -1234,22 +1391,15 @@
 		function changeMemberPage(page) {
 			const search = document.getElementById('memberSearch').value.toLowerCase();
 			let filtered = members;
-			if (search) {
-				filtered = members.filter(m =>
-					m.name.toLowerCase().includes(search) ||
-					m.id.toLowerCase().includes(search) ||
-					m.mobile.includes(search)
-				);
-			}
+			if (search) filtered = members.filter(m => m.name.toLowerCase().includes(search) || m.id.toLowerCase().includes(
+				search) || m.mobile.includes(search));
 			const totalPages = Math.ceil(filtered.length / memberRecordsPerPage);
 			if (page < 1 || page > totalPages) return;
 			memberCurrentPage = page;
 			renderMemberList();
 		}
 
-		function refreshMembers() {
-			loadFromGoogleSheets();
-		}
+		function refreshMembers() { loadFromGoogleSheets(); }
 
 		// ============================================================
 		// QR MODAL
@@ -1259,12 +1409,10 @@
 		function showQRModal(memberId) {
 			const member = members.find(m => m.id === memberId);
 			if (!member) return;
-
 			currentModalMemberId = memberId;
 			const container = document.getElementById('modalQrContainer');
 			container.innerHTML = '';
 			new QRCode(container, { text: memberId, width: 200, height: 200 });
-
 			document.getElementById('modalMemberName').textContent = member.name;
 			document.getElementById('modalMemberId').textContent = memberId;
 			$('#qrModal').modal('show');
@@ -1285,8 +1433,7 @@
 			tempDiv.style.position = 'absolute';
 			tempDiv.style.left = '-9999px';
 			document.body.appendChild(tempDiv);
-
-			const qr = new QRCode(tempDiv, { text: memberId, width: 200, height: 200 });
+			new QRCode(tempDiv, { text: memberId, width: 200, height: 200 });
 			const canvas = tempDiv.querySelector('canvas');
 			if (canvas) {
 				const link = document.createElement('a');
@@ -1302,18 +1449,10 @@
 		// ============================================================
 		function exportToExcel() {
 			const data = attendance.length === 0 ? [] : attendance.map(a => ({
-				'Date': a.date,
-				'Member ID': a.memberId,
-				'Name': a.name,
-				'Status': a.status,
-				'Time': a.time
+				'Date': a.date, 'Member ID': a.memberId,
+				'Name': a.name, 'Status': a.status, 'Time': a.time
 			}));
-
-			if (data.length === 0) {
-				alert('No attendance data to export.');
-				return;
-			}
-
+			if (data.length === 0) { alert('No attendance data to export.'); return; }
 			const wb = XLSX.utils.book_new();
 			const ws = XLSX.utils.json_to_sheet(data);
 			XLSX.utils.book_append_sheet(wb, ws, 'Attendance');
@@ -1321,21 +1460,11 @@
 		}
 
 		function exportMembersExcel() {
-			if (members.length === 0) {
-				alert('No members to export.');
-				return;
-			}
-
+			if (members.length === 0) { alert('No members to export.'); return; }
 			const data = members.map(m => ({
-				'Member ID': m.id,
-				'Name': m.name,
-				'Mobile': m.mobile,
-				'Age': m.age,
-				'State': m.state,
-				'District': m.district,
-				'Registered': m.registered
+				'Member ID': m.id, 'Name': m.name, 'Mobile': m.mobile, 'Age': m.age,
+				'State': m.state, 'District': m.district, 'Registered': m.registered
 			}));
-
 			const wb = XLSX.utils.book_new();
 			const ws = XLSX.utils.json_to_sheet(data);
 			XLSX.utils.book_append_sheet(wb, ws, 'Members');
@@ -1347,44 +1476,33 @@
 		// ============================================================
 		function loadRecentMembers() {
 			const container = document.getElementById('recentMembersList');
-			if (members.length === 0) {
-				container.innerHTML = '<p class="text-muted text-center">No members yet.</p>';
-				return;
-			}
+			if (members.length === 0) { container.innerHTML = '<p class="text-muted text-center">No members yet.</p>'; return; }
 			const recent = members.slice(-5).reverse();
 			container.innerHTML = recent.map(m => `
-			<div class="d-flex justify-content-between align-items-center border-bottom py-2">
-				<div><strong>${m.name}</strong><br><small class="text-muted">${m.id}</small></div>
-				<span class="badge badge-success">${m.mobile}</span>
-			</div>
-		`).join('');
+				<div class="d-flex justify-content-between align-items-center border-bottom py-2">
+					<div><strong>${m.name}</strong><br><small class="text-muted">${m.id}</small></div>
+					<span class="badge badge-success">${m.mobile}</span>
+				</div>`).join('');
 		}
 
 		// ============================================================
 		// KEYBOARD SHORTCUTS
 		// ============================================================
 		document.getElementById('scanInput').addEventListener('keyup', function (e) {
-			if (e.key === 'Enter') {
-				markAttendance();
-			}
+			if (e.key === 'Enter') markAttendance();
 		});
-
 		document.getElementById('filterSearch').addEventListener('keyup', function (e) {
-			if (e.key === 'Enter') {
-				applyFilters();
-			}
+			if (e.key === 'Enter') applyFilters();
 		});
 
 		// ============================================================
 		// INIT
 		// ============================================================
 		function init() {
-			// Load saved URL
 			if (GOOGLE_SHEET_URL) {
 				document.getElementById('currentSheetUrl').textContent = GOOGLE_SHEET_URL;
 				document.getElementById('sheetUrlInput').value = GOOGLE_SHEET_URL;
 			}
-
 			loadRecentMembers();
 			document.getElementById('filterDate').value = new Date().toISOString().split('T')[0];
 			filteredData = [];
@@ -1392,7 +1510,6 @@
 			document.getElementById('activeFilters').innerHTML = 'Showing all records';
 			renderAttendanceTable();
 			renderMemberList();
-
 			if (GOOGLE_SHEET_URL) {
 				showSyncStatus('✅ Google Sheets URL configured. Testing connection...', 'info');
 				setTimeout(testConnection, 1000);
@@ -1400,20 +1517,16 @@
 				showSyncStatus('⚠️ Please configure Google Sheets URL in the Sync tab', 'info');
 				addSyncLog('⚠️ Waiting for Google Sheets URL configuration');
 			}
-
 			console.log('Aga Oli System with Google Sheets integration loaded.');
 			console.log('Members:', members.length);
 			console.log('Attendance:', attendance.length);
-			console.log('Google Sheets URL:', GOOGLE_SHEET_URL || 'Not configured');
 		}
 
 		init();
 
 		// Clean up scanner when switching tabs
 		$('#mainTabs a').on('click', function () {
-			if (isScannerRunning) {
-				stopScanner();
-			}
+			if (isScannerRunning) stopScanner();
 		});
 	</script>
 

@@ -3,155 +3,247 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Scan Entry - Aga Oli Meignana Yogam</title>
+	<title>Register - Aga Oli Meignana Yogam</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 	<style>
+		/* ============================================
+		   COLOR THEME - GOLD & DARK GREEN
+		   Matching home page
+		   ============================================ */
 		body {
 			font-family: 'Montserrat', sans-serif;
-			background: linear-gradient(135deg, #f0ebe3 0%, #e8e0d5 100%);
+			background: #f7f3eb;
 			min-height: 100vh;
 		}
 
-		.gradient-header {
-			background: linear-gradient(135deg, #1a2a3a, #2c3e50);
-			color: #fff;
-			padding: 20px 0;
-			margin-bottom: 30px;
+		/* HEADER - matching home page */
+		.top {
+			background: #1a2b1a;
+		}
+
+		.top-nav {
+			background: #1a2b1a;
+			border-bottom: 2px solid #c9a96e;
+			padding: 10px 0;
+		}
+
+			.top-nav .left-side span {
+				color: #c9a96e;
+				font-weight: 500;
+			}
+
+			.top-nav .left-side p {
+				color: #e8e0d0;
+				margin-bottom: 0;
+			}
+
+			.top-nav .social-icons i {
+				color: #c9a96e;
+				font-size: 20px;
+				margin: 0 7px;
+				transition: 0.3s;
+				cursor: pointer;
+			}
+
+				.top-nav .social-icons i:hover {
+					color: #e8d5a3;
+					transform: scale(1.1);
+				}
+
+		.slide-menu i {
+			font-size: 30px;
+			color: #c9a96e;
+			transition: 0.3s;
+			cursor: pointer;
+		}
+
+			.slide-menu i:hover {
+				color: #e8d5a3;
+			}
+
+		.logo img {
+			max-height: 55px;
+		}
+
+		.border-img {
+			width: 100%;
+			display: block;
+		}
+
+		/* SIDENAV - OPENS FROM RIGHT */
+		.sidenav {
+			height: 100%;
+			width: 0;
+			position: fixed;
+			z-index: 999;
+			top: 0;
+			right: 0;
+			background-color: #122012;
+			overflow-x: hidden;
+			transition: 0.3s;
+			padding-top: 80px;
+			box-shadow: -8px 0 30px rgba(0, 0, 0, 0.7);
+		}
+
+			.sidenav a {
+				padding: 14px 32px;
+				text-decoration: none;
+				font-size: 18px;
+				font-weight: 500;
+				color: #c9c9b8;
+				display: block;
+				transition: 0.2s;
+				border-right: 4px solid transparent;
+				text-align: right;
+				letter-spacing: 0.5px;
+			}
+
+				.sidenav a:hover,
+				.sidenav a.active {
+					color: #e8d5a3;
+					border-right-color: #c9a96e;
+					background: #1f3a1f;
+				}
+
+			.sidenav .closebtn {
+				position: absolute;
+				top: 10px;
+				left: 25px;
+				font-size: 38px;
+				color: #c9a96e;
+				text-align: left;
+			}
+
+				.sidenav .closebtn:hover {
+					color: #e8d5a3;
+				}
+
+		/* MAIN CONTENT */
+		.register-page {
+			padding: 50px 0 70px;
 		}
 
 		.card {
 			border-radius: 15px;
-			box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-			border: none;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+			border: 1px solid #eae8e0;
+			background: #fff;
 			margin-bottom: 30px;
 		}
 
 		.card-header {
-			background: #2c3e50;
-			color: #fff;
+			background: #1a2b1a;
+			color: #e8d5a3;
 			border-radius: 15px 15px 0 0 !important;
 			padding: 18px 25px;
+			border-bottom: 2px solid #c9a96e;
 			font-weight: 600;
 		}
 
+			.card-header i {
+				color: #c9a96e;
+				margin-right: 8px;
+			}
+
+		/* BUTTONS - matching home page */
 		.btn-success {
-			background: #27ae60;
-			border: none;
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 12px 35px;
+			border-radius: 40px;
+			transition: 0.3s;
 		}
 
 			.btn-success:hover {
-				background: #219a52;
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
 			}
 
 		.btn-primary {
-			background: #2980b9;
-			border: none;
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 10px 25px;
+			border-radius: 40px;
+			transition: 0.3s;
 		}
 
-		.btn-danger {
-			background: #e74c3c;
-			border: none;
-		}
-
-			.btn-danger:hover {
-				background: #c0392b;
+			.btn-primary:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
 			}
 
-		.scanner-area {
-			border: 3px dashed #2980b9;
-			padding: 30px;
-			border-radius: 15px;
-			background: #f8f9fa;
-		}
-
-			.scanner-area input {
-				width: 100%;
-				padding: 15px;
-				font-size: 18px;
-				text-align: center;
-				border-radius: 10px;
-			}
-
-		#reader {
-			width: 100%;
-			max-width: 500px;
-			margin: 0 auto;
-		}
-
-			#reader video {
-				border-radius: 10px;
-				max-width: 100%;
-			}
-
-		.scan-toggle-btn {
-			margin: 10px 0;
-		}
-
-		.badge-present {
-			background: #27ae60;
+		.btn-secondary {
+			background: #6b7f6a;
+			border-color: #5a6f5a;
 			color: #fff;
-			padding: 5px 15px;
-			border-radius: 20px;
+			font-weight: 600;
+			border-radius: 40px;
+			transition: 0.3s;
 		}
 
-		.badge-absent {
-			background: #e74c3c;
-			color: #fff;
-			padding: 5px 15px;
-			border-radius: 20px;
+			.btn-secondary:hover {
+				background: #7b8f7a;
+				border-color: #6b7f6a;
+				color: #fff;
+				transform: translateY(-2px);
+			}
+
+		.btn-sm {
+			padding: 6px 18px;
+			font-size: 13px;
 		}
 
-		.pagination .page-link {
-			color: #2c3e50;
-		}
-
-		.pagination .page-item.active .page-link {
-			background: #2c3e50;
-			border-color: #2c3e50;
-		}
-
-		.filter-row {
-			background: #ecf0f1;
-			padding: 15px;
+		/* FORM */
+		.form-control {
 			border-radius: 10px;
-			margin-bottom: 20px;
+			border: 2px solid #d4cbb8;
+			padding: 12px 15px;
+			font-size: 15px;
 		}
 
-		.filter-btn-group {
-			display: flex;
-			gap: 10px;
-			flex-wrap: wrap;
-		}
-
-			.filter-btn-group .btn {
-				flex: 1;
-				min-width: 80px;
+			.form-control:focus {
+				border-color: #c9a96e;
+				box-shadow: 0 0 0 0.2rem rgba(201, 169, 110, 0.25);
 			}
 
-		.search-input-group {
-			display: flex;
-			gap: 10px;
+		label {
+			font-weight: 600;
+			color: #1a2b1a;
 		}
 
-			.search-input-group input {
-				flex: 1;
-			}
-
-		.scan-result {
-			margin-top: 15px;
-			font-size: 16px;
-		}
-
-		.footer {
-			background: #1a2a3a;
-			color: #ccc;
-			padding: 20px 0;
-			margin-top: 40px;
+		/* QR BOX */
+		.qr-box {
+			background: #fff;
+			padding: 20px;
+			border-radius: 12px;
 			text-align: center;
+			border: 2px dashed #c9a96e;
+			display: inline-block;
 		}
 
+		.member-id {
+			font-size: 16px;
+			font-weight: bold;
+			color: #1a2b1a;
+			background: #ecf0f1;
+			padding: 8px 20px;
+			border-radius: 20px;
+			display: inline-block;
+		}
+
+		/* SYNC STATUS */
 		.sync-status {
 			padding: 12px 20px;
 			border-radius: 8px;
@@ -183,267 +275,235 @@
 				border: 1px solid #ffeeba;
 			}
 
-		.nav-pills .nav-link {
-			color: #2c3e50;
-			border-radius: 30px;
-			margin: 0 5px;
-			padding: 10px 25px;
+		/* RECENT MEMBERS */
+		.recent-member-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 12px 0;
+			border-bottom: 1px solid #f0ece0;
 		}
 
-			.nav-pills .nav-link.active {
-				background: #2c3e50;
-				color: #fff;
+			.recent-member-item:last-child {
+				border-bottom: none;
 			}
 
-			.nav-pills .nav-link i {
-				margin-right: 8px;
+			.recent-member-item .name {
+				font-weight: 600;
+				color: #1a2b1a;
 			}
 
+			.recent-member-item .id {
+				font-size: 13px;
+				color: #6b7f6a;
+			}
+
+			.recent-member-item .badge {
+				background: #c9a96e;
+				color: #1a2b1a;
+				font-weight: 600;
+				padding: 4px 12px;
+				border-radius: 20px;
+			}
+
+		/* URL HIGHLIGHT */
 		.url-highlight {
-			background: #fff3cd;
-			border: 2px solid #ffc107;
+			background: #f7f3eb;
+			border: 2px solid #c9a96e;
 			padding: 15px;
 			border-radius: 10px;
 			margin: 10px 0;
 		}
 
-		.stats-box {
-			background: #f8f9fa;
-			padding: 15px;
-			border-radius: 10px;
+		/* FOOTER */
+		.footer {
+			background: #122012;
+			color: #a8b898;
+			padding: 20px 0;
+			margin-top: 40px;
 			text-align: center;
+			border-top: 2px solid #2a402a;
 		}
 
-			.stats-box .number {
-				font-size: 28px;
-				font-weight: 700;
-				color: #2c3e50;
+			.footer i.fa-heart {
+				color: #c9a96e;
 			}
 
-			.stats-box .label {
-				color: #7f8c8d;
-				font-size: 14px;
-			}
-
+		/* RESPONSIVE */
 		@media (max-width: 768px) {
-			.filter-btn-group .btn {
-				flex: 1 1 100%;
+			.top-nav .left-side span {
+				display: block;
+				margin-left: 0;
 			}
 
-			.search-input-group {
-				flex-direction: column;
+			.logo img {
+				max-height: 40px;
+			}
+
+			.register-page {
+				padding: 30px 0 50px;
 			}
 		}
 	</style>
 </head>
 <body>
 
-	<!-- ===== HEADER ===== -->
-	<div class="gradient-header text-center">
-		<h1><i class="fa fa-leaf"></i> Aga Oli Meignana Yogam</h1>
-		<p class="lead mb-0">Class Entry & Attendance System</p>
-	</div>
-
-	<div class="container">
-		<!-- Google Sheets Status -->
-		<div id="syncStatus" class="sync-status info">
-			<i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...
+	<!-- ===== HEADER WITH SIDENAV - MATCHING HOME PAGE ===== -->
+	<header class="top">
+		<!-- SIDENAV - OPENS FROM RIGHT -->
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="index.html">Home</a>
+			<a href="about.html">About Yogi</a>
+			<a href="about-gurunathar.html">About Gurunathar</a>
+			<a href="vasi-programs.html">Vasi Yoga Programs</a>
+			<a href="foundation-plan.html">Plan of the Foundation</a>
+			<a href="register.html" class="active">Become a Member</a>
+			<a href="scan.html">Class Entry (Scanner)</a>
+			<a href="gallery.html">Gallery</a>
+			<a href="videos.html">Videos</a>
 		</div>
 
-		<!-- Navigation -->
-		<ul class="nav nav-pills justify-content-center mb-4" id="mainTabs">
-			<li class="nav-item"><a class="nav-link active" id="scanTab" data-toggle="pill" href="#scanSection"><i class="fa fa-qrcode"></i> Scan Entry</a></li>
-			<li class="nav-item"><a class="nav-link" id="attendanceTab" data-toggle="pill" href="#attendanceSection"><i class="fa fa-calendar-check-o"></i> Attendance</a></li>
-			<li class="nav-item"><a class="nav-link" id="syncTab" data-toggle="pill" href="#syncSection"><i class="fa fa-cloud-upload"></i> Google Sheets Setup</a></li>
-		</ul>
+		<nav class="top-nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 col-md-5 align-self-center left-side">
+						<p>Love is Everything <span>Call: +91 63804 19470</span></p>
+					</div>
+					<div class="col-lg-2 col-md-2 col-5 align-self-center logo text-center">
+						<a href="index.html"><img src="images/nav-logo.png" alt="logo"></a>
+					</div>
+					<div class="col-lg-5 col-md-5 col-7 align-self-center right-side d-flex justify-content-end align-items-center">
+						<div class="social-icons another mb-0 mr-3">
+							<i class="fa fa-facebook-official" aria-hidden="true"></i>
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+							<i class="fa fa-pinterest" aria-hidden="true"></i>
+							<i class="fa fa-youtube" aria-hidden="true"></i>
+						</div>
+						<div class="social-icons square mb-0">
+							<span class="slide-menu" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<img class="border-img" src="images/border.png" width="100%" alt="">
+	</header>
 
-		<div class="tab-content">
-			<!-- ============================================================ -->
-			<!-- TAB 1: SCAN ENTRY -->
-			<!-- ============================================================ -->
-			<div class="tab-pane fade show active" id="scanSection">
-				<div class="card">
-					<div class="card-header"><i class="fa fa-qrcode"></i> Class Entry Scanner</div>
-					<div class="card-body">
-						<div class="scanner-area text-center">
-							<h5><i class="fa fa-camera"></i> Scan QR Code</h5>
-							<p>Use camera to scan QR or enter Member ID manually</p>
-							<div class="row justify-content-center">
-								<div class="col-md-8">
-									<div id="scannerContainer" style="display:none;">
-										<div id="reader"></div>
-										<button class="btn btn-danger btn-sm mt-2" onclick="stopScanner()"><i class="fa fa-stop"></i> Stop Scanner</button>
-									</div>
-									<button class="btn btn-primary scan-toggle-btn" id="toggleScannerBtn" onclick="toggleScanner()">
-										<i class="fa fa-camera"></i> Open QR Scanner
-									</button>
-									<hr>
-									<div class="input-group">
-										<input type="text" class="form-control" id="scanInput" placeholder="Type Member ID here" />
-										<div class="input-group-append">
-											<button class="btn btn-success" onclick="markAttendance()"><i class="fa fa-check"></i> Mark Present</button>
+	<!-- ===== REGISTRATION PAGE ===== -->
+	<div class="register-page">
+		<div class="container">
+			<!-- Google Sheets Status -->
+			<div id="syncStatus" class="sync-status info">
+				<i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...
+			</div>
+
+			<div class="row">
+				<div class="col-lg-7">
+					<div class="card">
+						<div class="card-header"><i class="fa fa-user-plus"></i> Become a Member</div>
+						<div class="card-body">
+							<form id="registerForm">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label><i class="fa fa-user"></i> Full Name</label>
+											<input type="text" class="form-control" id="regName" placeholder="Enter full name" required>
 										</div>
 									</div>
-									<div id="scanResult" class="scan-result"></div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label><i class="fa fa-phone"></i> Mobile Number</label>
+											<input type="tel" class="form-control" id="regMobile" placeholder="10 digit mobile" pattern="[0-9]{10}" required>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label><i class="fa fa-calendar"></i> Age</label>
+											<input type="number" class="form-control" id="regAge" placeholder="Age" required>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label><i class="fa fa-map-marker"></i> State</label>
+											<input type="text" class="form-control" id="regState" placeholder="Tamil Nadu" required>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label><i class="fa fa-location-arrow"></i> District</label>
+											<input type="text" class="form-control" id="regDistrict" placeholder="District" required>
+										</div>
+									</div>
+									<div class="col-12">
+										<button type="submit" class="btn btn-success btn-lg btn-block">
+											<i class="fa fa-id-card"></i> Register & Save to Google Sheets
+										</button>
+									</div>
 								</div>
-							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-md-4">
-								<div class="stats-box">
-									<div class="number" id="todayTotal">0</div>
-									<div class="label">Today's Attendance</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="stats-box">
-									<div class="number" id="totalAttendance">0</div>
-									<div class="label">Total Attendance</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="stats-box">
-									<div class="number" id="totalMembers">0</div>
-									<div class="label">Total Members</div>
+							</form>
+
+							<!-- QR Result -->
+							<div id="qrResult" style="display:none;" class="mt-4">
+								<div class="row">
+									<div class="col-md-5">
+										<div class="qr-box">
+											<h5><i class="fa fa-qrcode"></i> Your QR Code</h5>
+											<div id="qrCodeContainer" class="my-3"></div>
+											<p class="member-id" id="displayMemberId"></p>
+											<button class="btn btn-primary btn-sm" onclick="downloadQR()">
+												<i class="fa fa-download"></i> Download QR
+											</button>
+										</div>
+									</div>
+									<div class="col-md-7">
+										<div class="alert alert-success">
+											<h5><i class="fa fa-check-circle"></i> Registration Successful!</h5>
+											<p><strong>Member ID:</strong> <span id="displayMemberId2"></span></p>
+											<p><strong>Name:</strong> <span id="displayName"></span></p>
+											<p>Data saved to Google Sheets.</p>
+											<button class="btn btn-success btn-sm" onclick="resetForm()">
+												<i class="fa fa-plus"></i> Register Another
+											</button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- ============================================================ -->
-			<!-- TAB 2: ATTENDANCE LIST -->
-			<!-- ============================================================ -->
-			<div class="tab-pane fade" id="attendanceSection">
-				<div class="card">
-					<div class="card-header"><i class="fa fa-calendar-check-o"></i> Attendance Records</div>
-					<div class="card-body">
-						<div class="filter-row">
-							<div class="row">
-								<div class="col-md-4">
-									<label><i class="fa fa-calendar"></i> Date</label>
-									<input type="date" class="form-control" id="filterDate" />
-								</div>
-								<div class="col-md-4">
-									<label><i class="fa fa-search"></i> Search</label>
-									<div class="search-input-group">
-										<input type="text" class="form-control" id="filterSearch" placeholder="Name or ID" />
-									</div>
-								</div>
-								<div class="col-md-4">
-									<label>&nbsp;</label>
-									<div class="filter-btn-group">
-										<button class="btn btn-primary" onclick="applyFilters()"><i class="fa fa-search"></i> Search</button>
-										<button class="btn btn-secondary" onclick="resetFilters()"><i class="fa fa-refresh"></i> Reset</button>
-										<button class="btn btn-success" onclick="exportToExcel()"><i class="fa fa-file-excel-o"></i> Excel</button>
-									</div>
-								</div>
+				<div class="col-lg-5">
+					<div class="card">
+						<div class="card-header"><i class="fa fa-users"></i> Recent Members</div>
+						<div class="card-body" style="max-height: 450px; overflow-y: auto;">
+							<div id="recentMembersList">
+								<p class="text-muted text-center">No members yet.</p>
 							</div>
-							<div id="activeFilters" class="mt-2 small text-muted"></div>
-						</div>
-
-						<div class="table-responsive">
-							<table class="table table-bordered table-hover" id="attendanceTable">
-								<thead><tr><th>Date</th><th>Member ID</th><th>Name</th><th>Status</th><th>Time</th></tr></thead>
-								<tbody id="attendanceBody"></tbody>
-							</table>
-						</div>
-
-						<nav aria-label="Attendance pagination">
-							<ul class="pagination justify-content-center" id="paginationControls"></ul>
-						</nav>
-						<div class="text-center text-muted small">
-							Showing <span id="pageInfo">0</span> records
 						</div>
 					</div>
-				</div>
-			</div>
 
-			<!-- ============================================================ -->
-			<!-- TAB 3: GOOGLE SHEETS SETUP -->
-			<!-- ============================================================ -->
-			<div class="tab-pane fade" id="syncSection">
-				<div class="card">
-					<div class="card-header"><i class="fa fa-cloud-upload"></i> Google Sheets Setup</div>
-					<div class="card-body">
-						<div class="url-highlight">
-							<h5><i class="fa fa-exclamation-triangle" style="color:#ffc107;"></i> <strong>Google Sheets Configuration</strong></h5>
-							<p>Paste your Google Apps Script Web App URL below to enable cloud storage.</p>
-						</div>
-
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label><i class="fa fa-link"></i> <strong>Web App URL:</strong></label>
-									<div class="input-group">
-										<input type="text" class="form-control" id="sheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
-										<div class="input-group-append">
-											<button class="btn btn-primary" onclick="updateSheetUrl()"><i class="fa fa-save"></i> Save URL</button>
-										</div>
-									</div>
-									<small class="form-text text-muted">Example: https://script.google.com/macros/s/ABC123XYZ/exec</small>
-								</div>
-								<div class="alert alert-info">
-									<i class="fa fa-info-circle"></i> <strong>Current URL:</strong>
-									<span id="currentSheetUrl" style="font-family: monospace; word-break: break-all;">Not set</span>
-								</div>
-							</div>
-						</div>
-
-						<hr>
-
-						<div class="row">
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-body text-center">
-										<h4><i class="fa fa-google"></i> Google Sheets Status</h4>
-										<div id="syncStatusDetail" class="mt-3">
-											<p><strong>Members:</strong> <span id="sheetMemberCount">0</span></p>
-											<p><strong>Attendance:</strong> <span id="sheetAttendanceCount">0</span></p>
-										</div>
-										<button class="btn btn-primary btn-block" onclick="syncToGoogleSheets()">
-											<i class="fa fa-upload"></i> Sync All Data
-										</button>
-										<button class="btn btn-info btn-block mt-2" onclick="loadFromGoogleSheets()">
-											<i class="fa fa-download"></i> Load Data
-										</button>
-										<button class="btn btn-success btn-block mt-2" onclick="syncAndReload()">
-											<i class="fa fa-refresh"></i> Sync & Reload
-										</button>
-										<button class="btn btn-warning btn-block mt-2" onclick="testConnection()">
-											<i class="fa fa-plug"></i> Test Connection
-										</button>
+					<!-- Google Sheets Setup Mini -->
+					<div class="card">
+						<div class="card-header"><i class="fa fa-cloud-upload"></i> Google Sheets Setup</div>
+						<div class="card-body">
+							<div class="url-highlight">
+								<h6><i class="fa fa-link"></i> Web App URL</h6>
+								<div class="input-group">
+									<input type="text" class="form-control" id="sheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
+									<div class="input-group-append">
+										<button class="btn btn-primary" onclick="updateSheetUrl()"><i class="fa fa-save"></i> Save</button>
 									</div>
 								</div>
+								<small class="form-text text-muted">Paste your Google Apps Script Web App URL</small>
 							</div>
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-body">
-										<h5><i class="fa fa-info-circle"></i> Setup Instructions</h5>
-										<ol>
-											<li>Create a Google Sheet</li>
-											<li>Go to Extensions > Apps Script</li>
-											<li>Copy the Apps Script code</li>
-											<li>Deploy as Web App</li>
-											<li>Copy the Web App URL</li>
-											<li><strong>Paste it in the box above</strong></li>
-										</ol>
-										<div class="alert alert-success mt-3">
-											<i class="fa fa-check-circle"></i> After saving the URL, click "Test Connection" to verify.
-										</div>
-									</div>
-								</div>
+							<div class="mt-2">
+								<button class="btn btn-info btn-sm" onclick="testConnection()"><i class="fa fa-plug"></i> Test Connection</button>
+								<button class="btn btn-success btn-sm" onclick="syncToGoogleSheets()"><i class="fa fa-upload"></i> Sync All</button>
+								<button class="btn btn-secondary btn-sm" onclick="loadFromGoogleSheets()"><i class="fa fa-download"></i> Load Data</button>
 							</div>
-						</div>
-
-						<div class="row mt-3">
-							<div class="col-12">
-								<h5><i class="fa fa-list"></i> Sync Log</h5>
-								<div id="syncLog" style="max-height: 150px; overflow-y: auto; background: #f8f9fa; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px;">
-									<div>Sync log will appear here...</div>
-								</div>
+							<div class="mt-2 small text-muted">
+								Current URL: <span id="currentSheetUrl" style="font-family: monospace; word-break: break-all;">Not set</span>
 							</div>
 						</div>
 					</div>
@@ -452,9 +512,9 @@
 		</div>
 	</div>
 
-	<!-- ===== FOOTER ===== -->
+	<!-- ===== FOOTER - MATCHING HOME PAGE ===== -->
 	<div class="footer">
-		<p>&copy; 2026 Aga Oli Meignana Yogam - Athimagayogi | <i class="fa fa-heart" style="color:#e74c3c;"></i> Spread the Light</p>
+		<p>&copy; 2026 Aga Oli Meignana Yogam - Athimagayogi | <i class="fa fa-heart"></i> Spread the Light</p>
 	</div>
 
 	<!-- ===== SCRIPTS ===== -->
@@ -462,44 +522,35 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-	<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 	<script>
 		// ============================================================
-		// CONFIGURATION - PASTE YOUR GOOGLE SHEETS URL HERE
+		// SIDENAV FUNCTIONS
 		// ============================================================
-		let GOOGLE_SHEET_URL = localStorage.getItem('scanSheetUrl') || '';
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+		}
 
 		// ============================================================
-		// DATA STORE
+		// GOOGLE SHEETS URL
 		// ============================================================
-		let members = JSON.parse(localStorage.getItem('scanMembers')) || [];
-		let attendance = JSON.parse(localStorage.getItem('scanAttendance')) || [];
+		let GOOGLE_SHEET_URL = localStorage.getItem('registerSheetUrl') || '';
 
-		// Pagination
-		let currentPage = 1;
-		const recordsPerPage = 5;
-		let filteredData = [];
-
-		// QR Scanner
-		let html5QrCode = null;
-		let isScannerRunning = false;
-
-		// ============================================================
-		// UPDATE URL
-		// ============================================================
 		function updateSheetUrl() {
 			const url = document.getElementById('sheetUrlInput').value.trim();
 			if (url) {
 				if (!url.startsWith('https://script.google.com/macros/s/')) {
-					showSyncStatus('⚠️ Invalid URL format.', 'error');
+					showSyncStatus('⚠️ Invalid URL format. Must start with: https://script.google.com/macros/s/', 'error');
 					return;
 				}
 				GOOGLE_SHEET_URL = url;
-				localStorage.setItem('scanSheetUrl', url);
+				localStorage.setItem('registerSheetUrl', url);
 				document.getElementById('currentSheetUrl').textContent = url;
-				showSyncStatus('✅ URL updated!', 'success');
+				showSyncStatus('✅ URL updated successfully!', 'success');
 				addSyncLog('✅ URL updated: ' + url);
 				setTimeout(testConnection, 1000);
 			} else {
@@ -517,10 +568,8 @@
 		}
 
 		function addSyncLog(message) {
-			const log = document.getElementById('syncLog');
-			const time = new Date().toLocaleTimeString();
-			log.innerHTML += `<div>[${time}] ${message}</div>`;
-			log.scrollTop = log.scrollHeight;
+			// Just show in status for simplicity
+			console.log(message);
 		}
 
 		// ============================================================
@@ -556,16 +605,13 @@
 				return;
 			}
 			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Testing connection...', 'info');
-			addSyncLog('Testing connection...');
 			callGoogleSheets({ action: 'getMembers' })
 				.then(data => {
-					showSyncStatus('✅ Connected!', 'success');
-					addSyncLog('✅ Connection successful');
+					showSyncStatus('✅ Connected to Google Sheets successfully!', 'success');
 					loadFromGoogleSheets();
 				})
 				.catch(error => {
 					showSyncStatus('❌ Connection failed: ' + error.message, 'error');
-					addSyncLog('❌ Connection failed: ' + error.message);
 				});
 		}
 
@@ -578,8 +624,6 @@
 				return;
 			}
 			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Loading data...', 'info');
-			addSyncLog('Loading data from Google Sheets...');
-
 			callGoogleSheets({ action: 'getMembers' })
 				.then(memberData => {
 					if (memberData.success) {
@@ -589,59 +633,35 @@
 							mobile: m.mobile,
 							age: parseInt(m.age) || 0,
 							state: m.state,
-							district: m.district
+							district: m.district,
+							registered: m.registered
 						}));
 						saveMembers();
-						document.getElementById('sheetMemberCount').textContent = members.length;
-						document.getElementById('totalMembers').textContent = members.length;
-						addSyncLog(`✅ Loaded ${members.length} members`);
-						return callGoogleSheets({ action: 'getAttendance' });
+						showSyncStatus(`✅ Loaded ${members.length} members from Google Sheets`, 'success');
+						loadRecentMembers();
 					} else {
 						throw new Error('Failed to load members');
 					}
 				})
-				.then(attendanceData => {
-					if (attendanceData.success) {
-						attendance = attendanceData.data.map(a => ({
-							date: a.date,
-							memberId: a.memberId,
-							name: a.name,
-							status: a.status,
-							time: a.time
-						}));
-						saveAttendance();
-						document.getElementById('sheetAttendanceCount').textContent = attendance.length;
-						document.getElementById('totalAttendance').textContent = attendance.length;
-						addSyncLog(`✅ Loaded ${attendance.length} attendance records`);
-						renderAttendanceTable();
-						updateStats();
-						showSyncStatus(`✅ Loaded ${members.length} members & ${attendance.length} attendance`, 'success');
-					} else {
-						throw new Error('Failed to load attendance');
-					}
-				})
 				.catch(error => {
 					showSyncStatus('❌ Load failed: ' + error.message, 'error');
-					addSyncLog('❌ Load failed: ' + error.message);
 				});
 		}
 
 		// ============================================================
-		// SYNC ALL DATA
+		// SYNC ALL DATA TO GOOGLE SHEETS
 		// ============================================================
 		function syncToGoogleSheets() {
 			if (!GOOGLE_SHEET_URL) {
 				showSyncStatus('⚠️ Please configure URL first', 'error');
 				return;
 			}
-			if (members.length === 0 && attendance.length === 0) {
-				showSyncStatus('⚠️ No data to sync', 'warning');
+			if (members.length === 0) {
+				showSyncStatus('⚠️ No members to sync', 'warning');
 				return;
 			}
 
 			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Syncing...', 'info');
-			addSyncLog('Starting sync...');
-
 			const promises = [];
 
 			members.forEach(member => {
@@ -654,361 +674,160 @@
 						age: member.age,
 						state: member.state,
 						district: member.district
-					}).catch(err => addSyncLog(`⚠️ ${member.id} failed: ${err.message}`))
-				);
-			});
-
-			attendance.forEach(att => {
-				promises.push(
-					callGoogleSheets({
-						action: 'markAttendance',
-						memberId: att.memberId,
-						name: att.name,
-						date: att.date,
-						time: att.time,
-						status: att.status
-					}).catch(err => addSyncLog(`⚠️ ${att.memberId} attendance failed: ${err.message}`))
+					}).catch(err => {
+						console.log(`⚠️ ${member.id} failed: ${err.message}`);
+					})
 				);
 			});
 
 			Promise.all(promises)
 				.then(() => {
-					showSyncStatus(`✅ Synced ${members.length} members & ${attendance.length} attendance`, 'success');
-					addSyncLog('✅ Sync complete!');
-					loadFromGoogleSheets();
+					showSyncStatus(`✅ Synced ${members.length} members to Google Sheets`, 'success');
 				})
 				.catch(error => {
 					showSyncStatus('❌ Sync failed: ' + error.message, 'error');
-					addSyncLog('❌ Sync failed: ' + error.message);
 				});
 		}
 
-		function syncAndReload() {
-			syncToGoogleSheets();
-		}
+		// ============================================================
+		// DATA STORE
+		// ============================================================
+		let members = JSON.parse(localStorage.getItem('registerMembers')) || [];
 
-		// ============================================================
-		// SAVE FUNCTIONS
-		// ============================================================
 		function saveMembers() {
-			localStorage.setItem('scanMembers', JSON.stringify(members));
+			localStorage.setItem('registerMembers', JSON.stringify(members));
 		}
 
-		function saveAttendance() {
-			localStorage.setItem('scanAttendance', JSON.stringify(attendance));
-		}
-
-		// ============================================================
-		// QR SCANNER
-		// ============================================================
-		function toggleScanner() {
-			if (isScannerRunning) {
-				stopScanner();
-			} else {
-				startScanner();
-			}
-		}
-
-		function startScanner() {
-			const scannerContainer = document.getElementById('scannerContainer');
-			scannerContainer.style.display = 'block';
-			document.getElementById('toggleScannerBtn').innerHTML = '<i class="fa fa-stop"></i> Stop Scanner';
-			document.getElementById('toggleScannerBtn').className = 'btn btn-danger scan-toggle-btn';
-
-			if (html5QrCode) {
-				html5QrCode.clear();
-				html5QrCode = null;
-			}
-
-			html5QrCode = new Html5Qrcode("reader");
-			const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
-			html5QrCode.start(
-				{ facingMode: "environment" },
-				config,
-				onScanSuccess,
-				onScanError
-			).then(() => {
-				isScannerRunning = true;
-			}).catch(err => {
-				alert("Camera access denied. Please use manual entry.");
-				stopScanner();
-			});
-		}
-
-		function stopScanner() {
-			if (html5QrCode) {
-				html5QrCode.stop().then(() => {
-					html5QrCode.clear();
-					isScannerRunning = false;
-					document.getElementById('scannerContainer').style.display = 'none';
-					document.getElementById('toggleScannerBtn').innerHTML = '<i class="fa fa-camera"></i> Open QR Scanner';
-					document.getElementById('toggleScannerBtn').className = 'btn btn-primary scan-toggle-btn';
-				});
-			} else {
-				isScannerRunning = false;
-				document.getElementById('scannerContainer').style.display = 'none';
-				document.getElementById('toggleScannerBtn').innerHTML = '<i class="fa fa-camera"></i> Open QR Scanner';
-				document.getElementById('toggleScannerBtn').className = 'btn btn-primary scan-toggle-btn';
-			}
-		}
-
-		function onScanSuccess(decodedText) {
-			document.getElementById('scanInput').value = decodedText;
-			markAttendance();
-			if (navigator.vibrate) navigator.vibrate(200);
-			stopScanner();
-		}
-
-		function onScanError(err) {
-			// Ignore
+		function generateMemberId() {
+			const prefix = 'AY';
+			const num = String(members.length + 1).padStart(4, '0');
+			return prefix + num + String(Date.now()).slice(-4);
 		}
 
 		// ============================================================
-		// MARK ATTENDANCE
+		// REGISTRATION
 		// ============================================================
-		async function markAttendance() {
-			const id = document.getElementById('scanInput').value.trim();
-			const resultDiv = document.getElementById('scanResult');
+		document.getElementById('registerForm').addEventListener('submit', async function (e) {
+			e.preventDefault();
 
-			if (!id) {
-				resultDiv.innerHTML = '<div class="alert alert-danger">Please enter Member ID or scan QR.</div>';
+			if (!GOOGLE_SHEET_URL) {
+				alert('⚠️ Please configure Google Sheets URL first!');
+				showSyncStatus('⚠️ Please configure Google Sheets URL first', 'error');
 				return;
 			}
 
-			const member = members.find(m => m.id === id);
-			if (!member) {
-				resultDiv.innerHTML = '<div class="alert alert-danger">Member not found! Please register first.</div>';
+			const name = document.getElementById('regName').value.trim();
+			const mobile = document.getElementById('regMobile').value.trim();
+			const age = parseInt(document.getElementById('regAge').value);
+			const state = document.getElementById('regState').value.trim();
+			const district = document.getElementById('regDistrict').value.trim();
+
+			if (!name || !mobile || !age || !state || !district) {
+				alert('Please fill all fields.');
+				return;
+			}
+			if (mobile.length !== 10) {
+				alert('Mobile number must be 10 digits.');
 				return;
 			}
 
-			const today = new Date().toISOString().split('T')[0];
-			const already = attendance.find(a => a.memberId === id && a.date === today);
-
-			if (already) {
-				resultDiv.innerHTML = `<div class="alert alert-warning">${member.name} already marked present today at ${already.time}.</div>`;
-				return;
-			}
-
-			const now = new Date();
-			const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+			const memberId = generateMemberId();
+			const newMember = { id: memberId, name, mobile, age, state, district, registered: new Date().toISOString() };
 
 			try {
+				showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Saving to Google Sheets...', 'info');
+
 				await callGoogleSheets({
-					action: 'markAttendance',
-					memberId: id,
-					name: member.name,
-					date: today,
-					time: timeStr,
-					status: 'Present'
+					action: 'register',
+					memberId: memberId,
+					name: name,
+					mobile: mobile,
+					age: age,
+					state: state,
+					district: district
 				});
 
-				attendance.push({ memberId: id, name: member.name, date: today, time: timeStr, status: 'Present' });
-				saveAttendance();
+				members.push(newMember);
+				saveMembers();
+				loadRecentMembers();
 
-				resultDiv.innerHTML = `<div class="alert alert-success"><i class="fa fa-check"></i> ${member.name} (${member.id}) marked Present at ${timeStr}!</div>`;
-				document.getElementById('scanInput').value = '';
+				// Generate QR Code
+				const qrContainer = document.getElementById('qrCodeContainer');
+				qrContainer.innerHTML = '';
+				new QRCode(qrContainer, { text: memberId, width: 150, height: 150 });
 
-				filteredData = [];
-				document.getElementById('filterDate').value = '';
-				document.getElementById('filterSearch').value = '';
-				document.getElementById('activeFilters').innerHTML = '';
-				currentPage = 1;
-				renderAttendanceTable();
-				updateStats();
+				document.getElementById('displayMemberId').textContent = memberId;
+				document.getElementById('displayMemberId2').textContent = memberId;
+				document.getElementById('displayName').textContent = name;
+				document.getElementById('qrResult').style.display = 'block';
+				document.getElementById('registerForm').reset();
+
+				showSyncStatus(`✅ Member ${name} registered successfully!`, 'success');
+
 			} catch (error) {
-				resultDiv.innerHTML = `<div class="alert alert-danger">Failed to save: ${error.message}</div>`;
-			}
-		}
-
-		// ============================================================
-		// ATTENDANCE TABLE WITH PAGINATION
-		// ============================================================
-		function renderAttendanceTable() {
-			const tbody = document.getElementById('attendanceBody');
-			const data = filteredData.length > 0 ? filteredData : attendance;
-
-			if (data.length === 0) {
-				tbody.innerHTML = '<tr><td colspan="5" class="text-center">No attendance records found.</td></tr>';
-				document.getElementById('paginationControls').innerHTML = '';
-				document.getElementById('pageInfo').textContent = '0';
-				return;
-			}
-
-			const sorted = [...data].sort((a, b) => {
-				if (a.date !== b.date) return b.date.localeCompare(a.date);
-				return b.time.localeCompare(a.time);
-			});
-
-			const totalRecords = sorted.length;
-			const totalPages = Math.ceil(totalRecords / recordsPerPage);
-			if (currentPage > totalPages) currentPage = totalPages;
-			if (currentPage < 1) currentPage = 1;
-
-			const startIndex = (currentPage - 1) * recordsPerPage;
-			const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
-			const pageData = sorted.slice(startIndex, endIndex);
-
-			tbody.innerHTML = pageData.map(a => `
-			<tr>
-				<td>${a.date}</td>
-				<td><strong>${a.memberId}</strong></td>
-				<td>${a.name}</td>
-				<td><span class="badge-present"><i class="fa fa-check"></i> ${a.status}</span></td>
-				<td>${a.time}</td>
-			</tr>
-		`).join('');
-
-			document.getElementById('pageInfo').textContent = `${startIndex + 1} - ${endIndex} of ${totalRecords}`;
-
-			let paginationHtml = '';
-			if (totalPages > 1) {
-				paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-				<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a></li>`;
-				for (let i = 1; i <= totalPages; i++) {
-					paginationHtml += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-					<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`;
-				}
-				paginationHtml += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-				<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a></li>`;
-			}
-			document.getElementById('paginationControls').innerHTML = paginationHtml;
-		}
-
-		function changePage(page) {
-			const data = filteredData.length > 0 ? filteredData : attendance;
-			const totalPages = Math.ceil(data.length / recordsPerPage);
-			if (page < 1 || page > totalPages) return;
-			currentPage = page;
-			renderAttendanceTable();
-		}
-
-		// ============================================================
-		// FILTERS
-		// ============================================================
-		function applyFilters() {
-			const date = document.getElementById('filterDate').value;
-			const search = document.getElementById('filterSearch').value.toLowerCase().trim();
-
-			let result = [...attendance];
-
-			if (date) {
-				result = result.filter(a => a.date === date);
-			}
-
-			if (search) {
-				result = result.filter(a =>
-					a.name.toLowerCase().includes(search) ||
-					a.memberId.toLowerCase().includes(search)
-				);
-			}
-
-			filteredData = result;
-			currentPage = 1;
-
-			let filterText = '';
-			if (date) filterText += `<span class="badge badge-primary mr-1">Date: ${date}</span>`;
-			if (search) filterText += `<span class="badge badge-info mr-1">Search: "${search}"</span>`;
-			if (!date && !search) filterText = 'Showing all records';
-			document.getElementById('activeFilters').innerHTML = filterText;
-
-			renderAttendanceTable();
-
-			if (result.length === 0) {
-				document.getElementById('activeFilters').innerHTML += ' <span class="text-danger">(No results found)</span>';
-			}
-		}
-
-		function resetFilters() {
-			document.getElementById('filterDate').value = '';
-			document.getElementById('filterSearch').value = '';
-			filteredData = [];
-			currentPage = 1;
-			document.getElementById('activeFilters').innerHTML = 'Showing all records';
-			renderAttendanceTable();
-		}
-
-		// ============================================================
-		// STATS
-		// ============================================================
-		function updateStats() {
-			document.getElementById('totalMembers').textContent = members.length;
-			document.getElementById('totalAttendance').textContent = attendance.length;
-			const today = new Date().toISOString().split('T')[0];
-			const todayCount = attendance.filter(a => a.date === today).length;
-			document.getElementById('todayTotal').textContent = todayCount;
-		}
-
-		// ============================================================
-		// EXPORT
-		// ============================================================
-		function exportToExcel() {
-			const data = attendance.length === 0 ? [] : attendance.map(a => ({
-				'Date': a.date,
-				'Member ID': a.memberId,
-				'Name': a.name,
-				'Status': a.status,
-				'Time': a.time
-			}));
-
-			if (data.length === 0) {
-				alert('No attendance data to export.');
-				return;
-			}
-
-			const wb = XLSX.utils.book_new();
-			const ws = XLSX.utils.json_to_sheet(data);
-			XLSX.utils.book_append_sheet(wb, ws, 'Attendance');
-			XLSX.writeFile(wb, 'Attendance_Report.xlsx');
-		}
-
-		// ============================================================
-		// KEYBOARD SHORTCUTS
-		// ============================================================
-		document.getElementById('scanInput').addEventListener('keyup', function (e) {
-			if (e.key === 'Enter') {
-				markAttendance();
+				alert('Registration failed: ' + error.message);
+				showSyncStatus('❌ Registration failed: ' + error.message, 'error');
 			}
 		});
 
-		document.getElementById('filterSearch').addEventListener('keyup', function (e) {
-			if (e.key === 'Enter') {
-				applyFilters();
+		function resetForm() {
+			document.getElementById('qrResult').style.display = 'none';
+			document.getElementById('registerForm').reset();
+		}
+
+		function downloadQR() {
+			const canvas = document.querySelector('#qrCodeContainer canvas');
+			if (canvas) {
+				const link = document.createElement('a');
+				link.download = 'member_qr.png';
+				link.href = canvas.toDataURL('image/png');
+				link.click();
+			} else {
+				alert('QR not generated yet.');
 			}
-		});
+		}
+
+		// ============================================================
+		// RECENT MEMBERS
+		// ============================================================
+		function loadRecentMembers() {
+			const container = document.getElementById('recentMembersList');
+			if (members.length === 0) {
+				container.innerHTML = '<p class="text-muted text-center">No members yet. Register now!</p>';
+				return;
+			}
+			const recent = members.slice(-10).reverse();
+			container.innerHTML = recent.map(m => `
+					<div class="recent-member-item">
+						<div>
+							<div class="name">${m.name}</div>
+							<div class="id">${m.id}</div>
+						</div>
+						<span class="badge">${m.mobile}</span>
+					</div>
+				`).join('');
+		}
 
 		// ============================================================
 		// INIT
 		// ============================================================
 		function init() {
+			// Load URL from localStorage
 			if (GOOGLE_SHEET_URL) {
 				document.getElementById('currentSheetUrl').textContent = GOOGLE_SHEET_URL;
 				document.getElementById('sheetUrlInput').value = GOOGLE_SHEET_URL;
-				showSyncStatus('✅ URL configured. Loading data...', 'info');
-				setTimeout(loadFromGoogleSheets, 500);
+				showSyncStatus('✅ URL configured. Testing connection...', 'info');
+				setTimeout(testConnection, 1000);
 			} else {
-				showSyncStatus('⚠️ Please configure Google Sheets URL in the Setup tab', 'warning');
+				showSyncStatus('⚠️ Please configure Google Sheets URL in the setup section', 'warning');
 			}
 
-			document.getElementById('filterDate').value = new Date().toISOString().split('T')[0];
-			filteredData = [];
-			currentPage = 1;
-			document.getElementById('activeFilters').innerHTML = 'Showing all records';
-			renderAttendanceTable();
-			updateStats();
-
-			console.log('Scan & Attendance System Loaded.');
-			console.log('Attendance:', attendance.length);
+			loadRecentMembers();
+			console.log('Registration System Loaded.');
+			console.log('Members:', members.length);
 		}
 
 		init();
-
-		// Clean up scanner
-		$('#mainTabs a').on('click', function () {
-			if (isScannerRunning) {
-				stopScanner();
-			}
-		});
 	</script>
 
 </body>

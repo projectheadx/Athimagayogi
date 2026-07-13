@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Vasi Yoga Programs - Learn the secret breath science of Siddhars for transformation and inner light.">
+	<title>Vasi Yoga Programs | Aga Oli Meignana Yogam</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800|Old+Standard+TT:400,400i,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<style>
+		/* ============================================
+		   COLOR THEME - GOLD & DARK GREEN
+		   Matching home page
+		   ============================================ */
+		body {
+			font-family: 'Montserrat', sans-serif;
+			background: #f7f3eb;
+		}
+
+		/* HEADER & NAV - matching home page */
+		.top {
+			background: #1a2b1a;
+		}
+
+		.top-nav {
+			background: #1a2b1a;
+			border-bottom: 2px solid #c9a96e;
+			padding: 10px 0;
+		}
+
+			.top-nav .left-side span {
+				color: #c9a96e;
+				font-weight: 500;
+			}
+
+			.top-nav .left-side p {
+				color: #e8e0d0;
+				margin-bottom: 0;
+			}
+
+			.top-nav .social-icons i {
+				color: #c9a96e;
+				font-size: 20px;
+				margin: 0 7px;
+				transition: 0.3s;
+				cursor: pointer;
+			}
+
+				.top-nav .social-icons i:hover {
+					color: #e8d5a3;
+					transform: scale(1.1);
+				}
+
+		.slide-menu i {
+			font-size: 30px;
+			color: #c9a96e;
+			transition: 0.3s;
+			cursor: pointer;
+		}
+
+			.slide-menu i:hover {
+				color: #e8d5a3;
+			}
+
+		.logo img {
+			max-height: 55px;
+		}
+
+		.border-img {
+			width: 100%;
+			display: block;
+		}
+
+		/* SIDENAV - OPENS FROM RIGHT */
+		.sidenav {
+			height: 100%;
+			width: 0;
+			position: fixed;
+			z-index: 999;
+			top: 0;
+			right: 0;
+			background-color: #122012;
+			overflow-x: hidden;
+			transition: 0.3s;
+			padding-top: 80px;
+			box-shadow: -8px 0 30px rgba(0, 0, 0, 0.7);
+		}
+
+			.sidenav a {
+				padding: 14px 32px;
+				text-decoration: none;
+				font-size: 18px;
+				font-weight: 500;
+				color: #c9c9b8;
+				display: block;
+				transition: 0.2s;
+				border-right: 4px solid transparent;
+				text-align: right;
+				letter-spacing: 0.5px;
+			}
+
+				.sidenav a:hover,
+				.sidenav a.active {
+					color: #e8d5a3;
+					border-right-color: #c9a96e;
+					background: #1f3a1f;
+				}
+
+			.sidenav .closebtn {
+				position: absolute;
+				top: 10px;
+				left: 25px;
+				font-size: 38px;
+				color: #c9a96e;
+				text-align: left;
+			}
+
+				.sidenav .closebtn:hover {
+					color: #e8d5a3;
+				}
+
+		/* BANNER */
+		.page-banner {
+			background: linear-gradient(135deg, #1a2b1a 0%, #2d4a2d 100%);
+			padding: 70px 0 60px;
+			text-align: center;
+			border-bottom: 3px solid #c9a96e;
+			position: relative;
+			overflow: hidden;
+		}
+
+			.page-banner::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: url('images/services-bg.jpg') center/cover no-repeat;
+				opacity: 0.15;
+			}
+
+			.page-banner h1 {
+				color: #e8d5a3;
+				font-weight: 800;
+				font-size: 3rem;
+				position: relative;
+			}
+
+			.page-banner h2 {
+				color: #d4d0c0;
+				font-weight: 400;
+				font-size: 1.4rem;
+				position: relative;
+			}
+
+			.page-banner .breadcrumb {
+				background: transparent;
+				justify-content: center;
+				position: relative;
+			}
+
+			.page-banner .breadcrumb-item a {
+				color: #c9a96e;
+			}
+
+			.page-banner .breadcrumb-item.active {
+				color: #d4d0c0;
+			}
+
+			.page-banner .breadcrumb-item + .breadcrumb-item::before {
+				color: #c9a96e;
+			}
+
+		/* MAIN CONTENT */
+		.programs-page {
+			padding: 60px 0 80px;
+		}
+
+		.section-title {
+			text-align: center;
+			margin-bottom: 50px;
+		}
+
+			.section-title h2 {
+				color: #1a2b1a;
+				font-weight: 700;
+				font-size: 2.4rem;
+			}
+
+				.section-title h2::after {
+					content: '';
+					display: block;
+					width: 80px;
+					height: 3px;
+					background: #c9a96e;
+					margin: 15px auto 0;
+				}
+
+			.section-title p {
+				color: #6b7f6a;
+				font-size: 1.1rem;
+				max-width: 700px;
+				margin: 15px auto 0;
+			}
+
+		/* Program Cards */
+		.program-card {
+			background: #fff;
+			border-radius: 15px;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+			border: 1px solid #eae8e0;
+			margin-bottom: 30px;
+			overflow: hidden;
+			transition: 0.3s;
+			height: 100%;
+		}
+
+			.program-card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+				border-color: #c9a96e;
+			}
+
+			.program-card .card-img-top {
+				height: 220px;
+				object-fit: cover;
+				border-bottom: 3px solid #c9a96e;
+			}
+
+			.program-card .card-body {
+				padding: 25px;
+			}
+
+				.program-card .card-body .program-icon {
+					font-size: 40px;
+					color: #c9a96e;
+					margin-bottom: 10px;
+				}
+
+				.program-card .card-body h4 {
+					color: #1a2b1a;
+					font-weight: 700;
+				}
+
+				.program-card .card-body .badge-level {
+					background: #c9a96e;
+					color: #1a2b1a;
+					font-weight: 600;
+					padding: 5px 15px;
+					border-radius: 20px;
+					font-size: 12px;
+				}
+
+				.program-card .card-body p {
+					color: #4a5a4a;
+					line-height: 1.8;
+					font-size: 0.95rem;
+				}
+
+				.program-card .card-body ul {
+					padding-left: 0;
+					list-style: none;
+				}
+
+					.program-card .card-body ul li {
+						padding: 5px 0;
+						color: #4a5a4a;
+					}
+
+						.program-card .card-body ul li i {
+							color: #c9a96e;
+							width: 25px;
+						}
+
+			.program-card .card-footer {
+				background: #f7f3eb;
+				border-top: 1px solid #eae8e0;
+				padding: 18px 25px;
+			}
+
+		/* BUTTONS - matching home page */
+		.btn-success {
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 12px 35px;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-success:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
+			}
+
+		.btn-primary {
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 10px 25px;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-primary:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
+			}
+
+		.btn-outline-secondary {
+			border: 2px solid #c9a96e;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 10px 25px;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-outline-secondary:hover {
+				background: #c9a96e;
+				color: #1a2b1a;
+				border-color: #c9a96e;
+				transform: translateY(-2px);
+			}
+
+		/* Feature Section */
+		.feature-section {
+			background: #fff;
+			padding: 60px 0;
+			border-top: 1px solid #eae8e0;
+			border-bottom: 1px solid #eae8e0;
+		}
+
+		.feature-box {
+			text-align: center;
+			padding: 20px;
+		}
+
+			.feature-box .feature-icon {
+				font-size: 50px;
+				color: #c9a96e;
+				margin-bottom: 15px;
+			}
+
+			.feature-box h5 {
+				color: #1a2b1a;
+				font-weight: 600;
+			}
+
+			.feature-box p {
+				color: #6b7f6a;
+				font-size: 0.95rem;
+			}
+
+		/* Testimonial */
+		.testimonial-section {
+			padding: 60px 0;
+		}
+
+		.testimonial-card {
+			background: #fff;
+			border-radius: 15px;
+			padding: 30px;
+			border: 1px solid #eae8e0;
+			box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+			height: 100%;
+		}
+
+			.testimonial-card .quote-icon {
+				color: #c9a96e;
+				font-size: 30px;
+				opacity: 0.3;
+				margin-bottom: 10px;
+			}
+
+			.testimonial-card p {
+				color: #4a5a4a;
+				font-style: italic;
+				line-height: 1.8;
+			}
+
+			.testimonial-card .testimonial-author {
+				font-weight: 600;
+				color: #1a2b1a;
+			}
+
+			.testimonial-card .testimonial-role {
+				color: #6b7f6a;
+				font-size: 0.9rem;
+			}
+
+		/* FOOTER */
+		.footer {
+			background: #122012;
+			color: #a8b898;
+			padding: 20px 0;
+			margin-top: 40px;
+			text-align: center;
+			border-top: 2px solid #2a402a;
+		}
+
+			.footer i.fa-heart {
+				color: #c9a96e;
+			}
+
+		#return-to-top {
+			background: #c9a96e;
+			color: #1a2b1a;
+			bottom: 30px;
+			right: 30px;
+			width: 48px;
+			height: 48px;
+			line-height: 48px;
+			font-size: 22px;
+			border-radius: 50%;
+			text-align: center;
+			position: fixed;
+			z-index: 999;
+			display: none;
+			box-shadow: 0 6px 25px rgba(201, 169, 110, 0.4);
+			transition: 0.3s;
+		}
+
+			#return-to-top:hover {
+				background: #dbb97a;
+				color: #0f1f0f;
+				transform: translateY(-3px);
+			}
+
+		/* RESPONSIVE */
+		@media (max-width: 768px) {
+			.top-nav .left-side span {
+				display: block;
+				margin-left: 0;
+			}
+
+			.logo img {
+				max-height: 40px;
+			}
+
+			.page-banner h1 {
+				font-size: 2rem;
+			}
+
+			.page-banner h2 {
+				font-size: 1.1rem;
+			}
+
+			.program-card .card-img-top {
+				height: 180px;
+			}
+
+			.section-title h2 {
+				font-size: 1.8rem;
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<!-- ===== HEADER WITH SIDENAV ===== -->
+	<header class="top">
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="index.html">Home</a>
+			<a href="about.html">About Yogi</a>
+			<a href="about-gurunathar.html">About Gurunathar</a>
+			<a href="vasi-programs.html" class="active">Vasi Yoga Programs</a>
+			<a href="foundation-plan.html">Plan of the Foundation</a>
+			<a href="register.html">Become a Member</a>
+			<a href="scan.html">Class Entry (Scanner)</a>
+			<a href="gallery.html">Gallery</a>
+			<a href="videos.html">Videos</a>
+		</div>
+
+		<nav class="top-nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 col-md-5 align-self-center left-side">
+						<p>Love is Everything <span>Call: +91 63804 19470</span></p>
+					</div>
+					<div class="col-lg-2 col-md-2 col-5 align-self-center logo text-center">
+						<a href="index.html"><img src="images/nav-logo.png" alt="logo"></a>
+					</div>
+					<div class="col-lg-5 col-md-5 col-7 align-self-center right-side d-flex justify-content-end align-items-center">
+						<div class="social-icons another mb-0 mr-3">
+							<i class="fa fa-facebook-official" aria-hidden="true"></i>
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+							<i class="fa fa-pinterest" aria-hidden="true"></i>
+							<i class="fa fa-youtube" aria-hidden="true"></i>
+						</div>
+						<div class="social-icons square mb-0">
+							<span class="slide-menu" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<img class="border-img" src="images/border.png" width="100%" alt="">
+	</header>
+
+	<!-- ===== PAGE BANNER ===== -->
+	<section class="page-banner">
+		<div class="container">
+			<h1>Vasi Yoga Programs</h1>
+			<h2>Secret Breath Science of the Siddhars for Inner Transformation</h2>
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Vasi Yoga Programs</li>
+				</ol>
+			</nav>
+		</div>
+	</section>
+
+	<!-- ===== MAIN CONTENT ===== -->
+	<div class="programs-page">
+		<div class="container">
+
+			<!-- Section Title -->
+			<div class="section-title" data-aos="fade-up">
+				<h2>Choose Your Path to Inner Light</h2>
+				<p>Discover the ancient Siddhar breathing techniques that transform your body, mind, and consciousness. Each program is designed for a specific stage of your spiritual journey.</p>
+			</div>
+
+			<!-- Program Cards -->
+			<div class="row">
+				<!-- Program 1: Foundation -->
+				<div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+					<div class="program-card">
+						<img src="images/services-bg.jpg" class="card-img-top" alt="Foundation Vasi Yoga">
+						<div class="card-body">
+							<div class="program-icon"><i class="fa fa-leaf"></i></div>
+							<h4>Foundation Vasi Yoga</h4>
+							<span class="badge-level"><i class="fa fa-star"></i> Beginner</span>
+							<p class="mt-3">Learn the fundamental breath techniques to calm the restless mind and awaken your inner light.</p>
+							<ul>
+								<li><i class="fa fa-check-circle"></i> Basic breath awareness</li>
+								<li><i class="fa fa-check-circle"></i> Internal light focus</li>
+								<li><i class="fa fa-check-circle"></i> Stress management</li>
+								<li><i class="fa fa-check-circle"></i> 7-day practice routine</li>
+							</ul>
+						</div>
+						<div class="card-footer d-flex justify-content-between align-items-center">
+							<span><i class="fa fa-clock-o"></i> 7 Days</span>
+							<a href="register.html" class="btn btn-primary btn-sm">Enroll Now</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- Program 2: Advanced -->
+				<div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+					<div class="program-card">
+						<img src="images/section-4-bg.jpg" class="card-img-top" alt="Advanced Vasi Yoga">
+						<div class="card-body">
+							<div class="program-icon"><i class="fa fa-fire"></i></div>
+							<h4>Advanced Vasi Yoga</h4>
+							<span class="badge-level"><i class="fa fa-star"></i><i class="fa fa-star"></i> Intermediate</span>
+							<p class="mt-3">Deepen your practice with advanced breath retention and energy channeling techniques.</p>
+							<ul>
+								<li><i class="fa fa-check-circle"></i> Breath retention (Kumbhaka)</li>
+								<li><i class="fa fa-check-circle"></i> Energy channeling</li>
+								<li><i class="fa fa-check-circle"></i> Mudra integration</li>
+								<li><i class="fa fa-check-circle"></i> 14-day intensive</li>
+							</ul>
+						</div>
+						<div class="card-footer d-flex justify-content-between align-items-center">
+							<span><i class="fa fa-clock-o"></i> 14 Days</span>
+							<a href="register.html" class="btn btn-primary btn-sm">Enroll Now</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- Program 3: Mastery -->
+				<div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+					<div class="program-card">
+						<img src="images/blog-1.jpg" class="card-img-top" alt="Master Vasi Yoga">
+						<div class="card-body">
+							<div class="program-icon"><i class="fa fa-diamond"></i></div>
+							<h4>Master Vasi Yoga</h4>
+							<span class="badge-level"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> Advanced</span>
+							<p class="mt-3">Attain mastery over breath and consciousness with the secret Siddhar teachings.</p>
+							<ul>
+								<li><i class="fa fa-check-circle"></i> Panchakshara secrets</li>
+								<li><i class="fa fa-check-circle"></i> Pancha Bhoota attunement</li>
+								<li><i class="fa fa-check-circle"></i> Longevity practices</li>
+								<li><i class="fa fa-check-circle"></i> 21-day intensive</li>
+							</ul>
+						</div>
+						<div class="card-footer d-flex justify-content-between align-items-center">
+							<span><i class="fa fa-clock-o"></i> 21 Days</span>
+							<a href="register.html" class="btn btn-primary btn-sm">Enroll Now</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Program 4: Weekend Retreat -->
+			<div class="row mt-4">
+				<div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="400">
+					<div class="program-card">
+						<img src="images/blog-2.jpg" class="card-img-top" alt="Weekend Vasi Retreat">
+						<div class="card-body">
+							<div class="program-icon"><i class="fa fa-calendar"></i></div>
+							<h4>Weekend Vasi Retreat</h4>
+							<span class="badge-level"><i class="fa fa-star"></i> All Levels</span>
+							<p class="mt-3">Immerse yourself in a weekend of intense Vasi Yoga practice, meditation, and spiritual discourse.</p>
+							<ul>
+								<li><i class="fa fa-check-circle"></i> 2-day intensive</li>
+								<li><i class="fa fa-check-circle"></i> Group practice</li>
+								<li><i class="fa fa-check-circle"></i> Satvik meals</li>
+								<li><i class="fa fa-check-circle"></i> Evening satsang</li>
+							</ul>
+						</div>
+						<div class="card-footer d-flex justify-content-between align-items-center">
+							<span><i class="fa fa-clock-o"></i> 2 Days</span>
+							<a href="register.html" class="btn btn-primary btn-sm">Book Now</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- Program 5: Online -->
+				<div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="500">
+					<div class="program-card">
+						<img src="images/blog-3.jpg" class="card-img-top" alt="Online Vasi Yoga">
+						<div class="card-body">
+							<div class="program-icon"><i class="fa fa-laptop"></i></div>
+							<h4>Online Vasi Yoga Course</h4>
+							<span class="badge-level"><i class="fa fa-globe"></i> Remote</span>
+							<p class="mt-3">Learn from the comfort of your home with guided video sessions and live Q&A with Gurunathar.</p>
+							<ul>
+								<li><i class="fa fa-check-circle"></i> 10 video lessons</li>
+								<li><i class="fa fa-check-circle"></i> Live weekly Q&A</li>
+								<li><i class="fa fa-check-circle"></i> Downloadable materials</li>
+								<li><i class="fa fa-check-circle"></i> Lifetime access</li>
+							</ul>
+						</div>
+						<div class="card-footer d-flex justify-content-between align-items-center">
+							<span><i class="fa fa-clock-o"></i> Self-paced</span>
+							<a href="register.html" class="btn btn-primary btn-sm">Start Now</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- CTA Section -->
+			<div class="text-center mt-5" data-aos="fade-up">
+				<h3 class="text-muted">Not sure which program is right for you?</h3>
+				<p class="mb-4">Contact us for a free consultation with our expert teachers.</p>
+				<a href="register.html" class="btn btn-success btn-lg"><i class="fa fa-phone"></i> Schedule a Call</a>
+				<a href="about.html" class="btn btn-outline-secondary btn-lg ml-2"><i class="fa fa-info-circle"></i> Learn More</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- ===== FEATURE SECTION ===== -->
+	<section class="feature-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-6" data-aos="fade-up">
+					<div class="feature-box">
+						<div class="feature-icon"><i class="fa fa-users"></i></div>
+						<h5>1000+ Students</h5>
+						<p>Transformed through our programs</p>
+					</div>
+				</div>
+				<div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+					<div class="feature-box">
+						<div class="feature-icon"><i class="fa fa-calendar-check-o"></i></div>
+						<h5>50+ Workshops</h5>
+						<p>Conducted across Tamil Nadu</p>
+					</div>
+				</div>
+				<div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="200">
+					<div class="feature-box">
+						<div class="feature-icon"><i class="fa fa-star"></i></div>
+						<h5>4.9/5 Rating</h5>
+						<p>From our valued students</p>
+					</div>
+				</div>
+				<div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+					<div class="feature-box">
+						<div class="feature-icon"><i class="fa fa-certificate"></i></div>
+						<h5>Authentic Teachings</h5>
+						<p>Direct Siddhar lineage</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== TESTIMONIAL SECTION ===== -->
+	<section class="testimonial-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>What Our Students Say</h2>
+				<p>Real experiences from those who have walked the path</p>
+			</div>
+			<div class="row">
+				<div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+					<div class="testimonial-card">
+						<div class="quote-icon"><i class="fa fa-quote-left"></i></div>
+						<p>"Vasi Yoga transformed my life completely. I found peace and clarity I never thought possible. Gurunathar's teachings are a blessing."</p>
+						<div class="testimonial-author">- Ramakrishnan, Chennai</div>
+						<div class="testimonial-role">Software Engineer</div>
+					</div>
+				</div>
+				<div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+					<div class="testimonial-card">
+						<div class="quote-icon"><i class="fa fa-quote-left"></i></div>
+						<p>"The breath techniques helped me overcome chronic stress and anxiety. I feel more alive and connected than ever before."</p>
+						<div class="testimonial-author">- Priya, Trichy</div>
+						<div class="testimonial-role">Yoga Teacher</div>
+					</div>
+				</div>
+				<div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+					<div class="testimonial-card">
+						<div class="quote-icon"><i class="fa fa-quote-left"></i></div>
+						<p>"The Advanced Vasi program opened my eyes to the deeper dimensions of existence. I highly recommend it to any serious seeker."</p>
+						<div class="testimonial-author">- Senthil, Arcot</div>
+						<div class="testimonial-role">Business Owner</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== FOOTER ===== -->
+	<div class="footer">
+		<p>&copy; 2026 Aga Oli Meignana Yogam - Athimagayogi | <i class="fa fa-heart"></i> Spread the Light</p>
+	</div>
+
+	<!-- Return to Top -->
+	<a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+
+	<!-- ===== SCRIPTS ===== -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+	<script>
+		// SIDENAV FUNCTIONS
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+		}
+
+		// Return to Top
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 300) {
+				$('#return-to-top').fadeIn(300);
+			} else {
+				$('#return-to-top').fadeOut(300);
+			}
+		});
+		$('#return-to-top').click(function () {
+			$('html, body').animate({ scrollTop: 0 }, 400);
+			return false;
+		});
+
+		// AOS simulation with simple fade
+		$(document).ready(function () {
+			$('[data-aos]').each(function () {
+				$(this).css('opacity', '0');
+				$(this).css('transition', 'opacity 0.6s ease, transform 0.6s ease');
+			});
+
+			$(window).scroll(function () {
+				$('[data-aos]').each(function () {
+					var elementTop = $(this).offset().top;
+					var windowBottom = $(window).scrollTop() + $(window).height();
+					if (windowBottom > elementTop + 50) {
+						$(this).css('opacity', '1');
+						$(this).css('transform', 'translateY(0)');
+					}
+				});
+			});
+
+			// Trigger once on load
+			$(window).trigger('scroll');
+		});
+	</script>
+
+</body>
+</html>

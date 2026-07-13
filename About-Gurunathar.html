@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="About Gurunathar - Thavasilar Thiru Athimagayogi, the spiritual master of Aga Oli Meignana Yogam.">
+	<title>About Gurunathar | Aga Oli Meignana Yogam</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800|Old+Standard+TT:400,400i,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<style>
+		/* ============================================
+		   COLOR THEME - GOLD & DARK GREEN
+		   Matching all pages
+		   ============================================ */
+		body {
+			font-family: 'Montserrat', sans-serif;
+			background: #f7f3eb;
+		}
+
+		/* HEADER & NAV */
+		.top {
+			background: #1a2b1a;
+		}
+
+		.top-nav {
+			background: #1a2b1a;
+			border-bottom: 2px solid #c9a96e;
+			padding: 10px 0;
+		}
+
+			.top-nav .left-side span {
+				color: #c9a96e;
+				font-weight: 500;
+			}
+
+			.top-nav .left-side p {
+				color: #e8e0d0;
+				margin-bottom: 0;
+			}
+
+			.top-nav .social-icons i {
+				color: #c9a96e;
+				font-size: 20px;
+				margin: 0 7px;
+				transition: 0.3s;
+				cursor: pointer;
+			}
+
+				.top-nav .social-icons i:hover {
+					color: #e8d5a3;
+					transform: scale(1.1);
+				}
+
+		.slide-menu i {
+			font-size: 30px;
+			color: #c9a96e;
+			transition: 0.3s;
+			cursor: pointer;
+		}
+
+			.slide-menu i:hover {
+				color: #e8d5a3;
+			}
+
+		.logo img {
+			max-height: 55px;
+		}
+
+		.border-img {
+			width: 100%;
+			display: block;
+		}
+
+		/* SIDENAV - OPENS FROM RIGHT */
+		.sidenav {
+			height: 100%;
+			width: 0;
+			position: fixed;
+			z-index: 999;
+			top: 0;
+			right: 0;
+			background-color: #122012;
+			overflow-x: hidden;
+			transition: 0.3s;
+			padding-top: 80px;
+			box-shadow: -8px 0 30px rgba(0, 0, 0, 0.7);
+		}
+
+			.sidenav a {
+				padding: 14px 32px;
+				text-decoration: none;
+				font-size: 18px;
+				font-weight: 500;
+				color: #c9c9b8;
+				display: block;
+				transition: 0.2s;
+				border-right: 4px solid transparent;
+				text-align: right;
+				letter-spacing: 0.5px;
+			}
+
+				.sidenav a:hover,
+				.sidenav a.active {
+					color: #e8d5a3;
+					border-right-color: #c9a96e;
+					background: #1f3a1f;
+				}
+
+			.sidenav .closebtn {
+				position: absolute;
+				top: 10px;
+				left: 25px;
+				font-size: 38px;
+				color: #c9a96e;
+				text-align: left;
+			}
+
+				.sidenav .closebtn:hover {
+					color: #e8d5a3;
+				}
+
+		/* BANNER */
+		.page-banner {
+			background: linear-gradient(135deg, #1a2b1a 0%, #2d4a2d 100%);
+			padding: 70px 0 60px;
+			text-align: center;
+			border-bottom: 3px solid #c9a96e;
+			position: relative;
+			overflow: hidden;
+		}
+
+			.page-banner::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: url('images/services-bg.jpg') center/cover no-repeat;
+				opacity: 0.12;
+			}
+
+			.page-banner h1 {
+				color: #e8d5a3;
+				font-weight: 800;
+				font-size: 3rem;
+				position: relative;
+			}
+
+			.page-banner h2 {
+				color: #d4d0c0;
+				font-weight: 400;
+				font-size: 1.4rem;
+				position: relative;
+			}
+
+			.page-banner .breadcrumb {
+				background: transparent;
+				justify-content: center;
+				position: relative;
+			}
+
+			.page-banner .breadcrumb-item a {
+				color: #c9a96e;
+			}
+
+			.page-banner .breadcrumb-item.active {
+				color: #d4d0c0;
+			}
+
+			.page-banner .breadcrumb-item + .breadcrumb-item::before {
+				color: #c9a96e;
+			}
+
+		/* MAIN CONTENT */
+		.about-guru-page {
+			padding: 60px 0 80px;
+		}
+
+		.section-title {
+			text-align: center;
+			margin-bottom: 50px;
+		}
+
+			.section-title h2 {
+				color: #1a2b1a;
+				font-weight: 700;
+				font-size: 2.4rem;
+			}
+
+				.section-title h2::after {
+					content: '';
+					display: block;
+					width: 80px;
+					height: 3px;
+					background: #c9a96e;
+					margin: 15px auto 0;
+				}
+
+			.section-title p {
+				color: #6b7f6a;
+				font-size: 1.1rem;
+				max-width: 700px;
+				margin: 15px auto 0;
+			}
+
+		/* Guru Profile */
+		.guru-profile {
+			background: #fff;
+			border-radius: 15px;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+			border: 1px solid #eae8e0;
+			padding: 40px;
+			margin-bottom: 40px;
+		}
+
+			.guru-profile .guru-img {
+				border-radius: 15px;
+				border: 4px solid #c9a96e;
+				max-width: 100%;
+				height: auto;
+			}
+
+			.guru-profile h3 {
+				color: #1a2b1a;
+				font-weight: 700;
+				font-size: 2rem;
+			}
+
+			.guru-profile .guru-title {
+				color: #c9a96e;
+				font-weight: 500;
+				font-size: 1.1rem;
+				margin-bottom: 20px;
+			}
+
+			.guru-profile p {
+				color: #4a5a4a;
+				line-height: 1.9;
+				font-size: 1.05rem;
+				text-align: justify;
+			}
+
+			.guru-profile .guru-stat {
+				display: flex;
+				gap: 30px;
+				flex-wrap: wrap;
+				margin-top: 20px;
+			}
+
+				.guru-profile .guru-stat .stat-item {
+					text-align: center;
+					background: #f7f3eb;
+					padding: 15px 25px;
+					border-radius: 10px;
+					border: 1px solid #eae8e0;
+					flex: 1;
+					min-width: 100px;
+				}
+
+					.guru-profile .guru-stat .stat-item .number {
+						font-size: 28px;
+						font-weight: 700;
+						color: #1a2b1a;
+					}
+
+					.guru-profile .guru-stat .stat-item .label {
+						color: #6b7f6a;
+						font-size: 14px;
+					}
+
+		/* Timeline */
+		.timeline-section {
+			background: #fff;
+			border-radius: 15px;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+			border: 1px solid #eae8e0;
+			padding: 40px;
+			margin-bottom: 40px;
+		}
+
+			.timeline-section h3 {
+				color: #1a2b1a;
+				font-weight: 700;
+				margin-bottom: 30px;
+				text-align: center;
+			}
+
+		.timeline-item {
+			display: flex;
+			gap: 20px;
+			padding: 15px 0;
+			border-bottom: 1px solid #f0ece0;
+		}
+
+			.timeline-item:last-child {
+				border-bottom: none;
+			}
+
+			.timeline-item .year {
+				font-weight: 700;
+				color: #c9a96e;
+				font-size: 1.1rem;
+				min-width: 80px;
+			}
+
+			.timeline-item .content h5 {
+				color: #1a2b1a;
+				font-weight: 600;
+				margin-bottom: 5px;
+			}
+
+			.timeline-item .content p {
+				color: #6b7f6a;
+				margin-bottom: 0;
+				font-size: 0.95rem;
+			}
+
+		/* Teachings */
+		.teachings-section {
+			background: #fff;
+			border-radius: 15px;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+			border: 1px solid #eae8e0;
+			padding: 40px;
+			margin-bottom: 40px;
+		}
+
+			.teachings-section h3 {
+				color: #1a2b1a;
+				font-weight: 700;
+				margin-bottom: 30px;
+				text-align: center;
+			}
+
+		.teaching-card {
+			background: #f7f3eb;
+			border-radius: 10px;
+			padding: 20px;
+			border: 1px solid #eae8e0;
+			height: 100%;
+			transition: 0.3s;
+		}
+
+			.teaching-card:hover {
+				border-color: #c9a96e;
+				transform: translateY(-3px);
+			}
+
+			.teaching-card .icon {
+				font-size: 30px;
+				color: #c9a96e;
+				margin-bottom: 10px;
+			}
+
+			.teaching-card h5 {
+				color: #1a2b1a;
+				font-weight: 600;
+			}
+
+			.teaching-card p {
+				color: #6b7f6a;
+				font-size: 0.95rem;
+				margin-bottom: 0;
+			}
+
+		/* BUTTONS */
+		.btn-success {
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 12px 35px;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-success:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
+			}
+
+		.btn-primary {
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 10px 25px;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-primary:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
+			}
+
+		.btn-outline-secondary {
+			border: 2px solid #c9a96e;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 10px 25px;
+			border-radius: 40px;
+			transition: 0.3s;
+			background: transparent;
+		}
+
+			.btn-outline-secondary:hover {
+				background: #c9a96e;
+				color: #1a2b1a;
+				border-color: #c9a96e;
+				transform: translateY(-2px);
+			}
+
+		/* FOOTER */
+		.footer {
+			background: #122012;
+			color: #a8b898;
+			padding: 20px 0;
+			margin-top: 40px;
+			text-align: center;
+			border-top: 2px solid #2a402a;
+		}
+
+			.footer i.fa-heart {
+				color: #c9a96e;
+			}
+
+		#return-to-top {
+			background: #c9a96e;
+			color: #1a2b1a;
+			bottom: 30px;
+			right: 30px;
+			width: 48px;
+			height: 48px;
+			line-height: 48px;
+			font-size: 22px;
+			border-radius: 50%;
+			text-align: center;
+			position: fixed;
+			z-index: 999;
+			display: none;
+			box-shadow: 0 6px 25px rgba(201, 169, 110, 0.4);
+			transition: 0.3s;
+		}
+
+			#return-to-top:hover {
+				background: #dbb97a;
+				color: #0f1f0f;
+				transform: translateY(-3px);
+			}
+
+		/* RESPONSIVE */
+		@media (max-width: 768px) {
+			.top-nav .left-side span {
+				display: block;
+				margin-left: 0;
+			}
+
+			.logo img {
+				max-height: 40px;
+			}
+
+			.page-banner h1 {
+				font-size: 2rem;
+			}
+
+			.page-banner h2 {
+				font-size: 1.1rem;
+			}
+
+			.guru-profile {
+				padding: 25px;
+			}
+
+				.guru-profile .guru-stat {
+					gap: 10px;
+				}
+
+					.guru-profile .guru-stat .stat-item {
+						min-width: 80px;
+						padding: 10px 15px;
+					}
+
+			.timeline-section,
+			.teachings-section {
+				padding: 25px;
+			}
+
+			.timeline-item {
+				flex-direction: column;
+				gap: 5px;
+			}
+
+			.section-title h2 {
+				font-size: 1.8rem;
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<!-- ===== HEADER WITH SIDENAV ===== -->
+	<header class="top">
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="index.html">Home</a>
+			<a href="about.html">About Yogi</a>
+			<a href="about-gurunathar.html"  class="active">Plan of the Foundation>About Gurunathar</a>
+			<a href="vasi-programs.html">Vasi Yoga Programs</a>
+			<a href="foundation-plan.html"</a>
+			<a href="register.html">Become a Member</a>
+			<a href="scan.html">Class Entry (Scanner)</a>
+			<a href="gallery.html">Gallery</a>
+			<a href="videos.html">Videos</a>
+		</div>
+
+		<nav class="top-nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 col-md-5 align-self-center left-side">
+						<p>Love is Everything <span>Call: +91 63804 19470</span></p>
+					</div>
+					<div class="col-lg-2 col-md-2 col-5 align-self-center logo text-center">
+						<a href="index.html"><img src="images/nav-logo.png" alt="logo"></a>
+					</div>
+					<div class="col-lg-5 col-md-5 col-7 align-self-center right-side d-flex justify-content-end align-items-center">
+						<div class="social-icons another mb-0 mr-3">
+							<i class="fa fa-facebook-official" aria-hidden="true"></i>
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+							<i class="fa fa-pinterest" aria-hidden="true"></i>
+							<i class="fa fa-youtube" aria-hidden="true"></i>
+						</div>
+						<div class="social-icons square mb-0">
+							<span class="slide-menu" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<img class="border-img" src="images/border.png" width="100%" alt="">
+	</header>
+
+	<!-- ===== PAGE BANNER ===== -->
+	<section class="page-banner">
+		<div class="container">
+			<h1>About Gurunathar</h1>
+			<h2>Thavasilar Thiru Athimagayogi - The Guiding Light of Aga Oli Meignana Yogam</h2>
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active" aria-current="page">About Gurunathar</li>
+				</ol>
+			</nav>
+		</div>
+	</section>
+
+	<!-- ===== MAIN CONTENT ===== -->
+	<div class="about-guru-page">
+		<div class="container">
+
+			<!-- Guru Profile -->
+			<div class="guru-profile" data-aos="fade-up">
+				<div class="row">
+					<div class="col-md-4">
+						<img src="images/about.jpg" alt="Thavasilar Thiru Athimagayogi" class="guru-img img-fluid">
+					</div>
+					<div class="col-md-8">
+						<h3>Thavasilar Thiru Athimagayogi</h3>
+						<div class="guru-title">Founder & Spiritual Master, Aga Oli Meignana Yogam</div>
+						<p><strong>Gurunathar</strong> is a realized spiritual master from the ancient Tamil Siddhar lineage. His life's mission is to bring the secret teachings of the Siddhars to humanity, making the profound science of breath and consciousness accessible to all.</p>
+						<p>With over 40 years of dedicated practice and teaching, Gurunathar has guided thousands of seekers across Tamil Nadu and beyond. His teachings blend the ancient wisdom of Vasi Yoga, breath science, and inner light meditation with practical techniques for modern life.</p>
+						<p>Gurunathar's approach is deeply compassionate and inclusive. He believes that true spiritual transformation is not reserved for monks and ascetics but is the birthright of every human being, regardless of background or circumstance.</p>
+						<p><em>"Love is everything - see all living earthly beings as your own soul."</em> - Gurunathar</p>
+
+						<div class="guru-stat">
+							<div class="stat-item">
+								<div class="number">40+</div>
+								<div class="label">Years of Teaching</div>
+							</div>
+							<div class="stat-item">
+								<div class="number">10K+</div>
+								<div class="label">Students Guided</div>
+							</div>
+							<div class="stat-item">
+								<div class="number">500+</div>
+								<div class="label">Sessions Conducted</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Timeline -->
+			<div class="timeline-section" data-aos="fade-up" data-aos-delay="100">
+				<h3>Gurunathar's Spiritual Journey</h3>
+
+				<div class="timeline-item">
+					<div class="year">1954</div>
+					<div class="content">
+						<h5>Birth & Early Life</h5>
+						<p>Born in a small village near Arcot, Tamil Nadu, Gurunathar was drawn to spirituality from a very young age. His early experiences with divine visions set him on a path of deep inquiry.</p>
+					</div>
+				</div>
+
+				<div class="timeline-item">
+					<div class="year">1970</div>
+					<div class="content">
+						<h5>Meeting the Siddhar Master</h5>
+						<p>At the age of 16, Gurunathar met his spiritual master, who initiated him into the secret Vasi Yoga practices. He spent the next 12 years in intense sadhana under his master's guidance.</p>
+					</div>
+				</div>
+
+				<div class="timeline-item">
+					<div class="year">1982</div>
+					<div class="content">
+						<h5>Self-Realization & Divine Vision</h5>
+						<p>After years of rigorous practice, Gurunathar experienced the ultimate realization of inner light (Aga Oli). He received the divine vision and mission to spread these teachings to the world.</p>
+					</div>
+				</div>
+
+				<div class="timeline-item">
+					<div class="year">1985</div>
+					<div class="content">
+						<h5>First Public Teaching</h5>
+						<p>Gurunathar began teaching in his hometown of Arcot, starting with small groups of sincere seekers. Word spread quickly about the transformative power of his teachings.</p>
+					</div>
+				</div>
+
+				<div class="timeline-item">
+					<div class="year">2000</div>
+					<div class="content">
+						<h5>Foundation of Aga Oli Meignana Yogam</h5>
+						<p>Formally established the Aga Oli Meignana Yogam as a spiritual organization to systematically teach the Siddhar secrets to seekers from all walks of life.</p>
+					</div>
+				</div>
+
+				<div class="timeline-item">
+					<div class="year">2024 - Present</div>
+					<div class="content">
+						<h5>Global Reach & Digital Presence</h5>
+						<p>Today, Gurunathar's teachings have reached thousands through online courses, video content, and live programs across Tamil Nadu, with plans for international expansion.</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Core Teachings -->
+			<div class="teachings-section" data-aos="fade-up" data-aos-delay="200">
+				<h3>Gurunathar's Core Teachings</h3>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="teaching-card">
+							<div class="icon"><i class="fa fa-leaf"></i></div>
+							<h5>Vasi Yoga - The Breath Science</h5>
+							<p>Learn the secret art of breath control that Siddhars used to achieve mastery over mind, body, and consciousness. This ancient science transforms the way you live, think, and feel.</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="teaching-card">
+							<div class="icon"><i class="fa fa-sun-o"></i></div>
+							<h5>Aga Oli - Inner Light Awakening</h5>
+							<p>Discover the divine light within you through focused meditation and energy practices. This is the direct path to spiritual realization as taught by the Siddhars.</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="teaching-card">
+							<div class="icon"><i class="fa fa-heart"></i></div>
+							<h5>Love & Compassion - The Ultimate Path</h5>
+							<p>Gurunathar teaches that love is the highest spiritual practice. See all beings as your own soul and experience the true nature of existence through universal compassion.</p>
+						</div>
+					</div>
+					<div class="col-md-4 mt-3">
+						<div class="teaching-card">
+							<div class="icon"><i class="fa fa-magic"></i></div>
+							<h5>Mudras & Adharas</h5>
+							<p>Learn the secret hand gestures and postures that activate specific energy centers in the body, accelerating spiritual growth and healing.</p>
+						</div>
+					</div>
+					<div class="col-md-4 mt-3">
+						<div class="teaching-card">
+							<div class="icon"><i class="fa fa-diamond"></i></div>
+							<h5>Panchakshara & Mantra Secrets</h5>
+							<p>Understand the hidden power of the five sacred syllables and other Siddhar mantras for transformation and protection.</p>
+						</div>
+					</div>
+					<div class="col-md-4 mt-3">
+						<div class="teaching-card">
+							<div class="icon"><i class="fa fa-shield"></i></div>
+							<h5>Disease-Free Body & Longevity</h5>
+							<p>Master the techniques that Siddhars used to maintain perfect health and extended lifespan through breath, diet, and lifestyle alignment.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- CTA Section -->
+			<div class="text-center mt-5" data-aos="fade-up">
+				<h3 class="text-muted">Ready to Learn from Gurunathar?</h3>
+				<p class="mb-4">Join our upcoming programs and experience the transformation first-hand.</p>
+				<a href="register.html" class="btn btn-success btn-lg"><i class="fa fa-check-circle"></i> Become a Member</a>
+				<a href="vasi-programs.html" class="btn btn-outline-secondary btn-lg ml-2"><i class="fa fa-info-circle"></i> View Programs</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- ===== FOOTER ===== -->
+	<div class="footer">
+		<p>&copy; 2026 Aga Oli Meignana Yogam - Athimagayogi | <i class="fa fa-heart"></i> Spread the Light</p>
+	</div>
+
+	<!-- Return to Top -->
+	<a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+
+	<!-- ===== SCRIPTS ===== -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+	<script>
+		// SIDENAV FUNCTIONS
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+		}
+
+		// Return to Top
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 300) {
+				$('#return-to-top').fadeIn(300);
+			} else {
+				$('#return-to-top').fadeOut(300);
+			}
+		});
+		$('#return-to-top').click(function () {
+			$('html, body').animate({ scrollTop: 0 }, 400);
+			return false;
+		});
+
+		// AOS simulation
+		$(document).ready(function () {
+			$('[data-aos]').each(function () {
+				$(this).css('opacity', '0');
+				$(this).css('transition', 'opacity 0.6s ease, transform 0.6s ease');
+				$(this).css('transform', 'translateY(20px)');
+			});
+
+			$(window).scroll(function () {
+				$('[data-aos]').each(function () {
+					var elementTop = $(this).offset().top;
+					var windowBottom = $(window).scrollTop() + $(window).height();
+					if (windowBottom > elementTop + 50) {
+						$(this).css('opacity', '1');
+						$(this).css('transform', 'translateY(0)');
+					}
+				});
+			});
+
+			$(window).trigger('scroll');
+		});
+	</script>
+
+</body>
+</html>
