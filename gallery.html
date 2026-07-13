@@ -1,0 +1,633 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Aga Oli Meignana Yogam - Gallery of Class, Annadhanam and Songs">
+	<title>Gallery | Aga Oli Meignana Yogam</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800|Old+Standard+TT:400,400i,700" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/main.css">
+	<style>
+		/* gallery specific styles */
+		.gallery-page {
+			padding: 60px 0 80px;
+			background: #f8f6f0;
+		}
+
+			.gallery-page .heading {
+				margin-bottom: 40px;
+				text-align: center;
+			}
+
+				.gallery-page .heading h2 {
+					font-weight: 700;
+					color: #2d3e2b;
+				}
+
+				.gallery-page .heading h3 {
+					color: #6b7f6a;
+				}
+
+		.gallery-card {
+			background: #fff;
+			border-radius: 12px;
+			box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+			margin-bottom: 40px;
+			overflow: hidden;
+			transition: 0.25s;
+			border: 1px solid #eae8e0;
+		}
+
+			.gallery-card:hover {
+				box-shadow: 0 15px 35px rgba(0,0,0,0.10);
+			}
+
+			.gallery-card .card-header {
+				background: #f0ede4;
+				padding: 18px 25px;
+				border-bottom: 2px solid #cfb99b;
+			}
+
+				.gallery-card .card-header h4 {
+					margin: 0;
+					font-weight: 600;
+					color: #3b4d3a;
+				}
+
+					.gallery-card .card-header h4 i {
+						margin-right: 12px;
+						color: #a67c4e;
+					}
+
+		.gallery-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+			gap: 20px;
+			padding: 25px;
+		}
+
+			.gallery-grid .gallery-item {
+				position: relative;
+				border-radius: 10px;
+				overflow: hidden;
+				background: #e9e5db;
+				cursor: pointer;
+				transition: 0.2s;
+				border: 2px solid transparent;
+			}
+
+				.gallery-grid .gallery-item:hover {
+					border-color: #a67c4e;
+					transform: scale(1.02);
+				}
+
+				.gallery-grid .gallery-item img {
+					width: 100%;
+					height: 180px;
+					object-fit: cover;
+					display: block;
+					transition: 0.3s;
+				}
+
+				.gallery-grid .gallery-item:hover img {
+					transform: scale(1.05);
+				}
+
+				.gallery-grid .gallery-item .overlay {
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					background: linear-gradient(transparent, rgba(0,0,0,0.6));
+					padding: 12px 10px 8px;
+					color: #fff;
+					font-size: 0.85rem;
+					font-weight: 500;
+					opacity: 0;
+					transition: 0.3s;
+				}
+
+				.gallery-grid .gallery-item:hover .overlay {
+					opacity: 1;
+				}
+
+		/* lightbox (simple) */
+		.lightbox-overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(20,20,18,0.88);
+			z-index: 9999;
+			justify-content: center;
+			align-items: center;
+		}
+
+			.lightbox-overlay.active {
+				display: flex;
+			}
+
+			.lightbox-overlay .close-lightbox {
+				position: absolute;
+				top: 30px;
+				right: 40px;
+				font-size: 42px;
+				color: #fff;
+				cursor: pointer;
+				opacity: 0.7;
+				transition: 0.2s;
+			}
+
+				.lightbox-overlay .close-lightbox:hover {
+					opacity: 1;
+					transform: rotate(90deg);
+				}
+
+			.lightbox-overlay .lightbox-content {
+				max-width: 80%;
+				max-height: 80%;
+				border-radius: 12px;
+				box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+				border: 4px solid #f0ede4;
+			}
+
+			.lightbox-overlay .lightbox-caption {
+				position: absolute;
+				bottom: 40px;
+				left: 0;
+				right: 0;
+				text-align: center;
+				color: #f0ede4;
+				font-size: 1.3rem;
+				font-weight: 300;
+				letter-spacing: 1px;
+				background: rgba(0,0,0,0.3);
+				padding: 14px;
+				max-width: 70%;
+				margin: 0 auto;
+				border-radius: 60px;
+				backdrop-filter: blur(4px);
+			}
+
+		@media (max-width: 576px) {
+			.gallery-grid {
+				grid-template-columns: repeat(2, 1fr);
+				gap: 12px;
+				padding: 15px;
+			}
+
+				.gallery-grid .gallery-item img {
+					height: 130px;
+				}
+
+			.lightbox-overlay .lightbox-content {
+				max-width: 95%;
+			}
+		}
+
+		/* ===== HEADER / NAV FIX: menu right side ===== */
+		.top {
+			background: #1f2b1e;
+		}
+
+		#navbar .left-side p {
+			margin-bottom: 0;
+		}
+
+		#navbar .right-side {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+		}
+
+			#navbar .right-side .social-icons {
+				margin-right: 18px;
+			}
+
+			#navbar .right-side .slide-menu {
+				cursor: pointer;
+			}
+
+		/* ===== SIDENAV - OPEN FROM RIGHT SIDE ===== */
+		.sidenav {
+			height: 100%;
+			width: 0;
+			position: fixed;
+			z-index: 999;
+			top: 0;
+			right: 0; /* changed from left to right */
+			background-color: #1f2b1e;
+			overflow-x: hidden;
+			transition: 0.3s;
+			padding-top: 80px;
+			box-shadow: -5px 0 25px rgba(0,0,0,0.4);
+		}
+
+			.sidenav a {
+				padding: 12px 28px;
+				text-decoration: none;
+				font-size: 18px;
+				color: #c3c9b8;
+				display: block;
+				transition: 0.2s;
+				border-right: 3px solid transparent; /* changed from border-left */
+				text-align: right; /* right align text */
+			}
+
+				.sidenav a:hover, .sidenav a.active {
+					color: #f5eace;
+					border-right-color: #a67c4e; /* changed from border-left-color */
+					background: #2a3a28;
+				}
+
+			.sidenav .closebtn {
+				position: absolute;
+				top: 10px;
+				left: 25px; /* changed from right to left */
+				font-size: 36px;
+				color: #d4cbb8;
+				text-align: left;
+			}
+
+		#navbar {
+			background: #1f2b1e;
+			padding: 10px 0;
+			border-bottom: 1px solid #3d4d3a;
+			color: #d6d9cb;
+		}
+
+			#navbar .left-side span {
+				margin-left: 25px;
+				color: #c6b28c;
+			}
+
+			#navbar .social-icons i {
+				color: #c6b28c;
+				margin: 0 6px;
+				font-size: 18px;
+			}
+
+		.slide-menu i {
+			font-size: 28px;
+			color: #d6d9cb;
+		}
+
+		.border-img img {
+			width: 100%;
+			display: block;
+		}
+
+		.btn-success {
+			background: #6a7f4d;
+			border-color: #5a6f3d;
+		}
+
+		.btn-primary {
+			background: #a67c4e;
+			border-color: #8e6a3d;
+		}
+
+		.btn-warning {
+			background: #c4a36b;
+			border-color: #a8864d;
+			color: #1f2b1e;
+		}
+
+		footer.contact {
+			background: #1f2b1e;
+			color: #d4d9c6;
+			padding-top: 50px;
+		}
+
+			footer.contact .gradient {
+				background: linear-gradient(to right, #1f2b1e, #2e4030);
+			}
+
+			footer.contact address p {
+				margin-bottom: 0.3rem;
+			}
+
+			footer.contact .form-control {
+				background: #2f3d2c;
+				border: 1px solid #4b5f45;
+				color: #e9e4d4;
+			}
+
+				footer.contact .form-control::placeholder {
+					color: #a6b69b;
+				}
+
+		.copyright {
+			background: #141e13;
+			padding: 30px 0 20px;
+			color: #b3bfa3;
+			border-top: 1px solid #344b30;
+		}
+
+			.copyright ul {
+				display: flex;
+				flex-wrap: wrap;
+				list-style: none;
+				justify-content: flex-end;
+			}
+
+				.copyright ul li {
+					margin: 0 6px;
+				}
+
+					.copyright ul li a {
+						color: #c6d1b8;
+					}
+
+						.copyright ul li a:hover {
+							color: #f0e3c6;
+							text-decoration: none;
+						}
+
+			.copyright .right-part {
+				text-align: right;
+			}
+
+		@media (max-width:768px) {
+			.copyright .right-part {
+				text-align: center;
+			}
+
+			.copyright ul {
+				justify-content: center;
+			}
+
+				.copyright ul li a.hidden-xs {
+					display: none;
+				}
+		}
+
+		#return-to-top {
+			position: fixed;
+			bottom: 30px;
+			right: 30px;
+			background: #a67c4e;
+			color: #fff;
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 45px;
+			font-size: 22px;
+			z-index: 999;
+			display: none;
+			box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+		}
+
+			#return-to-top:hover {
+				background: #8e6a3d;
+				color: #fff;
+				text-decoration: none;
+			}
+	</style>
+</head>
+<body>
+	<!-- Header (menu right aligned) -->
+	<header class="top">
+		<!-- SIDENAV - OPENS FROM RIGHT SIDE -->
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="index.html">Home</a>
+			<a href="about.html">About Yogi</a>
+			<a href="register.html">Become a Member</a>
+			<a href="scan.html">Class Entry (Scanner)</a>
+			<a href="gallery.html" class="active">Gallery</a>
+		</div>
+		<nav id="navbar">
+			<div class="container">
+				<div class="row">
+					<!-- left side: tagline + phone -->
+					<div class="col-lg-6 col-md-6 col-12 align-self-center left-side">
+						<p>Awaken Inner Light, Realize the Truth <span>Call: +91 63804 19470</span></p>
+					</div>
+					<!-- right side: social + menu icon (aligned right) -->
+					<div class="col-lg-6 col-md-6 col-12 align-self-center right-side d-flex justify-content-end align-items-center">
+						<div class="social-icons another mb-0 mr-3">
+							<i class="fa fa-facebook-official" aria-hidden="true"></i>
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+							<i class="fa fa-pinterest" aria-hidden="true"></i>
+							<i class="fa fa-youtube" aria-hidden="true"></i>
+						</div>
+						<div class="social-icons square mb-0">
+							<span class="slide-menu" style="cursor:pointer;" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<img class="border-img" src="images/border.png" width="100%" alt="">
+	</header>
+
+	<!-- Gallery Page Content -->
+	<section class="gallery-page">
+		<div class="container">
+			<div class="heading" data-aos="fade-up">
+				<img src="images/leaf.png" alt="leaf">
+				<h2>Gallery – Moments of Grace</h2>
+				<h3>Class · Annadhanam · Devotional Songs</h3>
+				<p class="text-muted" style="max-width:650px; margin: 12px auto 0;">Witness the sacred energy of Aga Oli Meignana Yogam – from profound classes, nourishing Annadhanam, to soul-stirring bhajans.</p>
+			</div>
+
+			<!-- ========== GALLERY 1 : CLASS ========== -->
+			<div class="gallery-card" data-aos="fade-up">
+				<div class="card-header">
+					<h4><i class="fa fa-graduation-cap"></i> Class &amp; Vasi Yoga Sessions</h4>
+				</div>
+				<div class="gallery-grid" id="classGrid">
+					<!-- images will be injected via js -->
+				</div>
+			</div>
+
+			<!-- ========== GALLERY 2 : ANNADHANAM ========== -->
+			<div class="gallery-card" data-aos="fade-up" data-aos-delay="100">
+				<div class="card-header">
+					<h4><i class="fa fa-cutlery"></i> Annadhanam – Sacred Food Donation</h4>
+				</div>
+				<div class="gallery-grid" id="annaGrid"></div>
+			</div>
+
+			<!-- ========== GALLERY 3 : SONGS ========== -->
+			<div class="gallery-card" data-aos="fade-up" data-aos-delay="200">
+				<div class="card-header">
+					<h4><i class="fa fa-music"></i> Bhajans &amp; Devotional Songs</h4>
+				</div>
+				<div class="gallery-grid" id="songGrid"></div>
+			</div>
+
+			<div class="text-center mt-4" data-aos="fade-up">
+				<a href="register.html" class="btn btn-success btn-lg">Join the Next Session</a>
+				<a href="index.html" class="btn btn-outline-secondary btn-lg ml-2">Back to Home</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Lightbox -->
+	<div id="lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
+		<span class="close-lightbox" onclick="closeLightbox(event)">&times;</span>
+		<img id="lightboxImg" class="lightbox-content" src="" alt="gallery image">
+		<div id="lightboxCaption" class="lightbox-caption"></div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="contact">
+		<div class="gradient"></div>
+		<div class="container">
+			<div class="row" data-aos="fade-up">
+				<div class="col-lg-6 col-md-12 col-12 columns-1">
+					<h2>Our Center Address</h2>
+					<address>
+						<p>Kanesa Vijayalakshmi Marriage Hall,</p>
+						<p>Vellore Main Road, Arcot, Tamil Nadu, India</p>
+						<p>Inquiry Hours : Daily 9:00 AM - 1:30 PM</p>
+						<p>Call : <span>+91 63804 19470 / 73972 83252</span></p>
+					</address>
+				</div>
+				<div class="col-lg-1 col-md-12 col-12"></div>
+				<div class="col-lg-5 col-md-12 col-12 columns-2">
+					<h2>Quick Contact</h2>
+					<form class="row form-inline">
+						<div class="col-md-6 form-group"><input type="text" class="form-control" placeholder="Your Name" required /></div>
+						<div class="col-md-6 form-group"><input type="email" class="form-control" placeholder="Your Email" required /></div>
+						<div class="col-md-12 form-group"><textarea class="form-control" placeholder="Message" rows="5"></textarea></div>
+						<div class="col-md-12"><button type="submit" class="btn btn-primary">Submit Form</button></div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="copyright">
+			<div class="container">
+				<div class="row border-img"><div class="col-md-12"><img src="images/border.png" alt="border"></div></div>
+			</div>
+			<div class="container">
+				<div class="row" data-aos="fade-up">
+					<div class="col-lg-3 col-md-12"><a href="index.html"><img src="images/footer-logo-bg.png" alt="logo" style="max-height:60px;"></a></div>
+					<div class="col-lg-9 col-md-12 right-part">
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="services.html">Services</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="products.html">Products</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="rates.html">Rates</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="blog-page.html">Blog</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="gallery.html" class="active">Gallery</a></li>
+						</ul>
+						<p>(C) 2026 All Rights Reserved. Aga Oli Meignana Yogam</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up"></i></a>
+
+	<!-- scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="js/animate.js"></script>
+	<script src="js/custom.js"></script>
+	<script>
+		// ---- NAV - OPEN FROM RIGHT ----
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+		}
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+		}
+
+		// ---- GALLERY DATA (placeholders - replace with actual images) ----
+		const classImages = [
+			{ src: "images/services-bg.jpg", caption: "Morning Vasi Yoga session – Arcot" },
+			{ src: "images/section-4-bg.jpg", caption: "Gurunathar guiding inner light" },
+			{ src: "images/blog-1.jpg", caption: "Chennai Intensive – Breathwork" },
+			{ src: "images/blog-2.jpg", caption: "Trichy camp – Mudra practice" },
+			{ src: "images/blog-3.jpg", caption: "Arcot wedding hall – discourse" },
+			{ src: "images/blog-4.jpg", caption: "Evening meditation at center" }
+		];
+		const annaImages = [
+			{ src: "images/services-bg.jpg", caption: "Annadhanam distribution – Arcot" },
+			{ src: "images/section-4-bg.jpg", caption: "Sacred food offering" },
+			{ src: "images/blog-1.jpg", caption: "Devotees receiving Prasad" },
+			{ src: "images/blog-2.jpg", caption: "Community lunch – Chennai" }
+		];
+		const songImages = [
+			{ src: "images/blog-3.jpg", caption: "Bhajan night – Trichy" },
+			{ src: "images/blog-4.jpg", caption: "Devotional songs with harmonium" },
+			{ src: "images/services-bg.jpg", caption: "Kirtan at wedding hall" },
+			{ src: "images/section-4-bg.jpg", caption: "Soulful singing – Arcot" }
+		];
+
+		function renderGallery(gridId, images) {
+			const grid = document.getElementById(gridId);
+			if (!grid) return;
+			let html = '';
+			images.forEach((img) => {
+				html += `
+			  <div class="gallery-item" data-src="${img.src}" data-caption="${img.caption}" onclick="openLightbox(this)">
+				<img src="${img.src}" alt="${img.caption}" loading="lazy">
+				<div class="overlay">${img.caption}</div>
+			  </div>
+			`;
+			});
+			grid.innerHTML = html;
+		}
+
+		renderGallery('classGrid', classImages);
+		renderGallery('annaGrid', annaImages);
+		renderGallery('songGrid', songImages);
+
+		// ---- LIGHTBOX ----
+		function openLightbox(el) {
+			const src = el.getAttribute('data-src') || el.querySelector('img')?.src;
+			const caption = el.getAttribute('data-caption') || el.querySelector('.overlay')?.innerText || '';
+			if (!src) return;
+			document.getElementById('lightboxImg').src = src;
+			document.getElementById('lightboxCaption').innerText = caption;
+			document.getElementById('lightbox').classList.add('active');
+			document.body.style.overflow = 'hidden';
+		}
+		function closeLightbox(e) {
+			if (e && e.target && !e.target.closest('.lightbox-content') && !e.target.closest('.close-lightbox')) {
+				const lb = document.getElementById('lightbox');
+				if (lb.classList.contains('active')) {
+					lb.classList.remove('active');
+					document.body.style.overflow = '';
+				}
+			} else if (e && e.target && e.target.closest('.close-lightbox')) {
+				document.getElementById('lightbox').classList.remove('active');
+				document.body.style.overflow = '';
+			}
+		}
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape') {
+				document.getElementById('lightbox').classList.remove('active');
+				document.body.style.overflow = '';
+			}
+		});
+
+		// ---- return to top ----
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 300) $('#return-to-top').fadeIn(200);
+			else $('#return-to-top').fadeOut(200);
+		});
+		$('#return-to-top').click(function () { $('html, body').animate({ scrollTop: 0 }, 300); return false; });
+	</script>
+</body>
+</html>
+```

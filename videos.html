@@ -1,0 +1,579 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Aga Oli Meignana Yogam - Video Gallery with YouTube videos">
+	<title>Videos | Aga Oli Meignana Yogam</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800|Old+Standard+TT:400,400i,700" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/main.css">
+	<style>
+		/* video gallery styles */
+		.video-page {
+			padding: 60px 0 80px;
+			background: #f8f6f0;
+		}
+
+			.video-page .heading {
+				margin-bottom: 40px;
+				text-align: center;
+			}
+
+				.video-page .heading h2 {
+					font-weight: 700;
+					color: #2d3e2b;
+				}
+
+				.video-page .heading h3 {
+					color: #6b7f6a;
+				}
+
+		.video-card {
+			background: #fff;
+			border-radius: 12px;
+			box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+			margin-bottom: 30px;
+			overflow: hidden;
+			transition: 0.3s;
+			border: 1px solid #eae8e0;
+		}
+
+			.video-card:hover {
+				box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+				transform: translateY(-3px);
+			}
+
+			.video-card .video-wrapper {
+				position: relative;
+				padding-bottom: 56.25%;
+				height: 0;
+				overflow: hidden;
+				background: #000;
+			}
+
+				.video-card .video-wrapper iframe {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					border: 0;
+				}
+
+			.video-card .video-info {
+				padding: 18px 22px 22px;
+			}
+
+				.video-card .video-info h5 {
+					font-weight: 600;
+					color: #2d3e2b;
+					margin-bottom: 8px;
+				}
+
+				.video-card .video-info p {
+					color: #6b7f6a;
+					font-size: 0.95rem;
+					margin-bottom: 0;
+				}
+
+				.video-card .video-info .video-meta {
+					font-size: 0.85rem;
+					color: #a67c4e;
+					margin-top: 8px;
+				}
+
+					.video-card .video-info .video-meta i {
+						margin-right: 6px;
+					}
+
+		/* category filter */
+		.filter-section {
+			margin-bottom: 35px;
+			text-align: center;
+		}
+
+			.filter-section .btn-filter {
+				background: #fff;
+				border: 2px solid #d4cbb8;
+				color: #3b4d3a;
+				padding: 8px 22px;
+				margin: 4px 6px;
+				border-radius: 30px;
+				font-weight: 500;
+				transition: 0.2s;
+				cursor: pointer;
+			}
+
+				.filter-section .btn-filter:hover, .filter-section .btn-filter.active {
+					background: #a67c4e;
+					border-color: #a67c4e;
+					color: #fff;
+				}
+
+		/* ===== HEADER / NAV: menu right side, open from right ===== */
+		.top {
+			background: #1f2b1e;
+		}
+
+		#navbar .left-side p {
+			margin-bottom: 0;
+		}
+
+		#navbar .right-side {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+		}
+
+			#navbar .right-side .social-icons {
+				margin-right: 18px;
+			}
+
+			#navbar .right-side .slide-menu {
+				cursor: pointer;
+			}
+
+		/* SIDENAV - OPENS FROM RIGHT SIDE */
+		.sidenav {
+			height: 100%;
+			width: 0;
+			position: fixed;
+			z-index: 999;
+			top: 0;
+			right: 0;
+			background-color: #1f2b1e;
+			overflow-x: hidden;
+			transition: 0.3s;
+			padding-top: 80px;
+			box-shadow: -5px 0 25px rgba(0,0,0,0.4);
+		}
+
+			.sidenav a {
+				padding: 12px 28px;
+				text-decoration: none;
+				font-size: 18px;
+				color: #c3c9b8;
+				display: block;
+				transition: 0.2s;
+				border-right: 3px solid transparent;
+				text-align: right;
+			}
+
+				.sidenav a:hover, .sidenav a.active {
+					color: #f5eace;
+					border-right-color: #a67c4e;
+					background: #2a3a28;
+				}
+
+			.sidenav .closebtn {
+				position: absolute;
+				top: 10px;
+				left: 25px;
+				font-size: 36px;
+				color: #d4cbb8;
+				text-align: left;
+			}
+
+		#navbar {
+			background: #1f2b1e;
+			padding: 10px 0;
+			border-bottom: 1px solid #3d4d3a;
+			color: #d6d9cb;
+		}
+
+			#navbar .left-side span {
+				margin-left: 25px;
+				color: #c6b28c;
+			}
+
+			#navbar .social-icons i {
+				color: #c6b28c;
+				margin: 0 6px;
+				font-size: 18px;
+			}
+
+		.slide-menu i {
+			font-size: 28px;
+			color: #d6d9cb;
+		}
+
+		.border-img img {
+			width: 100%;
+			display: block;
+		}
+
+		.btn-success {
+			background: #6a7f4d;
+			border-color: #5a6f3d;
+		}
+
+		.btn-primary {
+			background: #a67c4e;
+			border-color: #8e6a3d;
+		}
+
+		footer.contact {
+			background: #1f2b1e;
+			color: #d4d9c6;
+			padding-top: 50px;
+		}
+
+			footer.contact .gradient {
+				background: linear-gradient(to right, #1f2b1e, #2e4030);
+			}
+
+			footer.contact address p {
+				margin-bottom: 0.3rem;
+			}
+
+			footer.contact .form-control {
+				background: #2f3d2c;
+				border: 1px solid #4b5f45;
+				color: #e9e4d4;
+			}
+
+				footer.contact .form-control::placeholder {
+					color: #a6b69b;
+				}
+
+		.copyright {
+			background: #141e13;
+			padding: 30px 0 20px;
+			color: #b3bfa3;
+			border-top: 1px solid #344b30;
+		}
+
+			.copyright ul {
+				display: flex;
+				flex-wrap: wrap;
+				list-style: none;
+				justify-content: flex-end;
+			}
+
+				.copyright ul li {
+					margin: 0 6px;
+				}
+
+					.copyright ul li a {
+						color: #c6d1b8;
+					}
+
+						.copyright ul li a:hover {
+							color: #f0e3c6;
+							text-decoration: none;
+						}
+
+			.copyright .right-part {
+				text-align: right;
+			}
+
+		@media (max-width:768px) {
+			.copyright .right-part {
+				text-align: center;
+			}
+
+			.copyright ul {
+				justify-content: center;
+			}
+
+				.copyright ul li a.hidden-xs {
+					display: none;
+				}
+		}
+
+		#return-to-top {
+			position: fixed;
+			bottom: 30px;
+			right: 30px;
+			background: #a67c4e;
+			color: #fff;
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 45px;
+			font-size: 22px;
+			z-index: 999;
+			display: none;
+			box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+		}
+
+			#return-to-top:hover {
+				background: #8e6a3d;
+				color: #fff;
+				text-decoration: none;
+			}
+
+		@media (max-width: 576px) {
+			.filter-section .btn-filter {
+				padding: 6px 14px;
+				font-size: 0.85rem;
+				margin: 3px 4px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- Header -->
+	<header class="top">
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="index.html">Home</a>
+			<a href="about.html">About Yogi</a>
+			<a href="register.html">Become a Member</a>
+			<a href="scan.html">Class Entry (Scanner)</a>
+			<a href="gallery.html">Gallery</a>
+			<a href="videos.html" class="active">Videos</a>
+		</div>
+		<nav id="navbar">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-12 align-self-center left-side">
+						<p>Awaken Inner Light, Realize the Truth <span>Call: +91 63804 19470</span></p>
+					</div>
+					<div class="col-lg-6 col-md-6 col-12 align-self-center right-side d-flex justify-content-end align-items-center">
+						<div class="social-icons another mb-0 mr-3">
+							<i class="fa fa-facebook-official" aria-hidden="true"></i>
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+							<i class="fa fa-pinterest" aria-hidden="true"></i>
+							<i class="fa fa-youtube" aria-hidden="true"></i>
+						</div>
+						<div class="social-icons square mb-0">
+							<span class="slide-menu" style="cursor:pointer;" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<img class="border-img" src="images/border.png" width="100%" alt="">
+	</header>
+
+	<!-- Video Page Content -->
+	<section class="video-page">
+		<div class="container">
+			<div class="heading" data-aos="fade-up">
+				<img src="images/leaf.png" alt="leaf">
+				<h2>Video Gallery</h2>
+				<h3>Teachings · Sessions · Devotional Songs</h3>
+				<p class="text-muted" style="max-width:650px; margin: 12px auto 0;">Watch the divine wisdom of Aga Oli Meignana Yogam – class recordings, bhajans, and siddhar teachings.</p>
+			</div>
+
+			<!-- Category Filter -->
+			<div class="filter-section" data-aos="fade-up">
+				<button class="btn-filter active" data-filter="all">All Videos</button>
+				<button class="btn-filter" data-filter="class">Class & Teachings</button>
+				<button class="btn-filter" data-filter="song">Bhajans & Songs</button>
+				<button class="btn-filter" data-filter="event">Events & Camps</button>
+			</div>
+
+			<!-- Video Grid -->
+			<div class="row" id="videoGrid" data-aos="fade-up">
+				<!-- videos will be injected via js -->
+			</div>
+
+			<div class="text-center mt-4" data-aos="fade-up">
+				<a href="register.html" class="btn btn-success btn-lg">Join Next Session</a>
+				<a href="index.html" class="btn btn-outline-secondary btn-lg ml-2">Back to Home</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="contact">
+		<div class="gradient"></div>
+		<div class="container">
+			<div class="row" data-aos="fade-up">
+				<div class="col-lg-6 col-md-12 col-12 columns-1">
+					<h2>Our Center Address</h2>
+					<address>
+						<p>Kanesa Vijayalakshmi Marriage Hall,</p>
+						<p>Vellore Main Road, Arcot, Tamil Nadu, India</p>
+						<p>Inquiry Hours : Daily 9:00 AM - 1:30 PM</p>
+						<p>Call : <span>+91 63804 19470 / 73972 83252</span></p>
+					</address>
+				</div>
+				<div class="col-lg-1 col-md-12 col-12"></div>
+				<div class="col-lg-5 col-md-12 col-12 columns-2">
+					<h2>Quick Contact</h2>
+					<form class="row form-inline">
+						<div class="col-md-6 form-group"><input type="text" class="form-control" placeholder="Your Name" required /></div>
+						<div class="col-md-6 form-group"><input type="email" class="form-control" placeholder="Your Email" required /></div>
+						<div class="col-md-12 form-group"><textarea class="form-control" placeholder="Message" rows="5"></textarea></div>
+						<div class="col-md-12"><button type="submit" class="btn btn-primary">Submit Form</button></div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="copyright">
+			<div class="container">
+				<div class="row border-img"><div class="col-md-12"><img src="images/border.png" alt="border"></div></div>
+			</div>
+			<div class="container">
+				<div class="row" data-aos="fade-up">
+					<div class="col-lg-3 col-md-12"><a href="index.html"><img src="images/footer-logo-bg.png" alt="logo" style="max-height:60px;"></a></div>
+					<div class="col-lg-9 col-md-12 right-part">
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="services.html">Services</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="products.html">Products</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="rates.html">Rates</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="blog-page.html">Blog</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="gallery.html">Gallery</a></li>
+							<li class="hidden-xs">~</li>
+							<li><a href="videos.html" class="active">Videos</a></li>
+						</ul>
+						<p>(C) 2026 All Rights Reserved. Aga Oli Meignana Yogam</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up"></i></a>
+
+	<!-- scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="js/animate.js"></script>
+	<script src="js/custom.js"></script>
+	<script>
+		// ---- NAV ----
+		function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
+		function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+
+		// ---- VIDEO DATA (YouTube embed links) ----
+		const videos = [
+			{
+				id: 'vid1',
+				title: 'Vasi Yoga Initiation – Arcot Camp',
+				desc: 'Gurunathar teaching the secret breath science of Siddhars.',
+				category: 'class',
+				youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+				date: 'Dec 2024'
+			},
+			{
+				id: 'vid2',
+				title: 'Morning Meditation & Inner Light Awakening',
+				desc: 'Guided meditation for stilling the restless mind and experiencing Aga Oli.',
+				category: 'class',
+				youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+				date: 'Nov 2024'
+			},
+			{
+				id: 'vid3',
+				title: 'Bhajan – Om Namah Shivaya',
+				desc: 'Devotional singing session at Trichy camp with full satsang.',
+				category: 'song',
+				youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+				date: 'Oct 2024'
+			},
+			{
+				id: 'vid4',
+				title: 'Soulful Kirtan – Arcot Wedding Hall',
+				desc: 'Evening bhajan with harmonium and mridangam accompaniment.',
+				category: 'song',
+				youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+				date: 'Sep 2024'
+			},
+			{
+				id: 'vid5',
+				title: 'Chennai Mega Camp – Day 1 Highlights',
+				desc: 'Over 500 participants attended this transformative session.',
+				category: 'event',
+				youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+				date: 'Aug 2024'
+			},
+			{
+				id: 'vid6',
+				title: 'Annadhanam Seva – Feeding 1000+ Devotees',
+				desc: 'Sacred food donation event at Arcot center.',
+				category: 'event',
+				youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+				date: 'Jul 2024'
+			},
+			{
+				id: 'vid7',
+				title: 'Panchakshara Mantra Chanting',
+				desc: 'Learn the secret of the five syllables and their energy vibrations.',
+				category: 'class',
+				youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+				date: 'Jun 2024'
+			},
+			{
+				id: 'vid8',
+				title: 'Devotional Songs – Trichy Satsang',
+				desc: 'Evening of soulful music and divine connection.',
+				category: 'song',
+				youtube: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+				date: 'May 2024'
+			}
+		];
+
+		// ---- RENDER VIDEOS ----
+		function renderVideos(filter = 'all') {
+			const grid = document.getElementById('videoGrid');
+			if (!grid) return;
+
+			const filtered = filter === 'all' ? videos : videos.filter(v => v.category === filter);
+
+			let html = '';
+			filtered.forEach((video, index) => {
+				html += `
+			  <div class="col-lg-4 col-md-6 col-12 video-item" data-category="${video.category}" data-aos="fade-up" data-aos-delay="${index * 50}">
+				<div class="video-card">
+				  <div class="video-wrapper">
+					<iframe src="${video.youtube}" allowfullscreen loading="lazy"></iframe>
+				  </div>
+				  <div class="video-info">
+					<h5>${video.title}</h5>
+					<p>${video.desc}</p>
+					<div class="video-meta">
+					  <i class="fa fa-calendar"></i> ${video.date}
+					  <span class="ml-3"><i class="fa fa-tag"></i> ${video.category.charAt(0).toUpperCase() + video.category.slice(1)}</span>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			`;
+			});
+
+			grid.innerHTML = html || `<div class="col-12 text-center py-5"><p class="text-muted">No videos found in this category.</p></div>`;
+		}
+
+		// Initial render
+		renderVideos('all');
+
+		// ---- FILTER FUNCTIONALITY ----
+		const filterBtns = document.querySelectorAll('.btn-filter');
+		filterBtns.forEach(btn => {
+			btn.addEventListener('click', function () {
+				filterBtns.forEach(b => b.classList.remove('active'));
+				this.classList.add('active');
+				const filter = this.getAttribute('data-filter');
+				renderVideos(filter);
+			});
+		});
+
+		// ---- return to top ----
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 300) $('#return-to-top').fadeIn(200);
+			else $('#return-to-top').fadeOut(200);
+		});
+		$('#return-to-top').click(function () { $('html, body').animate({ scrollTop: 0 }, 300); return false; });
+
+		console.log('Video Gallery ready. Replace YouTube embed links with actual video URLs.');
+	</script>
+</body>
+</html>
+```
