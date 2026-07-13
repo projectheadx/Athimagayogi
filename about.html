@@ -2,137 +2,487 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Learn more about Thavasilar Thiru Athimagayogi and the origins of Aga Oli Meignana Yogam.">
-    <meta name="author" content="Athimagayogi">
-    <title>About Yogi | Aga Oli Meignana Yogam</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800|Old+Standard+TT:400,400i,700" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/main.css">
-    <style>
-        .banner-home {
-            height: auto;
-            padding-top: 200px;
-        }
-    </style>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Learn more about Thavasilar Thiru Athimagayogi and the origins of Aga Oli Meignana Yogam.">
+	<meta name="author" content="Athimagayogi">
+	<title>About Yogi | Aga Oli Meignana Yogam</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800|Old+Standard+TT:400,400i,700" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/main.css">
+
+	<!-- UPDATED: New Color Theme - Gold & Dark Green (matching home page) -->
+	<style>
+		/* ============================================
+		   COLOR THEME - GOLD & DARK GREEN
+		   Same as home page
+		   ============================================ */
+		body {
+			background: #f7f3eb;
+		}
+
+		/* HEADER & NAV */
+		.top {
+			background: #1a2b1a;
+		}
+
+		#navbar {
+			background: #1a2b1a;
+			border-bottom: 2px solid #c9a96e;
+			padding: 10px 0;
+			color: #e8e0d0;
+		}
+
+			#navbar .left-side span {
+				color: #c9a96e;
+				font-weight: 500;
+			}
+
+			#navbar .left-side p {
+				color: #e8e0d0;
+				margin-bottom: 0;
+			}
+
+			#navbar .social-icons i {
+				color: #c9a96e;
+				font-size: 20px;
+				margin: 0 7px;
+				transition: 0.3s;
+			}
+
+				#navbar .social-icons i:hover {
+					color: #e8d5a3;
+					transform: scale(1.1);
+				}
+
+		.slide-menu i {
+			font-size: 30px;
+			color: #c9a96e;
+			transition: 0.3s;
+			cursor: pointer;
+		}
+
+			.slide-menu i:hover {
+				color: #e8d5a3;
+			}
+
+		.logo img {
+			max-height: 55px;
+		}
+
+		/* SIDENAV - OPENS FROM RIGHT */
+		.sidenav {
+			height: 100%;
+			width: 0;
+			position: fixed;
+			z-index: 999;
+			top: 0;
+			right: 0;
+			background-color: #122012;
+			overflow-x: hidden;
+			transition: 0.3s;
+			padding-top: 80px;
+			box-shadow: -8px 0 30px rgba(0,0,0,0.7);
+		}
+
+			.sidenav a {
+				padding: 14px 32px;
+				text-decoration: none;
+				font-size: 18px;
+				font-weight: 500;
+				color: #c9c9b8;
+				display: block;
+				transition: 0.2s;
+				border-right: 4px solid transparent;
+				text-align: right;
+				letter-spacing: 0.5px;
+			}
+
+				.sidenav a:hover,
+				.sidenav a.active {
+					color: #e8d5a3;
+					border-right-color: #c9a96e;
+					background: #1f3a1f;
+				}
+
+			.sidenav .closebtn {
+				position: absolute;
+				top: 10px;
+				left: 25px;
+				font-size: 38px;
+				color: #c9a96e;
+				text-align: left;
+			}
+
+				.sidenav .closebtn:hover {
+					color: #e8d5a3;
+				}
+
+		.border-img img {
+			width: 100%;
+			display: block;
+		}
+
+		/* BANNER */
+		.banner-another {
+			min-height: 250px;
+			background: linear-gradient(135deg, #1a2b1a 0%, #2d4a2d 100%);
+			position: relative;
+		}
+
+			.banner-another::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: url('images/services-bg.jpg') center/cover no-repeat;
+				opacity: 0.2;
+			}
+
+		/* ABOUT SECTION */
+		#about-us {
+			padding: 70px 0 80px;
+			background: #f7f3eb;
+		}
+
+			#about-us h3 {
+				color: #1a2b1a;
+				font-weight: 700;
+				font-size: 2.2rem;
+				margin-bottom: 30px;
+				text-align: center;
+			}
+
+				#about-us h3::after {
+					content: '';
+					display: block;
+					width: 80px;
+					height: 3px;
+					background: #c9a96e;
+					margin: 15px auto 0;
+				}
+
+			#about-us .thumbnail {
+				border-radius: 12px;
+				box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+				max-height: 500px;
+				width: 100%;
+				object-fit: cover;
+				border: 4px solid #c9a96e;
+			}
+
+			#about-us p {
+				color: #3a4a3a;
+				font-size: 1.1rem;
+				line-height: 1.9;
+				text-align: justify;
+			}
+
+				#about-us p strong {
+					color: #1a2b1a;
+				}
+
+				#about-us p em {
+					color: #c9a96e;
+					font-weight: 500;
+				}
+
+		/* BUTTONS - matching home page */
+		.btn-success {
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 12px 35px;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-success:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(201,169,110,0.3);
+			}
+
+		.btn-primary {
+			background: #c9a96e;
+			border-color: #b8944a;
+			color: #1a2b1a;
+			font-weight: 600;
+			padding: 10px 30px;
+			border-radius: 40px;
+			transition: 0.3s;
+		}
+
+			.btn-primary:hover {
+				background: #dbb97a;
+				border-color: #c9a96e;
+				color: #0f1f0f;
+				transform: translateY(-2px);
+			}
+
+		/* FOOTER */
+		footer.contact {
+			background: #122012;
+			color: #d4d0c0;
+		}
+
+			footer.contact .gradient {
+				background: linear-gradient(to right, #122012, #1a2b1a);
+			}
+
+		.copyright {
+			background: #0d1a0d;
+			border-top: 2px solid #2a402a;
+			padding: 30px 0 20px;
+			color: #a8b898;
+		}
+
+			.copyright ul li a {
+				color: #b8b8a8;
+			}
+
+				.copyright ul li a:hover {
+					color: #e8d5a3;
+					text-decoration: none;
+				}
+
+				.copyright ul li a.active {
+					color: #c9a96e;
+				}
+
+			.copyright .right-part {
+				text-align: right;
+			}
+
+			.copyright ul {
+				display: flex;
+				flex-wrap: wrap;
+				list-style: none;
+				justify-content: flex-end;
+			}
+
+				.copyright ul li {
+					margin: 0 6px;
+				}
+
+		#return-to-top {
+			background: #c9a96e;
+			color: #1a2b1a;
+			bottom: 30px;
+			right: 30px;
+			width: 48px;
+			height: 48px;
+			line-height: 48px;
+			font-size: 22px;
+			border-radius: 50%;
+			text-align: center;
+			position: fixed;
+			z-index: 999;
+			display: none;
+			box-shadow: 0 6px 25px rgba(201,169,110,0.4);
+			transition: 0.3s;
+		}
+
+			#return-to-top:hover {
+				background: #dbb97a;
+				color: #0f1f0f;
+				transform: translateY(-3px);
+			}
+
+		/* RESPONSIVE */
+		@media (max-width: 768px) {
+			#navbar .left-side span {
+				display: block;
+				margin-left: 0;
+			}
+
+			#about-us h3 {
+				font-size: 1.8rem;
+			}
+
+			#about-us p {
+				font-size: 1rem;
+			}
+
+			.copyright .right-part {
+				text-align: center;
+			}
+
+			.copyright ul {
+				justify-content: center;
+			}
+
+				.copyright ul li a.hidden-xs {
+					display: none;
+				}
+
+			.banner-another {
+				min-height: 150px;
+			}
+		}
+
+		@media (max-width: 576px) {
+			.logo img {
+				max-height: 40px;
+			}
+
+			#about-us {
+				padding: 40px 0 50px;
+			}
+		}
+	</style>
 </head>
 
 <body>
-    <!-- Header section Start-->
-    <header class="top">
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="index">Home</a>
-            <a class="active" href="about">About Yogi</a>
-            <!--<a href="services.html">Yogam Classes</a>
-            <a href="products.html">Teachings</a>
-            <a href="rates.html">Schedules</a>
-            <a href="blog-page.html">Spiritual Blog</a>-->
-        </div>
+	<!-- Header section Start -->
+	<header class="top">
+		<!-- SIDENAV - OPENS FROM RIGHT -->
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="index.html">Home</a>
+			<a class="active" href="about.html">About Yogi</a>
+			<a href="register.html">Become a Member</a>
+			<a href="scan.html">Class Entry (Scanner)</a>
+			<a href="gallery.html">Gallery</a>
+			<a href="videos.html">Videos</a>
+		</div>
 
-        <nav id="navbar">
-            <!-- container Start-->
-            <div class="container">
-                <!--Row Start-->
-                <div class="row">
-                    <div class="col-lg-5 col-md-5 align-self-center left-side">
-                        <p>Love is Everything <span>Call: +91 63804 19470</span></p>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-5 align-self-center logo">
-                        <a href="index.html"><img src="images/nav-logo.png" alt="logo"></a>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-7 align-self-center right-side">
-                        <div class="social-icons square">
-                            <!-- Page Content -->
-                            <div id="page-content-wrapper">
-                                <span class="slide-menu" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></span>
-                            </div>
-                        </div>
-                        <div class="social-icons another">
-                            <i class="fa fa-facebook-official" aria-hidden="true"></i>
-                            <i class="fa fa-twitter" aria-hidden="true"></i>
-                           
-                            <i class="fa fa-youtube" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                </div>
-                <!--Row Ended-->
-            </div>
-            <!-- container Ended-->
-        </nav>
-        <img class="border-img" src="images/border.png" width="100%" alt="">
-    </header>
-    <!-- Header section Ended-->
+		<nav id="navbar">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 col-md-5 align-self-center left-side">
+						<p>Love is Everything <span>Call: +91 63804 19470</span></p>
+					</div>
+					<div class="col-lg-2 col-md-2 col-5 align-self-center logo text-center">
+						<a href="index.html"><img src="images/nav-logo.png" alt="logo"></a>
+					</div>
+					<div class="col-lg-5 col-md-5 col-7 align-self-center right-side d-flex justify-content-end align-items-center">
+						<div class="social-icons another mb-0 mr-3">
+							<i class="fa fa-facebook-official" aria-hidden="true"></i>
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+							<i class="fa fa-pinterest" aria-hidden="true"></i>
+							<i class="fa fa-youtube" aria-hidden="true"></i>
+						</div>
+						<div class="social-icons square mb-0">
+							<span class="slide-menu" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<img class="border-img" src="images/border.png" width="100%" alt="">
+	</header>
+	<!-- Header section Ended -->
+	<!-- Banner Section -->
+	<section class="banner-another"></section>
 
-    <section class="banner-another"></section>
+	<!-- About Section Start -->
+	<div id="about-us">
+		<div class="container">
+			<h3 data-aos="fade-up" data-aos-delay="300">About the Master & Teachings</h3>
+			<div class="row" data-aos="fade-up" data-aos-delay="500">
+				<div class="col-12">
+					<img src="images/about.jpg" alt="Thavasilar Thiru Athimagayogi" class="thumbnail image img-fluid mb-4">
 
-    <!-- About Section Start -->
-    <div id="about-us">
-        <div class="container">
-            <h3 data-aos="fade-up" data-aos-delay="300">About the Master & Teachings</h3>
-            <div class="row" data-aos="fade-up" data-aos-delay="500">
-                <div class="col-12">
-                    <img src="images/about.jpg" alt="Thavasilar Thiru Athimagayogi" class="thumbnail image img-fluid mb-4">
+					<p><strong>Aga Oli Meignana Yogam</strong> is a divine spiritual path decoded from ancient Tamil Siddhar lineages. Under the compassionate guidance of <strong>Thavasilar Thiru Athimagayogi</strong>, this methodology renders complex spiritual secrets accessible to common individuals seeking deep mental clarity, elevated energy, and baseline biological vitality. The practices are structurally grounded in systematic breath observation, internal light focus, and stabilizing individual consciousness against continuous external triggers.</p>
 
-                    <p><strong>Aga Oli Meignana Yogam</strong> is a divine spiritual path decoded from ancient Tamil Siddhar lineages. Under the compassionate guidance of <strong>Thavasilar Thiru Athimagayogi</strong>, this methodology renders complex spiritual secrets accessible to common individuals seeking deep mental clarity, elevated energy, and baseline biological vitality. The practices are structurally grounded in systematic breath observation, internal light focus, and stabilizing individual consciousness against continuous external triggers.</p>
+					<p>Our master's traditional discourses break down the deep inner mysteries of individual existence into practical actionable lifestyle adjustments. By uncovering the structural philosophy behind <em>Vasi Nesi Swasi</em>, seekers learn to completely settle raging internal mental storms. Achieving an unshakeable deep silence within automatically targets bodily ailments, builds physical core strength, and paves natural pathways to true outer prosperity and enduring blissful balance.</p>
 
-                    <p>Our master's traditional discourses break down the deep inner mysteries of individual existence into practical actionable lifestyle adjustments. By uncovering the structural philosophy behind <em>Vasi Nesi Swasi</em>, seekers learn to completely settle raging internal mental storms. Achieving an unshakeable deep silence within automatically targets bodily ailments, builds physical core strength, and paves natural pathways to true outer prosperity and enduring blissful balance.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- About Section End -->
-    <!-- Footer Section Start -->
-    <footer class="contact">
-        <div class="gradient"></div>
-        <div class="copyright">
-            <div class="container">
-                <div class="row border-img">
-                    <div class="col-md-12">
-                        <img src="images/border.png" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-12">
-                        <a href="index.html"><img src="images/footer-logo-bg.png" alt="logo"></a>
-                    </div>
-                    <div class="col-lg-9 col-md-12 right-part">
-                        <ul class="ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li><a class="hidden-xs">~</a></li>
-                            <li class="nav-item"><a class="nav-link" href="services.html">Our Services</a></li>
-                            <li><a class="hidden-xs">~</a></li>
-                            <li class="nav-item"><a class="nav-link" href="products.html">Our Products</a></li>
-                            <li><a class="hidden-xs">~</a></li>
-                            <li class="nav-item"><a class="nav-link" href="rates.html">Rates</a></li>
-                            <li><a class="hidden-xs">~</a></li>
-                            <li class="nav-item"><a class="nav-link" href="blog-page.html">Read Blog</a></li>
-                        </ul>
-                        <p>(C) 2026 Athimagayogi. All Rights Reserved. Inspired by Siddhar Secret Yoga Art.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Return to Top -->
-    <a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+					<div class="text-center mt-4">
+						<a href="register.html" class="btn btn-success btn-lg">Join Foundation</a>
+						<a href="gallery.html" class="btn btn-primary btn-lg ml-2">View Gallery</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- About Section End -->
+	<!-- Footer Section Start -->
+	<footer class="contact">
+		<div class="gradient"></div>
+		<div class="copyright">
+			<div class="container">
+				<div class="row border-img">
+					<div class="col-md-12">
+						<img src="images/border.png" alt="">
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-12">
+						<a href="index.html"><img src="images/footer-logo-bg.png" alt="logo"></a>
+					</div>
+					<div class="col-lg-9 col-md-12 right-part">
+						<ul class="ml-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="index.html">Home</a>
+							</li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link active" href="about.html">About Yogi</a></li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="services.html">Our Services</a></li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="products.html">Our Products</a></li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="rates.html">Rates</a></li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="blog-page.html">Read Blog</a></li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
+						</ul>
+						<p>(C) 2026 Athimagayogi. All Rights Reserved. Inspired by Siddhar Secret Yoga Art.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer Section End -->
+	<!-- Return to Top -->
+	<a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <!-- Custom JavaScript -->
-    <script src="js/animate.js"></script>
-    <script src="js/custom.js"></script>
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!-- Custom JavaScript -->
+	<script src="js/animate.js"></script>
+	<script src="js/custom.js"></script>
+
+	<script>
+		// NAV - OPEN FROM RIGHT
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+		}
+
+		// Return to Top
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 300) {
+				$('#return-to-top').fadeIn(300);
+			} else {
+				$('#return-to-top').fadeOut(300);
+			}
+		});
+		$('#return-to-top').click(function () {
+			$('html, body').animate({ scrollTop: 0 }, 400);
+			return false;
+		});
+	</script>
 </body>
 
 </html>
