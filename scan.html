@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Aga Oli - Google Sheets Integration</title>
+	<title>Aga Oli - Login</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
@@ -14,24 +14,62 @@
 		body {
 			font-family: 'Montserrat', sans-serif;
 			background: #f7f3eb;
+			min-height: 100vh;
 		}
 
-		.gradient-header {
-			background: linear-gradient(135deg, #1a2b1a, #2d4a2d);
-			color: #e8d5a3;
-			padding: 20px 0;
-			margin-bottom: 30px;
-			border-bottom: 3px solid #c9a96e;
+		/* HEADER */
+		.top {
+			background: #1a2b1a;
 		}
 
-			.gradient-header h1 {
+		.top-nav {
+			background: #1a2b1a;
+			border-bottom: 2px solid #c9a96e;
+			padding: 10px 0;
+		}
+
+			.top-nav .left-side span {
+				color: #c9a96e;
+				font-weight: 500;
+			}
+
+			.top-nav .left-side p {
+				color: #e8e0d0;
+				margin-bottom: 0;
+			}
+
+			.top-nav .social-icons i {
+				color: #c9a96e;
+				font-size: 20px;
+				margin: 0 7px;
+				transition: 0.3s;
+				cursor: pointer;
+			}
+
+				.top-nav .social-icons i:hover {
+					color: #e8d5a3;
+					transform: scale(1.1);
+				}
+
+		.slide-menu i {
+			font-size: 30px;
+			color: #c9a96e;
+			transition: 0.3s;
+			cursor: pointer;
+		}
+
+			.slide-menu i:hover {
 				color: #e8d5a3;
-				font-weight: 700;
 			}
 
-			.gradient-header .lead {
-				color: #d4d0c0;
-			}
+		.logo img {
+			max-height: 55px;
+		}
+
+		.border-img {
+			width: 100%;
+			display: block;
+		}
 
 		/* SIDENAV */
 		.sidenav {
@@ -80,54 +118,112 @@
 					color: #e8d5a3;
 				}
 
-		/* TOP NAV */
-		.top-nav {
-			background: #1a2b1a;
-			border-bottom: 2px solid #c9a96e;
-			padding: 10px 0;
+		/* LOGIN PAGE */
+		.login-page {
+			min-height: calc(100vh - 200px);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 50px 0;
 		}
 
-			.top-nav .left-side span {
-				color: #c9a96e;
-				font-weight: 500;
+		.login-card {
+			max-width: 450px;
+			width: 100%;
+			border-radius: 20px;
+			box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+			border: 1px solid #eae8e0;
+			background: #fff;
+			padding: 40px 35px;
+		}
+
+			.login-card .logo-img {
+				text-align: center;
+				margin-bottom: 30px;
 			}
 
-			.top-nav .left-side p {
-				color: #e8e0d0;
-				margin-bottom: 0;
-			}
-
-			.top-nav .social-icons i {
-				color: #c9a96e;
-				font-size: 20px;
-				margin: 0 7px;
-				transition: 0.3s;
-				cursor: pointer;
-			}
-
-				.top-nav .social-icons i:hover {
-					color: #e8d5a3;
-					transform: scale(1.1);
+				.login-card .logo-img img {
+					max-height: 70px;
 				}
 
-		.slide-menu i {
-			font-size: 30px;
-			color: #c9a96e;
-			transition: 0.3s;
-			cursor: pointer;
-		}
-
-			.slide-menu i:hover {
-				color: #e8d5a3;
+			.login-card h3 {
+				color: #1a2b1a;
+				font-weight: 700;
+				text-align: center;
+				margin-bottom: 5px;
 			}
 
-		.logo img {
-			max-height: 55px;
-		}
+			.login-card .subtitle {
+				text-align: center;
+				color: #6b7f6a;
+				font-size: 14px;
+				margin-bottom: 30px;
+			}
 
-		.border-img {
-			width: 100%;
-			display: block;
+			.login-card .form-control {
+				border-radius: 10px;
+				border: 2px solid #d4cbb8;
+				padding: 12px 18px;
+				font-size: 15px;
+			}
+
+				.login-card .form-control:focus {
+					border-color: #c9a96e;
+					box-shadow: 0 0 0 0.2rem rgba(201,169,110,0.25);
+				}
+
+			.login-card .btn-login {
+				background: #c9a96e;
+				border-color: #b8944a;
+				color: #1a2b1a;
+				font-weight: 700;
+				padding: 14px;
+				border-radius: 40px;
+				transition: 0.3s;
+				width: 100%;
+				font-size: 16px;
+			}
+
+				.login-card .btn-login:hover {
+					background: #dbb97a;
+					border-color: #c9a96e;
+					color: #0f1f0f;
+					transform: translateY(-2px);
+					box-shadow: 0 8px 25px rgba(201,169,110,0.3);
+				}
+
+				.login-card .btn-login i {
+					margin-right: 8px;
+				}
+
+			.login-card .form-group label {
+				font-weight: 600;
+				color: #1a2b1a;
+			}
+
+			.login-card .error-msg {
+				color: #e74c3c;
+				font-size: 14px;
+				margin-top: 10px;
+				text-align: center;
+				display: none;
+			}
+
+				.login-card .error-msg.show {
+					display: block;
+				}
+
+			.login-card .decorative-line {
+				height: 3px;
+				background: linear-gradient(to right, #c9a96e, #1a2b1a, #c9a96e);
+				width: 60px;
+				margin: 0 auto 25px;
+				border-radius: 10px;
+			}
+
+		/* MAIN CONTENT (hidden until login) */
+		.main-content {
+			display: none;
 		}
 
 		/* CARDS */
@@ -462,6 +558,22 @@
 					color: #fff;
 				}
 
+		.logout-btn {
+			background: transparent;
+			border: 2px solid #c9a96e;
+			color: #e8d5a3;
+			border-radius: 30px;
+			padding: 5px 20px;
+			font-weight: 500;
+			transition: 0.3s;
+			cursor: pointer;
+		}
+
+			.logout-btn:hover {
+				background: #c9a96e;
+				color: #1a2b1a;
+			}
+
 		@media (max-width: 768px) {
 			.filter-btn-group .btn {
 				flex: 1 1 100%;
@@ -478,6 +590,11 @@
 
 			.logo img {
 				max-height: 40px;
+			}
+
+			.login-card {
+				padding: 30px 20px;
+				margin: 0 15px;
 			}
 		}
 	</style>
@@ -502,13 +619,13 @@
 		<nav class="top-nav">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-5 col-md-5 align-self-center left-side">
+					<div class="col-lg-4 col-md-4 align-self-center left-side">
 						<p>Love is Everything <span>Call: +91 63804 19470</span></p>
 					</div>
-					<div class="col-lg-2 col-md-2 col-5 align-self-center logo text-center">
+					<div class="col-lg-4 col-md-4 col-5 align-self-center logo text-center">
 						<a href="index.html"><img src="images/nav-logo.png" alt="logo"></a>
 					</div>
-					<div class="col-lg-5 col-md-5 col-7 align-self-center right-side d-flex justify-content-end align-items-center">
+					<div class="col-lg-4 col-md-4 col-7 align-self-center right-side d-flex justify-content-end align-items-center">
 						<div class="social-icons another mb-0 mr-3">
 							<i class="fa fa-facebook-official" aria-hidden="true"></i>
 							<i class="fa fa-twitter" aria-hidden="true"></i>
@@ -525,176 +642,214 @@
 		<img class="border-img" src="images/border.png" width="100%" alt="">
 	</header>
 
-	<!-- ===== MAIN CONTENT ===== -->
-	<div class="container" style="margin-top: 30px;">
-		<!-- Google Sheets Status -->
-		<div id="syncStatus" class="sync-status info">
-			<i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...
+	<!-- ===== LOGIN PAGE ===== -->
+	<div class="login-page" id="loginPage">
+		<div class="login-card">
+			<div class="logo-img">
+				<img src="images/nav-logo.png" alt="Aga Oli">
+			</div>
+			<h3>Welcome Back</h3>
+			<div class="decorative-line"></div>
+			<p class="subtitle">Login to access the member system</p>
+
+			<form id="loginForm">
+				<div class="form-group">
+					<label><i class="fa fa-user"></i> Username</label>
+					<input type="text" class="form-control" id="loginUsername" placeholder="Enter username" required>
+				</div>
+				<div class="form-group">
+					<label><i class="fa fa-lock"></i> Password</label>
+					<input type="password" class="form-control" id="loginPassword" placeholder="Enter password" required>
+				</div>
+				<button type="submit" class="btn-login">
+					<i class="fa fa-sign-in"></i> Login
+				</button>
+				<div id="loginError" class="error-msg">
+					<i class="fa fa-exclamation-circle"></i> Invalid username or password!
+				</div>
+			</form>
 		</div>
+	</div>
 
-		<!-- Navigation Pills - ONLY 3 TABS (NO SYNC TAB) -->
-		<ul class="nav nav-pills justify-content-center mb-4" id="mainTabs">
-			<li class="nav-item"><a class="nav-link active" id="registerTab" data-toggle="pill" href="#registerSection"><i class="fa fa-user-plus"></i> Registration</a></li>
-			<li class="nav-item"><a class="nav-link" id="scanTab" data-toggle="pill" href="#scanSection"><i class="fa fa-qrcode"></i> Scan Entry</a></li>
-			<li class="nav-item"><a class="nav-link" id="membersTab" data-toggle="pill" href="#membersSection"><i class="fa fa-users"></i> Member List</a></li>
-		</ul>
+	<!-- ===== MAIN CONTENT (Hidden until login) ===== -->
+	<div class="main-content" id="mainContent">
 
-		<div class="tab-content">
-			<!-- ============================================================ -->
-			<!-- TAB 1: REGISTRATION -->
-			<!-- ============================================================ -->
-			<div class="tab-pane fade show active" id="registerSection">
-				<div class="row">
-					<div class="col-lg-7">
-						<div class="card">
-							<div class="card-header"><i class="fa fa-user-plus"></i> Become a Member</div>
-							<div class="card-body">
-								<form id="registerForm">
-									<div class="row">
-										<div class="col-md-6"><div class="form-group"><label>Full Name</label><input type="text" class="form-control" id="regName" placeholder="Enter full name" required></div></div>
-										<div class="col-md-6"><div class="form-group"><label>Mobile Number</label><input type="tel" class="form-control" id="regMobile" placeholder="10 digit mobile" pattern="[0-9]{10}" required></div></div>
-										<div class="col-md-4"><div class="form-group"><label>Age</label><input type="number" class="form-control" id="regAge" placeholder="Age" required></div></div>
-										<div class="col-md-4"><div class="form-group"><label>State</label><input type="text" class="form-control" id="regState" placeholder="Tamil Nadu" required></div></div>
-										<div class="col-md-4"><div class="form-group"><label>District</label><input type="text" class="form-control" id="regDistrict" placeholder="District" required></div></div>
-										<div class="col-12">
-											<button type="submit" class="btn btn-success btn-lg btn-block"><i class="fa fa-id-card"></i> Register & Save to Google Sheets</button>
-										</div>
-									</div>
-								</form>
-								<hr>
-								<div id="qrResult" style="display:none;" class="mt-3">
-									<div class="row">
-										<div class="col-md-5">
-											<div class="qr-box">
-												<h5><i class="fa fa-qrcode"></i> Your QR Code</h5>
-												<div id="qrCodeContainer"></div>
-												<p class="member-id mt-2" id="displayMemberId"></p>
-												<button class="btn btn-sm btn-success" onclick="downloadQR()"><i class="fa fa-download"></i> Download QR</button>
+		<div class="container" style="margin-top: 30px;">
+			<!-- Logout Button -->
+			<div class="text-right mb-3">
+				<span class="text-muted mr-3" id="loggedInUser"><i class="fa fa-user"></i> Admin</span>
+				<button class="logout-btn" onclick="logout()"><i class="fa fa-sign-out"></i> Logout</button>
+			</div>
+
+			<!-- Google Sheets Status -->
+			<div id="syncStatus" class="sync-status info">
+				<i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...
+			</div>
+
+			<!-- Navigation Pills - ONLY 3 TABS (NO SYNC TAB) -->
+			<ul class="nav nav-pills justify-content-center mb-4" id="mainTabs">
+				<li class="nav-item"><a class="nav-link active" id="registerTab" data-toggle="pill" href="#registerSection"><i class="fa fa-user-plus"></i> Registration</a></li>
+				<li class="nav-item"><a class="nav-link" id="scanTab" data-toggle="pill" href="#scanSection"><i class="fa fa-qrcode"></i> Scan Entry</a></li>
+				<li class="nav-item"><a class="nav-link" id="membersTab" data-toggle="pill" href="#membersSection"><i class="fa fa-users"></i> Member List</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<!-- ============================================================ -->
+				<!-- TAB 1: REGISTRATION -->
+				<!-- ============================================================ -->
+				<div class="tab-pane fade show active" id="registerSection">
+					<div class="row">
+						<div class="col-lg-7">
+							<div class="card">
+								<div class="card-header"><i class="fa fa-user-plus"></i> Become a Member</div>
+								<div class="card-body">
+									<form id="registerForm">
+										<div class="row">
+											<div class="col-md-6"><div class="form-group"><label>Full Name</label><input type="text" class="form-control" id="regName" placeholder="Enter full name" required></div></div>
+											<div class="col-md-6"><div class="form-group"><label>Mobile Number</label><input type="tel" class="form-control" id="regMobile" placeholder="10 digit mobile" pattern="[0-9]{10}" required></div></div>
+											<div class="col-md-4"><div class="form-group"><label>Age</label><input type="number" class="form-control" id="regAge" placeholder="Age" required></div></div>
+											<div class="col-md-4"><div class="form-group"><label>State</label><input type="text" class="form-control" id="regState" placeholder="Tamil Nadu" required></div></div>
+											<div class="col-md-4"><div class="form-group"><label>District</label><input type="text" class="form-control" id="regDistrict" placeholder="District" required></div></div>
+											<div class="col-12">
+												<button type="submit" class="btn btn-success btn-lg btn-block"><i class="fa fa-id-card"></i> Register & Save to Google Sheets</button>
 											</div>
 										</div>
-										<div class="col-md-7">
-											<div class="alert alert-success">
-												<h5><i class="fa fa-check-circle"></i> Registration Successful!</h5>
-												<p><strong>Member ID:</strong> <span id="displayMemberId2"></span></p>
-												<p><strong>Name:</strong> <span id="displayName"></span></p>
-												<p>Data saved to Google Sheets.</p>
-												<button class="btn btn-primary btn-sm" onclick="resetForm()"><i class="fa fa-plus"></i> Register Another</button>
+									</form>
+									<hr>
+									<div id="qrResult" style="display:none;" class="mt-3">
+										<div class="row">
+											<div class="col-md-5">
+												<div class="qr-box">
+													<h5><i class="fa fa-qrcode"></i> Your QR Code</h5>
+													<div id="qrCodeContainer"></div>
+													<p class="member-id mt-2" id="displayMemberId"></p>
+													<button class="btn btn-sm btn-success" onclick="downloadQR()"><i class="fa fa-download"></i> Download QR</button>
+												</div>
+											</div>
+											<div class="col-md-7">
+												<div class="alert alert-success">
+													<h5><i class="fa fa-check-circle"></i> Registration Successful!</h5>
+													<p><strong>Member ID:</strong> <span id="displayMemberId2"></span></p>
+													<p><strong>Name:</strong> <span id="displayName"></span></p>
+													<p>Data saved to Google Sheets.</p>
+													<button class="btn btn-primary btn-sm" onclick="resetForm()"><i class="fa fa-plus"></i> Register Another</button>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-5">
-						<div class="card">
-							<div class="card-header"><i class="fa fa-users"></i> Recent Members</div>
-							<div class="card-body" style="max-height: 450px; overflow-y: auto;">
-								<div id="recentMembersList"></div>
+						<div class="col-lg-5">
+							<div class="card">
+								<div class="card-header"><i class="fa fa-users"></i> Recent Members</div>
+								<div class="card-body" style="max-height: 450px; overflow-y: auto;">
+									<div id="recentMembersList"></div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- ============================================================ -->
-			<!-- TAB 2: SCAN ENTRY -->
-			<!-- ============================================================ -->
-			<div class="tab-pane fade" id="scanSection">
-				<div class="card">
-					<div class="card-header"><i class="fa fa-qrcode"></i> Class Entry Scanner</div>
-					<div class="card-body">
-						<div class="scanner-area text-center">
-							<h5><i class="fa fa-camera"></i> Scan QR Code</h5>
-							<p>Use camera to scan QR or enter Member ID manually</p>
-							<div class="row justify-content-center">
-								<div class="col-md-8">
-									<div id="scannerContainer" style="display:none;">
-										<div id="reader"></div>
-										<button class="btn btn-danger btn-sm mt-2" onclick="stopScanner()"><i class="fa fa-stop"></i> Stop Scanner</button>
+				<!-- ============================================================ -->
+				<!-- TAB 2: SCAN ENTRY -->
+				<!-- ============================================================ -->
+				<div class="tab-pane fade" id="scanSection">
+					<div class="card">
+						<div class="card-header"><i class="fa fa-qrcode"></i> Class Entry Scanner</div>
+						<div class="card-body">
+							<div class="scanner-area text-center">
+								<h5><i class="fa fa-camera"></i> Scan QR Code</h5>
+								<p>Use camera to scan QR or enter Member ID manually</p>
+								<div class="row justify-content-center">
+									<div class="col-md-8">
+										<div id="scannerContainer" style="display:none;">
+											<div id="reader"></div>
+											<button class="btn btn-danger btn-sm mt-2" onclick="stopScanner()"><i class="fa fa-stop"></i> Stop Scanner</button>
+										</div>
+										<button class="btn btn-primary scan-toggle-btn" id="toggleScannerBtn" onclick="toggleScanner()">
+											<i class="fa fa-camera"></i> Open QR Scanner
+										</button>
+										<hr>
+										<div class="input-group">
+											<input type="text" class="form-control" id="scanInput" placeholder="Or type Member ID here" />
+											<div class="input-group-append">
+												<button class="btn btn-success" onclick="markAttendance()"><i class="fa fa-check"></i> Mark Present</button>
+											</div>
+										</div>
+										<div id="scanResult" class="scan-result"></div>
 									</div>
-									<button class="btn btn-primary scan-toggle-btn" id="toggleScannerBtn" onclick="toggleScanner()">
-										<i class="fa fa-camera"></i> Open QR Scanner
-									</button>
-									<hr>
-									<div class="input-group">
-										<input type="text" class="form-control" id="scanInput" placeholder="Or type Member ID here" />
-										<div class="input-group-append">
-											<button class="btn btn-success" onclick="markAttendance()"><i class="fa fa-check"></i> Mark Present</button>
+								</div>
+							</div>
+							<hr>
+							<div class="mt-4">
+								<h5><i class="fa fa-calendar-check-o"></i> Attendance Records</h5>
+								<div class="filter-row">
+									<div class="row">
+										<div class="col-md-4">
+											<label><i class="fa fa-calendar"></i> Date</label>
+											<input type="date" class="form-control" id="filterDate" />
+										</div>
+										<div class="col-md-4">
+											<label><i class="fa fa-search"></i> Search</label>
+											<div class="search-input-group">
+												<input type="text" class="form-control" id="filterSearch" placeholder="Name or ID" />
+											</div>
+										</div>
+										<div class="col-md-4">
+											<label>&nbsp;</label>
+											<div class="filter-btn-group">
+												<button class="btn btn-primary" onclick="applyFilters()"><i class="fa fa-search"></i> Search</button>
+												<button class="btn btn-secondary" onclick="resetFilters()"><i class="fa fa-refresh"></i> Reset</button>
+												<button class="btn btn-success" onclick="exportToExcel()"><i class="fa fa-file-excel-o"></i> Excel</button>
+											</div>
 										</div>
 									</div>
-									<div id="scanResult" class="scan-result"></div>
+									<div id="activeFilters" class="mt-2 small text-muted"></div>
+								</div>
+								<div class="table-responsive">
+									<table class="table table-bordered table-hover" id="attendanceTable">
+										<thead><tr><th>Date</th><th>Member ID</th><th>Name</th><th>Status</th><th>Time</th></tr></thead>
+										<tbody id="attendanceBody"></tbody>
+									</table>
+								</div>
+								<nav aria-label="Attendance pagination">
+									<ul class="pagination justify-content-center" id="paginationControls"></ul>
+								</nav>
+								<div class="text-center text-muted small">
+									Showing <span id="pageInfo">0</span> records
 								</div>
 							</div>
 						</div>
-						<hr>
-						<div class="mt-4">
-							<h5><i class="fa fa-calendar-check-o"></i> Attendance Records</h5>
-							<div class="filter-row">
-								<div class="row">
-									<div class="col-md-4">
-										<label><i class="fa fa-calendar"></i> Date</label>
-										<input type="date" class="form-control" id="filterDate" />
-									</div>
-									<div class="col-md-4">
-										<label><i class="fa fa-search"></i> Search</label>
-										<div class="search-input-group">
-											<input type="text" class="form-control" id="filterSearch" placeholder="Name or ID" />
-										</div>
-									</div>
-									<div class="col-md-4">
-										<label>&nbsp;</label>
-										<div class="filter-btn-group">
-											<button class="btn btn-primary" onclick="applyFilters()"><i class="fa fa-search"></i> Search</button>
-											<button class="btn btn-secondary" onclick="resetFilters()"><i class="fa fa-refresh"></i> Reset</button>
-											<button class="btn btn-success" onclick="exportToExcel()"><i class="fa fa-file-excel-o"></i> Excel</button>
-										</div>
-									</div>
+					</div>
+				</div>
+
+				<!-- ============================================================ -->
+				<!-- TAB 3: MEMBER LIST -->
+				<!-- ============================================================ -->
+				<div class="tab-pane fade" id="membersSection">
+					<div class="card">
+						<div class="card-header"><i class="fa fa-users"></i> All Members with QR Codes</div>
+						<div class="card-body">
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<input type="text" class="form-control" id="memberSearch" placeholder="Search by name, ID or mobile" onkeyup="renderMemberList()" />
 								</div>
-								<div id="activeFilters" class="mt-2 small text-muted"></div>
+								<div class="col-md-6 text-right">
+									<button class="btn btn-success" onclick="exportMembersExcel()"><i class="fa fa-file-excel-o"></i> Export Members</button>
+									<button class="btn btn-info" onclick="refreshMembers()"><i class="fa fa-refresh"></i> Refresh</button>
+								</div>
 							</div>
 							<div class="table-responsive">
-								<table class="table table-bordered table-hover" id="attendanceTable">
-									<thead><tr><th>Date</th><th>Member ID</th><th>Name</th><th>Status</th><th>Time</th></tr></thead>
-									<tbody id="attendanceBody"></tbody>
+								<table class="table table-bordered table-hover" id="membersTable">
+									<thead><tr><th>QR Code</th><th>Member ID</th><th>Name</th><th>Mobile</th><th>Age</th><th>State</th><th>District</th><th>Action</th></tr></thead>
+									<tbody id="membersBody"></tbody>
 								</table>
 							</div>
-							<nav aria-label="Attendance pagination">
-								<ul class="pagination justify-content-center" id="paginationControls"></ul>
+							<nav aria-label="Member pagination">
+								<ul class="pagination justify-content-center" id="memberPaginationControls"></ul>
 							</nav>
-							<div class="text-center text-muted small">
-								Showing <span id="pageInfo">0</span> records
-							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- ============================================================ -->
-			<!-- TAB 3: MEMBER LIST -->
-			<!-- ============================================================ -->
-			<div class="tab-pane fade" id="membersSection">
-				<div class="card">
-					<div class="card-header"><i class="fa fa-users"></i> All Members with QR Codes</div>
-					<div class="card-body">
-						<div class="row mb-3">
-							<div class="col-md-6">
-								<input type="text" class="form-control" id="memberSearch" placeholder="Search by name, ID or mobile" onkeyup="renderMemberList()" />
-							</div>
-							<div class="col-md-6 text-right">
-								<button class="btn btn-success" onclick="exportMembersExcel()"><i class="fa fa-file-excel-o"></i> Export Members</button>
-								<button class="btn btn-info" onclick="refreshMembers()"><i class="fa fa-refresh"></i> Refresh</button>
-							</div>
-						</div>
-						<div class="table-responsive">
-							<table class="table table-bordered table-hover" id="membersTable">
-								<thead><tr><th>QR Code</th><th>Member ID</th><th>Name</th><th>Mobile</th><th>Age</th><th>State</th><th>District</th><th>Action</th></tr></thead>
-								<tbody id="membersBody"></tbody>
-							</table>
-						</div>
-						<nav aria-label="Member pagination">
-							<ul class="pagination justify-content-center" id="memberPaginationControls"></ul>
-						</nav>
 					</div>
 				</div>
 			</div>
@@ -734,12 +889,74 @@
 
 	<script>
 		// ============================================================
+		// ====== LOGIN CREDENTIALS ======
+		// ============================================================
+		const VALID_USERNAME = 'admin';
+		const VALID_PASSWORD = 'agaoli2026';
+
+		// ============================================================
 		// ====== PASTE YOUR GOOGLE SHEETS WEB APP URL HERE ======
 		// ============================================================
 		// 🔴🔴🔴 MACHI - PASTE YOUR URL HERE 🔴🔴🔴
 		// ============================================================
-		const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxuk82IftFT4Wsut7loMQXfBbvqImpufopVfYA9n8iELOGhRTo8t06Cu8VskOkP63dw/exec';
+		const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec';
 		// ============================================================
+
+		// ============================================================
+		// LOGIN FUNCTIONS
+		// ============================================================
+		document.getElementById('loginForm').addEventListener('submit', function (e) {
+			e.preventDefault();
+
+			const username = document.getElementById('loginUsername').value.trim();
+			const password = document.getElementById('loginPassword').value.trim();
+			const errorDiv = document.getElementById('loginError');
+
+			if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+				// Login successful
+				errorDiv.classList.remove('show');
+				document.getElementById('loginPage').style.display = 'none';
+				document.getElementById('mainContent').style.display = 'block';
+				document.getElementById('loggedInUser').textContent = '<i class="fa fa-user"></i> ' + username;
+
+				// Initialize the system after login
+				initSystem();
+
+				// Save login state
+				localStorage.setItem('isLoggedIn', 'true');
+				localStorage.setItem('loggedInUser', username);
+
+			} else {
+				errorDiv.classList.add('show');
+				setTimeout(() => {
+					errorDiv.classList.remove('show');
+				}, 3000);
+			}
+		});
+
+		function logout() {
+			localStorage.removeItem('isLoggedIn');
+			localStorage.removeItem('loggedInUser');
+			document.getElementById('mainContent').style.display = 'none';
+			document.getElementById('loginPage').style.display = 'flex';
+			document.getElementById('loginForm').reset();
+
+			// Clear any running scanner
+			if (isScannerRunning) stopScanner();
+		}
+
+		// Check if user is already logged in
+		function checkLoginStatus() {
+			if (localStorage.getItem('isLoggedIn') === 'true') {
+				document.getElementById('loginPage').style.display = 'none';
+				document.getElementById('mainContent').style.display = 'block';
+				const user = localStorage.getItem('loggedInUser') || 'Admin';
+				document.getElementById('loggedInUser').textContent = '<i class="fa fa-user"></i> ' + user;
+				initSystem();
+				return true;
+			}
+			return false;
+		}
 
 		// ============================================================
 		// SIDENAV FUNCTIONS
@@ -1127,24 +1344,24 @@
 			const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
 			const pageData = sorted.slice(startIndex, endIndex);
 			tbody.innerHTML = pageData.map(a => `
-						<tr>
-							<td>${a.date}</td>
-							<td><strong>${a.memberId}</strong></td>
-							<td>${a.name}</td>
-							<td><span class="badge-present"><i class="fa fa-check"></i> ${a.status}</span></td>
-							<td>${a.time}</td>
-						</tr>`).join('');
+							<tr>
+								<td>${a.date}</td>
+								<td><strong>${a.memberId}</strong></td>
+								<td>${a.name}</td>
+								<td><span class="badge-present"><i class="fa fa-check"></i> ${a.status}</span></td>
+								<td>${a.time}</td>
+							</tr>`).join('');
 			document.getElementById('pageInfo').textContent = `${startIndex + 1} - ${endIndex} of ${totalRecords}`;
 			let paginationHtml = '';
 			if (totalPages > 1) {
 				paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-							<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a></li>`;
+								<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a></li>`;
 				for (let i = 1; i <= totalPages; i++) {
 					paginationHtml += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-								<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`;
+									<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`;
 				}
 				paginationHtml += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-							<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a></li>`;
+								<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a></li>`;
 			}
 			document.getElementById('paginationControls').innerHTML = paginationHtml;
 		}
@@ -1207,19 +1424,19 @@
 			const endIndex = Math.min(startIndex + memberRecordsPerPage, totalRecords);
 			const pageData = filtered.slice(startIndex, endIndex);
 			tbody.innerHTML = pageData.map((m) => `
-						<tr>
-							<td><div class="member-list-qr"><div class="qr-small" id="qr_${m.id}"></div></div></td>
-							<td><strong>${m.id}</strong></td>
-							<td>${m.name}</td>
-							<td>${m.mobile}</td>
-							<td>${m.age}</td>
-							<td>${m.state}</td>
-							<td>${m.district}</td>
-							<td>
-								<button class="btn btn-primary btn-sm" onclick="showQRModal('${m.id}')"><i class="fa fa-qrcode"></i></button>
-								<button class="btn btn-success btn-sm" onclick="downloadMemberQR('${m.id}')"><i class="fa fa-download"></i></button>
-							</td>
-						</tr>`).join('');
+							<tr>
+								<td><div class="member-list-qr"><div class="qr-small" id="qr_${m.id}"></div></div></td>
+								<td><strong>${m.id}</strong></td>
+								<td>${m.name}</td>
+								<td>${m.mobile}</td>
+								<td>${m.age}</td>
+								<td>${m.state}</td>
+								<td>${m.district}</td>
+								<td>
+									<button class="btn btn-primary btn-sm" onclick="showQRModal('${m.id}')"><i class="fa fa-qrcode"></i></button>
+									<button class="btn btn-success btn-sm" onclick="downloadMemberQR('${m.id}')"><i class="fa fa-download"></i></button>
+								</td>
+							</tr>`).join('');
 			pageData.forEach(m => {
 				const container = document.getElementById(`qr_${m.id}`);
 				if (container) {
@@ -1230,13 +1447,13 @@
 			let paginationHtml = '';
 			if (totalPages > 1) {
 				paginationHtml += `<li class="page-item ${memberCurrentPage === 1 ? 'disabled' : ''}">
-							<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage - 1}); return false;">Previous</a></li>`;
+								<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage - 1}); return false;">Previous</a></li>`;
 				for (let i = 1; i <= totalPages; i++) {
 					paginationHtml += `<li class="page-item ${i === memberCurrentPage ? 'active' : ''}">
-								<a class="page-link" href="#" onclick="changeMemberPage(${i}); return false;">${i}</a></li>`;
+									<a class="page-link" href="#" onclick="changeMemberPage(${i}); return false;">${i}</a></li>`;
 				}
 				paginationHtml += `<li class="page-item ${memberCurrentPage === totalPages ? 'disabled' : ''}">
-							<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage + 1}); return false;">Next</a></li>`;
+								<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage + 1}); return false;">Next</a></li>`;
 			}
 			document.getElementById('memberPaginationControls').innerHTML = paginationHtml;
 		}
@@ -1340,10 +1557,10 @@
 			if (members.length === 0) { container.innerHTML = '<p class="text-muted text-center">No members yet.</p>'; return; }
 			const recent = members.slice(-5).reverse();
 			container.innerHTML = recent.map(m => `
-						<div class="d-flex justify-content-between align-items-center border-bottom py-2">
-							<div><strong>${m.name}</strong><br><small class="text-muted">${m.id}</small></div>
-							<span class="badge badge-success">${m.mobile}</span>
-						</div>`).join('');
+							<div class="d-flex justify-content-between align-items-center border-bottom py-2">
+								<div><strong>${m.name}</strong><br><small class="text-muted">${m.id}</small></div>
+								<span class="badge badge-success">${m.mobile}</span>
+							</div>`).join('');
 		}
 
 		// ============================================================
@@ -1357,9 +1574,9 @@
 		});
 
 		// ============================================================
-		// INIT
+		// INIT SYSTEM (Called after login)
 		// ============================================================
-		function init() {
+		function initSystem() {
 			loadRecentMembers();
 			document.getElementById('filterDate').value = new Date().toISOString().split('T')[0];
 			filteredData = [];
@@ -1380,7 +1597,16 @@
 			console.log('Attendance:', attendance.length);
 		}
 
-		init();
+		// ============================================================
+		// PAGE LOAD - Check login status
+		// ============================================================
+		$(document).ready(function () {
+			// Check if already logged in
+			if (!checkLoginStatus()) {
+				document.getElementById('loginPage').style.display = 'flex';
+				document.getElementById('mainContent').style.display = 'none';
+			}
+		});
 
 		// Clean up scanner when switching tabs
 		$('#mainTabs a').on('click', function () {
