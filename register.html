@@ -10,7 +10,6 @@
 	<style>
 		/* ============================================
 		   COLOR THEME - GOLD & DARK GREEN
-		   Matching home page
 		   ============================================ */
 		body {
 			font-family: 'Montserrat', sans-serif;
@@ -18,7 +17,7 @@
 			min-height: 100vh;
 		}
 
-		/* HEADER - matching home page */
+		/* HEADER */
 		.top {
 			background: #1a2b1a;
 		}
@@ -72,7 +71,7 @@
 			display: block;
 		}
 
-		/* SIDENAV - OPENS FROM RIGHT */
+		/* SIDENAV */
 		.sidenav {
 			height: 100%;
 			width: 0;
@@ -147,7 +146,7 @@
 				margin-right: 8px;
 			}
 
-		/* BUTTONS - matching home page */
+		/* BUTTONS */
 		.btn-success {
 			background: #c9a96e;
 			border-color: #b8944a;
@@ -231,7 +230,12 @@
 			text-align: center;
 			border: 2px dashed #c9a96e;
 			display: inline-block;
+			width: 100%;
 		}
+
+			.qr-box canvas {
+				margin: 0 auto;
+			}
 
 		.member-id {
 			font-size: 16px;
@@ -275,37 +279,6 @@
 				border: 1px solid #ffeeba;
 			}
 
-		/* RECENT MEMBERS */
-		.recent-member-item {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 12px 0;
-			border-bottom: 1px solid #f0ece0;
-		}
-
-			.recent-member-item:last-child {
-				border-bottom: none;
-			}
-
-			.recent-member-item .name {
-				font-weight: 600;
-				color: #1a2b1a;
-			}
-
-			.recent-member-item .id {
-				font-size: 13px;
-				color: #6b7f6a;
-			}
-
-			.recent-member-item .badge {
-				background: #c9a96e;
-				color: #1a2b1a;
-				font-weight: 600;
-				padding: 4px 12px;
-				border-radius: 20px;
-			}
-
 		/* URL HIGHLIGHT */
 		.url-highlight {
 			background: #f7f3eb;
@@ -343,14 +316,17 @@
 			.register-page {
 				padding: 30px 0 50px;
 			}
+
+			.qr-box {
+				width: 100%;
+			}
 		}
 	</style>
 </head>
 <body>
 
-	<!-- ===== HEADER WITH SIDENAV - MATCHING HOME PAGE ===== -->
+	<!-- ===== HEADER WITH SIDENAV ===== -->
 	<header class="top">
-		<!-- SIDENAV - OPENS FROM RIGHT -->
 		<div id="mySidenav" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<a href="index.html">Home</a>
@@ -390,7 +366,7 @@
 		<img class="border-img" src="images/border.png" width="100%" alt="">
 	</header>
 
-	<!-- ===== REGISTRATION PAGE ===== -->
+	<!-- ===== REGISTRATION PAGE - FULL WIDTH ===== -->
 	<div class="register-page">
 		<div class="container">
 			<!-- Google Sheets Status -->
@@ -398,46 +374,71 @@
 				<i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...
 			</div>
 
-			<div class="row">
-				<div class="col-lg-7">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
 					<div class="card">
 						<div class="card-header"><i class="fa fa-user-plus"></i> Become a Member</div>
 						<div class="card-body">
+							<!-- URL Setup - Compact -->
+							<div class="url-highlight">
+								<div class="row">
+									<div class="col-md-8">
+										<label><i class="fa fa-link"></i> Google Sheets Web App URL</label>
+										<div class="input-group">
+											<input type="text" class="form-control" id="sheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
+											<div class="input-group-append">
+												<button class="btn btn-primary" onclick="updateSheetUrl()"><i class="fa fa-save"></i> Save</button>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<label>&nbsp;</label>
+										<div>
+											<button class="btn btn-info btn-sm" onclick="testConnection()"><i class="fa fa-plug"></i> Test</button>
+											<button class="btn btn-success btn-sm" onclick="syncToGoogleSheets()"><i class="fa fa-upload"></i> Sync</button>
+										</div>
+									</div>
+								</div>
+								<div class="mt-2 small text-muted">
+									Current URL: <span id="currentSheetUrl" style="font-family: monospace; word-break: break-all;">Not set</span>
+								</div>
+							</div>
+
 							<form id="registerForm">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label><i class="fa fa-user"></i> Full Name</label>
+											<label><i class="fa fa-user"></i> Full Name <span class="text-danger">*</span></label>
 											<input type="text" class="form-control" id="regName" placeholder="Enter full name" required>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label><i class="fa fa-phone"></i> Mobile Number</label>
+											<label><i class="fa fa-phone"></i> Mobile Number <span class="text-danger">*</span></label>
 											<input type="tel" class="form-control" id="regMobile" placeholder="10 digit mobile" pattern="[0-9]{10}" required>
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<label><i class="fa fa-calendar"></i> Age</label>
+											<label><i class="fa fa-calendar"></i> Age <span class="text-danger">*</span></label>
 											<input type="number" class="form-control" id="regAge" placeholder="Age" required>
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<label><i class="fa fa-map-marker"></i> State</label>
+											<label><i class="fa fa-map-marker"></i> State <span class="text-danger">*</span></label>
 											<input type="text" class="form-control" id="regState" placeholder="Tamil Nadu" required>
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<label><i class="fa fa-location-arrow"></i> District</label>
+											<label><i class="fa fa-location-arrow"></i> District <span class="text-danger">*</span></label>
 											<input type="text" class="form-control" id="regDistrict" placeholder="District" required>
 										</div>
 									</div>
 									<div class="col-12">
 										<button type="submit" class="btn btn-success btn-lg btn-block">
-											<i class="fa fa-id-card"></i> Register & Save to Google Sheets
+											<i class="fa fa-id-card"></i> Register & Generate QR Code
 										</button>
 									</div>
 								</div>
@@ -445,6 +446,7 @@
 
 							<!-- QR Result -->
 							<div id="qrResult" style="display:none;" class="mt-4">
+								<hr>
 								<div class="row">
 									<div class="col-md-5">
 										<div class="qr-box">
@@ -461,6 +463,7 @@
 											<h5><i class="fa fa-check-circle"></i> Registration Successful!</h5>
 											<p><strong>Member ID:</strong> <span id="displayMemberId2"></span></p>
 											<p><strong>Name:</strong> <span id="displayName"></span></p>
+											<p><strong>Mobile:</strong> <span id="displayMobile"></span></p>
 											<p>Data saved to Google Sheets.</p>
 											<button class="btn btn-success btn-sm" onclick="resetForm()">
 												<i class="fa fa-plus"></i> Register Another
@@ -472,47 +475,11 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="col-lg-5">
-					<div class="card">
-						<div class="card-header"><i class="fa fa-users"></i> Recent Members</div>
-						<div class="card-body" style="max-height: 450px; overflow-y: auto;">
-							<div id="recentMembersList">
-								<p class="text-muted text-center">No members yet.</p>
-							</div>
-						</div>
-					</div>
-
-					<!-- Google Sheets Setup Mini -->
-					<div class="card">
-						<div class="card-header"><i class="fa fa-cloud-upload"></i> Google Sheets Setup</div>
-						<div class="card-body">
-							<div class="url-highlight">
-								<h6><i class="fa fa-link"></i> Web App URL</h6>
-								<div class="input-group">
-									<input type="text" class="form-control" id="sheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
-									<div class="input-group-append">
-										<button class="btn btn-primary" onclick="updateSheetUrl()"><i class="fa fa-save"></i> Save</button>
-									</div>
-								</div>
-								<small class="form-text text-muted">Paste your Google Apps Script Web App URL</small>
-							</div>
-							<div class="mt-2">
-								<button class="btn btn-info btn-sm" onclick="testConnection()"><i class="fa fa-plug"></i> Test Connection</button>
-								<button class="btn btn-success btn-sm" onclick="syncToGoogleSheets()"><i class="fa fa-upload"></i> Sync All</button>
-								<button class="btn btn-secondary btn-sm" onclick="loadFromGoogleSheets()"><i class="fa fa-download"></i> Load Data</button>
-							</div>
-							<div class="mt-2 small text-muted">
-								Current URL: <span id="currentSheetUrl" style="font-family: monospace; word-break: break-all;">Not set</span>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- ===== FOOTER - MATCHING HOME PAGE ===== -->
+	<!-- ===== FOOTER ===== -->
 	<div class="footer">
 		<p>&copy; 2026 Aga Oli Meignana Yogam - Athimagayogi | <i class="fa fa-heart"></i> Spread the Light</p>
 	</div>
@@ -551,7 +518,6 @@
 				localStorage.setItem('registerSheetUrl', url);
 				document.getElementById('currentSheetUrl').textContent = url;
 				showSyncStatus('✅ URL updated successfully!', 'success');
-				addSyncLog('✅ URL updated: ' + url);
 				setTimeout(testConnection, 1000);
 			} else {
 				showSyncStatus('⚠️ Please enter a valid URL', 'error');
@@ -565,11 +531,6 @@
 			const statusDiv = document.getElementById('syncStatus');
 			statusDiv.className = `sync-status ${type}`;
 			statusDiv.innerHTML = message;
-		}
-
-		function addSyncLog(message) {
-			// Just show in status for simplicity
-			console.log(message);
 		}
 
 		// ============================================================
@@ -638,7 +599,6 @@
 						}));
 						saveMembers();
 						showSyncStatus(`✅ Loaded ${members.length} members from Google Sheets`, 'success');
-						loadRecentMembers();
 					} else {
 						throw new Error('Failed to load members');
 					}
@@ -749,7 +709,6 @@
 
 				members.push(newMember);
 				saveMembers();
-				loadRecentMembers();
 
 				// Generate QR Code
 				const qrContainer = document.getElementById('qrCodeContainer');
@@ -759,8 +718,12 @@
 				document.getElementById('displayMemberId').textContent = memberId;
 				document.getElementById('displayMemberId2').textContent = memberId;
 				document.getElementById('displayName').textContent = name;
+				document.getElementById('displayMobile').textContent = mobile;
 				document.getElementById('qrResult').style.display = 'block';
 				document.getElementById('registerForm').reset();
+
+				// Scroll to QR result
+				document.getElementById('qrResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
 
 				showSyncStatus(`✅ Member ${name} registered successfully!`, 'success');
 
@@ -773,6 +736,7 @@
 		function resetForm() {
 			document.getElementById('qrResult').style.display = 'none';
 			document.getElementById('registerForm').reset();
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 
 		function downloadQR() {
@@ -788,41 +752,18 @@
 		}
 
 		// ============================================================
-		// RECENT MEMBERS
-		// ============================================================
-		function loadRecentMembers() {
-			const container = document.getElementById('recentMembersList');
-			if (members.length === 0) {
-				container.innerHTML = '<p class="text-muted text-center">No members yet. Register now!</p>';
-				return;
-			}
-			const recent = members.slice(-10).reverse();
-			container.innerHTML = recent.map(m => `
-					<div class="recent-member-item">
-						<div>
-							<div class="name">${m.name}</div>
-							<div class="id">${m.id}</div>
-						</div>
-						<span class="badge">${m.mobile}</span>
-					</div>
-				`).join('');
-		}
-
-		// ============================================================
 		// INIT
 		// ============================================================
 		function init() {
-			// Load URL from localStorage
 			if (GOOGLE_SHEET_URL) {
 				document.getElementById('currentSheetUrl').textContent = GOOGLE_SHEET_URL;
 				document.getElementById('sheetUrlInput').value = GOOGLE_SHEET_URL;
 				showSyncStatus('✅ URL configured. Testing connection...', 'info');
 				setTimeout(testConnection, 1000);
 			} else {
-				showSyncStatus('⚠️ Please configure Google Sheets URL in the setup section', 'warning');
+				showSyncStatus('⚠️ Please configure Google Sheets URL above', 'warning');
 			}
 
-			loadRecentMembers();
 			console.log('Registration System Loaded.');
 			console.log('Members:', members.length);
 		}
