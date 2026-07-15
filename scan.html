@@ -9,15 +9,13 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 	<style>
 		/* ============================================
-		   NEW COLOR THEME - GOLD & DARK GREEN
-		   Matching home page
+		   COLOR THEME - GOLD & DARK GREEN
 		   ============================================ */
 		body {
 			font-family: 'Montserrat', sans-serif;
 			background: #f7f3eb;
 		}
 
-		/* HEADER - matching home page */
 		.gradient-header {
 			background: linear-gradient(135deg, #1a2b1a, #2d4a2d);
 			color: #e8d5a3;
@@ -35,7 +33,7 @@
 				color: #d4d0c0;
 			}
 
-		/* SIDENAV - OPENS FROM RIGHT */
+		/* SIDENAV */
 		.sidenav {
 			height: 100%;
 			width: 0;
@@ -63,8 +61,7 @@
 				letter-spacing: 0.5px;
 			}
 
-				.sidenav a:hover,
-				.sidenav a.active {
+				.sidenav a:hover, .sidenav a.active {
 					color: #e8d5a3;
 					border-right-color: #c9a96e;
 					background: #1f3a1f;
@@ -83,7 +80,7 @@
 					color: #e8d5a3;
 				}
 
-		/* NAVIGATION BAR - matching home page */
+		/* TOP NAV */
 		.top-nav {
 			background: #1a2b1a;
 			border-bottom: 2px solid #c9a96e;
@@ -156,7 +153,7 @@
 				margin-right: 8px;
 			}
 
-		/* BUTTONS - matching home page */
+		/* BUTTONS */
 		.btn-success {
 			background: #c9a96e;
 			border-color: #b8944a;
@@ -237,22 +234,6 @@
 				background: #7b8f7a;
 				border-color: #6b7f6a;
 				color: #fff;
-				transform: translateY(-2px);
-			}
-
-		.btn-warning {
-			background: #c9a96e;
-			border-color: #b8944a;
-			color: #1a2b1a;
-			font-weight: 600;
-			border-radius: 40px;
-			transition: 0.3s;
-		}
-
-			.btn-warning:hover {
-				background: #dbb97a;
-				border-color: #c9a96e;
-				color: #0f1f0f;
 				transform: translateY(-2px);
 			}
 
@@ -443,15 +424,7 @@
 			margin: 10px 0;
 		}
 
-		.url-highlight {
-			background: #f7f3eb;
-			border: 2px solid #c9a96e;
-			padding: 15px;
-			border-radius: 10px;
-			margin: 10px 0;
-		}
-
-		/* FOOTER - matching home page */
+		/* FOOTER */
 		.footer {
 			background: #122012;
 			color: #a8b898;
@@ -465,7 +438,6 @@
 				color: #c9a96e;
 			}
 
-		/* TABLE */
 		.table thead th {
 			background: #1a2b1a;
 			color: #e8d5a3;
@@ -476,7 +448,6 @@
 			background: #f0ece0;
 		}
 
-		/* MODAL */
 		.modal-header {
 			background: #1a2b1a;
 			color: #e8d5a3;
@@ -491,7 +462,6 @@
 					color: #fff;
 				}
 
-		/* RESPONSIVE */
 		@media (max-width: 768px) {
 			.filter-btn-group .btn {
 				flex: 1 1 100%;
@@ -514,9 +484,8 @@
 </head>
 <body>
 
-	<!-- ===== HEADER WITH SIDENAV - MATCHING HOME PAGE ===== -->
+	<!-- ===== HEADER WITH SIDENAV ===== -->
 	<header class="top">
-		<!-- SIDENAV - OPENS FROM RIGHT -->
 		<div id="mySidenav" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<a href="index.html">Home</a>
@@ -525,7 +494,7 @@
 			<a href="vasi-programs.html">Vasi Yoga Programs</a>
 			<a href="foundation-plan.html">Plan of the Foundation</a>
 			<a href="register.html">Become a Member</a>
-			<a href="scan.html"  class="active">Class Entry (Scanner)</a>
+			<a href="scan.html" class="active">Class Entry (Scanner)</a>
 			<a href="gallery.html">Gallery</a>
 			<a href="videos.html">Videos</a>
 		</div>
@@ -563,12 +532,11 @@
 			<i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...
 		</div>
 
-		<!-- Navigation Pills -->
+		<!-- Navigation Pills - ONLY 3 TABS (NO SYNC TAB) -->
 		<ul class="nav nav-pills justify-content-center mb-4" id="mainTabs">
 			<li class="nav-item"><a class="nav-link active" id="registerTab" data-toggle="pill" href="#registerSection"><i class="fa fa-user-plus"></i> Registration</a></li>
 			<li class="nav-item"><a class="nav-link" id="scanTab" data-toggle="pill" href="#scanSection"><i class="fa fa-qrcode"></i> Scan Entry</a></li>
 			<li class="nav-item"><a class="nav-link" id="membersTab" data-toggle="pill" href="#membersSection"><i class="fa fa-users"></i> Member List</a></li>
-			<li class="nav-item"><a class="nav-link" id="syncTab" data-toggle="pill" href="#syncSection"><i class="fa fa-cloud-upload"></i> Sync</a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -730,96 +698,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- ============================================================ -->
-			<!-- TAB 4: SYNC -->
-			<!-- ============================================================ -->
-			<div class="tab-pane fade" id="syncSection">
-				<div class="card">
-					<div class="card-header"><i class="fa fa-cloud-upload"></i> Google Sheets Sync</div>
-					<div class="card-body">
-						<div class="url-highlight">
-							<h5><i class="fa fa-exclamation-triangle" style="color:#c9a96e;"></i> <strong>PASTE YOUR GOOGLE SHEETS URL HERE</strong></h5>
-							<p class="mb-2">1. Get your Web App URL from Google Apps Script deployment</p>
-							<p class="mb-2">2. Paste it in the box below</p>
-							<p class="mb-2">3. Click "Save URL" button</p>
-						</div>
-
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label><i class="fa fa-link"></i> <strong>Google Sheets Web App URL:</strong></label>
-									<div class="input-group">
-										<input type="text" class="form-control" id="sheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" style="font-size: 14px;" />
-										<div class="input-group-append">
-											<button class="btn btn-primary" onclick="updateSheetUrl()"><i class="fa fa-save"></i> Save URL</button>
-										</div>
-									</div>
-									<small class="form-text text-muted">Example: https://script.google.com/macros/s/ABC123XYZ/exec</small>
-								</div>
-								<div class="alert alert-success">
-									<i class="fa fa-info-circle"></i> <strong>Current URL:</strong> <span id="currentSheetUrl" style="font-family: monospace; word-break: break-all;">Not set</span>
-								</div>
-							</div>
-						</div>
-
-						<hr>
-
-						<div class="row">
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-body text-center">
-										<h4><i class="fa fa-google"></i> Google Sheets Status</h4>
-										<div id="syncStatusDetail" class="mt-3">
-											<p><strong>Members:</strong> <span id="sheetMemberCount">0</span></p>
-											<p><strong>Attendance:</strong> <span id="sheetAttendanceCount">0</span></p>
-										</div>
-										<button class="btn btn-primary btn-lg btn-block" onclick="syncToGoogleSheets()">
-											<i class="fa fa-upload"></i> Sync All Data to Google Sheets
-										</button>
-										<button class="btn btn-info btn-block mt-2" onclick="loadFromGoogleSheets()">
-											<i class="fa fa-download"></i> Load Data from Google Sheets
-										</button>
-										<button class="btn btn-success btn-block mt-2" onclick="syncAndReload()">
-											<i class="fa fa-refresh"></i> Sync & Reload All
-										</button>
-										<button class="btn btn-warning btn-block mt-2" onclick="testConnection()">
-											<i class="fa fa-plug"></i> Test Connection
-										</button>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-body">
-										<h5><i class="fa fa-info-circle"></i> Setup Instructions</h5>
-										<ol>
-											<li>Create a Google Sheet</li>
-											<li>Go to Extensions > Apps Script</li>
-											<li>Copy the Apps Script code</li>
-											<li>Deploy as Web App</li>
-											<li>Copy the Web App URL</li>
-											<li><strong>Paste it in the box above</strong></li>
-										</ol>
-										<div class="alert alert-success mt-3">
-											<i class="fa fa-check-circle"></i> After saving the URL, click "Test Connection" to verify.
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="row mt-3">
-							<div class="col-12">
-								<h5><i class="fa fa-list"></i> Sync Log</h5>
-								<div id="syncLog" style="max-height: 200px; overflow-y: auto; background: #f8f6f0; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; border: 1px solid #eae8e0;">
-									<div>Sync log will appear here...</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 
@@ -841,7 +719,7 @@
 		</div>
 	</div>
 
-	<!-- ===== FOOTER - MATCHING HOME PAGE ===== -->
+	<!-- ===== FOOTER ===== -->
 	<div class="footer">
 		<p>&copy; 2026 Aga Oli Meignana Yogam - Athimagayogi | <i class="fa fa-heart"></i> Spread the Light</p>
 	</div>
@@ -856,6 +734,14 @@
 
 	<script>
 		// ============================================================
+		// ====== PASTE YOUR GOOGLE SHEETS WEB APP URL HERE ======
+		// ============================================================
+		// 🔴🔴🔴 MACHI - PASTE YOUR URL HERE 🔴🔴🔴
+		// ============================================================
+		const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxuk82IftFT4Wsut7loMQXfBbvqImpufopVfYA9n8iELOGhRTo8t06Cu8VskOkP63dw/exec';
+		// ============================================================
+
+		// ============================================================
 		// SIDENAV FUNCTIONS
 		// ============================================================
 		function openNav() {
@@ -864,30 +750,6 @@
 
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
-		}
-
-		// ============================================================
-		// GOOGLE SHEETS URL
-		// ============================================================
-		let GOOGLE_SHEET_URL = localStorage.getItem('googleSheetUrl') || '';
-
-		function updateSheetUrl() {
-			const url = document.getElementById('sheetUrlInput').value.trim();
-			if (url) {
-				if (!url.startsWith('https://script.google.com/macros/s/')) {
-					showSyncStatus('⚠️ Invalid URL format. It should start with: https://script.google.com/macros/s/', 'error');
-					addSyncLog('⚠️ Invalid URL format');
-					return;
-				}
-				GOOGLE_SHEET_URL = url;
-				localStorage.setItem('googleSheetUrl', url);
-				document.getElementById('currentSheetUrl').textContent = url;
-				showSyncStatus('✅ Google Sheets URL updated successfully!', 'success');
-				addSyncLog('✅ URL updated: ' + url);
-				setTimeout(testConnection, 1000);
-			} else {
-				showSyncStatus('⚠️ Please enter a valid Google Sheets Web App URL', 'error');
-			}
 		}
 
 		// ============================================================
@@ -900,10 +762,7 @@
 		}
 
 		function addSyncLog(message) {
-			const log = document.getElementById('syncLog');
-			const time = new Date().toLocaleTimeString();
-			log.innerHTML += `<div>[${time}] ${message}</div>`;
-			log.scrollTop = log.scrollHeight;
+			console.log('[Sync]', message);
 		}
 
 		// ============================================================
@@ -911,8 +770,8 @@
 		// ============================================================
 		function callGoogleSheets(params) {
 			return new Promise((resolve, reject) => {
-				if (!GOOGLE_SHEET_URL) {
-					reject(new Error('❌ Google Sheets URL not configured. Please set it in the Sync tab.'));
+				if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+					reject(new Error('❌ Please set your Google Sheets URL in the code.'));
 					return;
 				}
 				const url = new URL(GOOGLE_SHEET_URL);
@@ -932,26 +791,25 @@
 		}
 
 		// ============================================================
-		// TEST CONNECTION
+		// TEST CONNECTION & LOAD DATA
 		// ============================================================
-		function testConnection() {
-			if (!GOOGLE_SHEET_URL) {
-				showSyncStatus('⚠️ Please configure Google Sheets URL first', 'error');
-				addSyncLog('⚠️ No URL configured');
+		function testAndLoad() {
+			if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+				showSyncStatus('⚠️ Please set your Google Sheets URL in the code (GOOGLE_SHEET_URL variable)', 'error');
 				return;
 			}
-			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Testing connection...', 'info');
-			addSyncLog('Testing connection to Google Sheets...');
+			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...', 'info');
+			console.log('Testing connection to Google Sheets...');
 			callGoogleSheets({ action: 'getMembers' })
 				.then(data => {
 					showSyncStatus('✅ Connected to Google Sheets successfully!', 'success');
-					addSyncLog('✅ Connection successful');
-					if (data.data) document.getElementById('sheetMemberCount').textContent = data.data.length;
+					console.log('✅ Connection successful');
+					if (data.data) document.getElementById('sheetMemberCount') && (document.getElementById('sheetMemberCount').textContent = data.data.length);
 					loadFromGoogleSheets();
 				})
 				.catch(error => {
 					showSyncStatus('❌ Connection failed: ' + error.message, 'error');
-					addSyncLog('❌ Connection failed: ' + error.message);
+					console.error('❌ Connection failed:', error.message);
 				});
 		}
 
@@ -963,11 +821,11 @@
 				const params = { action: action, ...data };
 				callGoogleSheets(params)
 					.then(result => {
-						addSyncLog(`✅ ${action} successful: ${result.message}`);
+						console.log(`✅ ${action} successful:`, result.message);
 						resolve(result);
 					})
 					.catch(error => {
-						addSyncLog(`❌ ${action} failed: ${error.message}`);
+						console.error(`❌ ${action} failed:`, error.message);
 						reject(error);
 					});
 			});
@@ -977,12 +835,12 @@
 		// LOAD FROM GOOGLE SHEETS
 		// ============================================================
 		function loadFromGoogleSheets() {
-			if (!GOOGLE_SHEET_URL) {
-				showSyncStatus('⚠️ Please configure Google Sheets URL first', 'error');
+			if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+				showSyncStatus('⚠️ Please set your Google Sheets URL in the code', 'error');
 				return;
 			}
 			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Loading data from Google Sheets...', 'info');
-			addSyncLog('Loading data from Google Sheets...');
+			console.log('Loading data from Google Sheets...');
 			callGoogleSheets({ action: 'getMembers' })
 				.then(memberData => {
 					if (memberData.success) {
@@ -996,8 +854,7 @@
 							registered: m.registered
 						}));
 						saveMembers();
-						document.getElementById('sheetMemberCount').textContent = members.length;
-						addSyncLog(`✅ Loaded ${members.length} members from Google Sheets`);
+						console.log(`✅ Loaded ${members.length} members from Google Sheets`);
 						renderMemberList();
 						loadRecentMembers();
 						return callGoogleSheets({ action: 'getAttendance' });
@@ -1013,15 +870,14 @@
 							time: a.time
 						}));
 						saveAttendance();
-						document.getElementById('sheetAttendanceCount').textContent = attendance.length;
-						addSyncLog(`✅ Loaded ${attendance.length} attendance records from Google Sheets`);
+						console.log(`✅ Loaded ${attendance.length} attendance records from Google Sheets`);
 						renderAttendanceTable();
 						showSyncStatus(`✅ Loaded ${members.length} members and ${attendance.length} attendance records`, 'success');
 					} else throw new Error('Failed to load attendance');
 				})
 				.catch(error => {
 					showSyncStatus('❌ Load failed: ' + error.message, 'error');
-					addSyncLog('❌ Load failed: ' + error.message);
+					console.error('❌ Load failed:', error.message);
 				});
 		}
 
@@ -1029,18 +885,16 @@
 		// SYNC ALL DATA TO GOOGLE SHEETS
 		// ============================================================
 		function syncToGoogleSheets() {
-			if (!GOOGLE_SHEET_URL) {
-				showSyncStatus('⚠️ Please configure Google Sheets URL first', 'error');
-				addSyncLog('⚠️ Sync failed: No URL configured');
+			if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+				showSyncStatus('⚠️ Please set your Google Sheets URL in the code', 'error');
 				return;
 			}
 			if (members.length === 0 && attendance.length === 0) {
 				showSyncStatus('⚠️ No data to sync', 'info');
-				addSyncLog('⚠️ No data to sync');
 				return;
 			}
 			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Syncing to Google Sheets...', 'info');
-			addSyncLog('Starting sync to Google Sheets...');
+			console.log('Starting sync to Google Sheets...');
 			const syncPromises = [];
 			members.forEach(member => {
 				syncPromises.push(
@@ -1051,7 +905,7 @@
 						age: member.age,
 						state: member.state,
 						district: member.district
-					}).catch(err => addSyncLog(`⚠️ Member ${member.id} sync failed: ${err.message}`))
+					}).catch(err => console.error(`⚠️ Member ${member.id} sync failed:`, err.message))
 				);
 			});
 			attendance.forEach(att => {
@@ -1062,22 +916,19 @@
 						date: att.date,
 						time: att.time,
 						status: att.status
-					}).catch(err => addSyncLog(`⚠️ Attendance ${att.memberId} sync failed: ${err.message}`))
+					}).catch(err => console.error(`⚠️ Attendance ${att.memberId} sync failed:`, err.message))
 				);
 			});
 			Promise.all(syncPromises)
 				.then(() => {
 					showSyncStatus(`✅ Sync complete! Synced ${members.length} members and ${attendance.length} attendance records`, 'success');
-					addSyncLog('✅ Sync complete!');
-					loadFromGoogleSheets();
+					console.log('✅ Sync complete!');
 				})
 				.catch(error => {
 					showSyncStatus('❌ Sync failed: ' + error.message, 'error');
-					addSyncLog('❌ Sync failed: ' + error.message);
+					console.error('❌ Sync failed:', error.message);
 				});
 		}
-
-		function syncAndReload() { syncToGoogleSheets(); }
 
 		// ============================================================
 		// DATA STORE
@@ -1106,9 +957,8 @@
 		// ============================================================
 		document.getElementById('registerForm').addEventListener('submit', async function (e) {
 			e.preventDefault();
-			if (!GOOGLE_SHEET_URL) {
-				alert('⚠️ Please configure Google Sheets URL first in the Sync tab!');
-				showSyncStatus('⚠️ Please configure Google Sheets URL first', 'error');
+			if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+				alert('⚠️ Please set your Google Sheets URL in the code!');
 				return;
 			}
 			const name = document.getElementById('regName').value.trim();
@@ -1224,13 +1074,17 @@
 			const already = attendance.find(a => a.memberId === id && a.date === today);
 			if (already) {
 				resultDiv.innerHTML =
-				`<div class="alert alert-warning">${member.name} already marked present today at ${already.time}.</div>`; return;
+					`<div class="alert alert-warning">${member.name} already marked present today at ${already.time}.</div>`;
+				return;
 			}
 			const now = new Date();
 			const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 			try {
 				await saveToGoogleSheets('markAttendance', {
-					memberId: id, name: member.name, date: today, time: timeStr,
+					memberId: id,
+					name: member.name,
+					date: today,
+					time: timeStr,
 					status: 'Present'
 				});
 				attendance.push({ memberId: id, name: member.name, date: today, time: timeStr, status: 'Present' });
@@ -1244,7 +1098,6 @@
 				document.getElementById('activeFilters').innerHTML = '';
 				currentPage = 1;
 				renderAttendanceTable();
-				document.getElementById('sheetAttendanceCount').textContent = attendance.length;
 			} catch (error) {
 				resultDiv.innerHTML = `<div class="alert alert-danger">Failed to save attendance: ${error.message}</div>`;
 			}
@@ -1274,24 +1127,24 @@
 			const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
 			const pageData = sorted.slice(startIndex, endIndex);
 			tbody.innerHTML = pageData.map(a => `
-				<tr>
-					<td>${a.date}</td>
-					<td><strong>${a.memberId}</strong></td>
-					<td>${a.name}</td>
-					<td><span class="badge-present"><i class="fa fa-check"></i> ${a.status}</span></td>
-					<td>${a.time}</td>
-				</tr>`).join('');
+						<tr>
+							<td>${a.date}</td>
+							<td><strong>${a.memberId}</strong></td>
+							<td>${a.name}</td>
+							<td><span class="badge-present"><i class="fa fa-check"></i> ${a.status}</span></td>
+							<td>${a.time}</td>
+						</tr>`).join('');
 			document.getElementById('pageInfo').textContent = `${startIndex + 1} - ${endIndex} of ${totalRecords}`;
 			let paginationHtml = '';
 			if (totalPages > 1) {
 				paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-					<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a></li>`;
+							<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a></li>`;
 				for (let i = 1; i <= totalPages; i++) {
 					paginationHtml += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-						<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`;
+								<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`;
 				}
 				paginationHtml += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-					<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a></li>`;
+							<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a></li>`;
 			}
 			document.getElementById('paginationControls').innerHTML = paginationHtml;
 		}
@@ -1354,19 +1207,19 @@
 			const endIndex = Math.min(startIndex + memberRecordsPerPage, totalRecords);
 			const pageData = filtered.slice(startIndex, endIndex);
 			tbody.innerHTML = pageData.map((m) => `
-				<tr>
-					<td><div class="member-list-qr"><div class="qr-small" id="qr_${m.id}"></div></div></td>
-					<td><strong>${m.id}</strong></td>
-					<td>${m.name}</td>
-					<td>${m.mobile}</td>
-					<td>${m.age}</td>
-					<td>${m.state}</td>
-					<td>${m.district}</td>
-					<td>
-						<button class="btn btn-primary btn-sm" onclick="showQRModal('${m.id}')"><i class="fa fa-qrcode"></i></button>
-						<button class="btn btn-success btn-sm" onclick="downloadMemberQR('${m.id}')"><i class="fa fa-download"></i></button>
-					</td>
-				</tr>`).join('');
+						<tr>
+							<td><div class="member-list-qr"><div class="qr-small" id="qr_${m.id}"></div></div></td>
+							<td><strong>${m.id}</strong></td>
+							<td>${m.name}</td>
+							<td>${m.mobile}</td>
+							<td>${m.age}</td>
+							<td>${m.state}</td>
+							<td>${m.district}</td>
+							<td>
+								<button class="btn btn-primary btn-sm" onclick="showQRModal('${m.id}')"><i class="fa fa-qrcode"></i></button>
+								<button class="btn btn-success btn-sm" onclick="downloadMemberQR('${m.id}')"><i class="fa fa-download"></i></button>
+							</td>
+						</tr>`).join('');
 			pageData.forEach(m => {
 				const container = document.getElementById(`qr_${m.id}`);
 				if (container) {
@@ -1377,13 +1230,13 @@
 			let paginationHtml = '';
 			if (totalPages > 1) {
 				paginationHtml += `<li class="page-item ${memberCurrentPage === 1 ? 'disabled' : ''}">
-					<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage - 1}); return false;">Previous</a></li>`;
+							<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage - 1}); return false;">Previous</a></li>`;
 				for (let i = 1; i <= totalPages; i++) {
 					paginationHtml += `<li class="page-item ${i === memberCurrentPage ? 'active' : ''}">
-						<a class="page-link" href="#" onclick="changeMemberPage(${i}); return false;">${i}</a></li>`;
+								<a class="page-link" href="#" onclick="changeMemberPage(${i}); return false;">${i}</a></li>`;
 				}
 				paginationHtml += `<li class="page-item ${memberCurrentPage === totalPages ? 'disabled' : ''}">
-					<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage + 1}); return false;">Next</a></li>`;
+							<a class="page-link" href="#" onclick="changeMemberPage(${memberCurrentPage + 1}); return false;">Next</a></li>`;
 			}
 			document.getElementById('memberPaginationControls').innerHTML = paginationHtml;
 		}
@@ -1449,8 +1302,11 @@
 		// ============================================================
 		function exportToExcel() {
 			const data = attendance.length === 0 ? [] : attendance.map(a => ({
-				'Date': a.date, 'Member ID': a.memberId,
-				'Name': a.name, 'Status': a.status, 'Time': a.time
+				'Date': a.date,
+				'Member ID': a.memberId,
+				'Name': a.name,
+				'Status': a.status,
+				'Time': a.time
 			}));
 			if (data.length === 0) { alert('No attendance data to export.'); return; }
 			const wb = XLSX.utils.book_new();
@@ -1462,8 +1318,13 @@
 		function exportMembersExcel() {
 			if (members.length === 0) { alert('No members to export.'); return; }
 			const data = members.map(m => ({
-				'Member ID': m.id, 'Name': m.name, 'Mobile': m.mobile, 'Age': m.age,
-				'State': m.state, 'District': m.district, 'Registered': m.registered
+				'Member ID': m.id,
+				'Name': m.name,
+				'Mobile': m.mobile,
+				'Age': m.age,
+				'State': m.state,
+				'District': m.district,
+				'Registered': m.registered
 			}));
 			const wb = XLSX.utils.book_new();
 			const ws = XLSX.utils.json_to_sheet(data);
@@ -1479,10 +1340,10 @@
 			if (members.length === 0) { container.innerHTML = '<p class="text-muted text-center">No members yet.</p>'; return; }
 			const recent = members.slice(-5).reverse();
 			container.innerHTML = recent.map(m => `
-				<div class="d-flex justify-content-between align-items-center border-bottom py-2">
-					<div><strong>${m.name}</strong><br><small class="text-muted">${m.id}</small></div>
-					<span class="badge badge-success">${m.mobile}</span>
-				</div>`).join('');
+						<div class="d-flex justify-content-between align-items-center border-bottom py-2">
+							<div><strong>${m.name}</strong><br><small class="text-muted">${m.id}</small></div>
+							<span class="badge badge-success">${m.mobile}</span>
+						</div>`).join('');
 		}
 
 		// ============================================================
@@ -1499,10 +1360,6 @@
 		// INIT
 		// ============================================================
 		function init() {
-			if (GOOGLE_SHEET_URL) {
-				document.getElementById('currentSheetUrl').textContent = GOOGLE_SHEET_URL;
-				document.getElementById('sheetUrlInput').value = GOOGLE_SHEET_URL;
-			}
 			loadRecentMembers();
 			document.getElementById('filterDate').value = new Date().toISOString().split('T')[0];
 			filteredData = [];
@@ -1510,14 +1367,15 @@
 			document.getElementById('activeFilters').innerHTML = 'Showing all records';
 			renderAttendanceTable();
 			renderMemberList();
-			if (GOOGLE_SHEET_URL) {
-				showSyncStatus('✅ Google Sheets URL configured. Testing connection...', 'info');
-				setTimeout(testConnection, 1000);
+
+			if (GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+				showSyncStatus('✅ Google Sheets URL configured. Loading data...', 'info');
+				setTimeout(testAndLoad, 1000);
 			} else {
-				showSyncStatus('⚠️ Please configure Google Sheets URL in the Sync tab', 'info');
-				addSyncLog('⚠️ Waiting for Google Sheets URL configuration');
+				showSyncStatus('⚠️ Please set your Google Sheets URL in the code (GOOGLE_SHEET_URL variable)', 'error');
+				console.error('⚠️ Google Sheets URL not configured!');
 			}
-			console.log('Aga Oli System with Google Sheets integration loaded.');
+			console.log('Aga Oli System loaded.');
 			console.log('Members:', members.length);
 			console.log('Attendance:', attendance.length);
 		}
