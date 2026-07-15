@@ -17,53 +17,80 @@
 
 	<style>
 		/* ============================================
-		   NEW COLOR THEME - GOLD & DARK GREEN
+		   PROFESSIONAL COLOR THEME - GOLD & DARK GREEN
 		   ============================================ */
-		body {
-			background: #f7f3eb;
-			font-family: 'Montserrat', sans-serif;
+		:root {
+			--primary-dark: #0f1f0f;
+			--primary-green: #1a2b1a;
+			--secondary-green: #2d4a2d;
+			--gold: #c9a96e;
+			--gold-light: #dbb97a;
+			--gold-dark: #b8944a;
+			--cream: #f7f3eb;
+			--light-text: #e8e0d0;
+			--dark-text: #1a2b1a;
+			--muted-text: #8a9a7a;
 		}
 
-		/* HEADER & NAV */
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Montserrat', sans-serif;
+			background: var(--cream);
+			color: var(--dark-text);
+			overflow-x: hidden;
+		}
+
+		/* ============================================
+		   HEADER & NAVIGATION
+		   ============================================ */
 		.top {
-			background: #1a2b1a;
+			background: var(--primary-green);
 		}
 
 		#navbar {
-			background: #1a2b1a;
-			border-bottom: 2px solid #c9a96e;
+			background: var(--primary-green);
+			border-bottom: 2px solid var(--gold);
 			padding: 10px 0;
-			color: #e8e0d0;
+			color: var(--light-text);
 		}
 
+			#navbar .left-side p {
+				margin-bottom: 0;
+				font-size: 14px;
+			}
+
 			#navbar .left-side span {
-				color: #c9a96e;
+				color: var(--gold);
 				font-weight: 500;
 			}
 
 			#navbar .social-icons i {
-				color: #c9a96e;
-				font-size: 20px;
-				margin: 0 7px;
+				color: var(--gold);
+				font-size: 18px;
+				margin: 0 6px;
 				transition: 0.3s;
+				cursor: pointer;
 			}
 
 				#navbar .social-icons i:hover {
-					color: #e8d5a3;
+					color: var(--gold-light);
 					transform: scale(1.1);
 				}
 
 		.slide-menu i {
-			font-size: 30px;
-			color: #c9a96e;
+			font-size: 28px;
+			color: var(--gold);
 			transition: 0.3s;
+			cursor: pointer;
 		}
 
 			.slide-menu i:hover {
-				color: #e8d5a3;
+				color: var(--gold-light);
 			}
 
-		/* LOGO IN NAV */
 		.nav-logo {
 			max-height: 55px;
 			transition: 0.3s;
@@ -73,7 +100,9 @@
 				transform: scale(1.05);
 			}
 
-		/* SIDENAV - OPENS FROM RIGHT */
+		/* ============================================
+		   SIDENAV
+		   ============================================ */
 		.sidenav {
 			height: 100%;
 			width: 0;
@@ -81,7 +110,7 @@
 			z-index: 999;
 			top: 0;
 			right: 0;
-			background-color: #122012;
+			background-color: #0d1a0d;
 			overflow-x: hidden;
 			transition: 0.3s;
 			padding-top: 80px;
@@ -91,9 +120,9 @@
 			.sidenav a {
 				padding: 14px 32px;
 				text-decoration: none;
-				font-size: 18px;
+				font-size: 17px;
 				font-weight: 500;
-				color: #c9c9b8;
+				color: #a8b898;
 				display: block;
 				transition: 0.2s;
 				border-right: 4px solid transparent;
@@ -103,9 +132,9 @@
 
 				.sidenav a:hover,
 				.sidenav a.active {
-					color: #e8d5a3;
-					border-right-color: #c9a96e;
-					background: #1f3a1f;
+					color: var(--gold-light);
+					border-right-color: var(--gold);
+					background: #1a2b1a;
 				}
 
 			.sidenav .closebtn {
@@ -113,22 +142,31 @@
 				top: 10px;
 				left: 25px;
 				font-size: 38px;
-				color: #c9a96e;
+				color: var(--gold);
 				text-align: left;
 			}
 
 				.sidenav .closebtn:hover {
-					color: #e8d5a3;
+					color: var(--gold-light);
 				}
 
-		/* BANNER / CAROUSEL */
+			.sidenav .sidenav-divider {
+				border-top: 1px solid #2a402a;
+				margin: 15px 30px;
+			}
+
+		/* ============================================
+		   BANNER / CAROUSEL
+		   ============================================ */
 		.banner-home .gradient {
-			background: linear-gradient(to right, rgba(20,35,20,0.92) 35%, rgba(20,35,20,0.5) 100%);
+			background: linear-gradient(to right, rgba(15,31,15,0.92) 30%, rgba(15,31,15,0.4) 100%);
 		}
 
 		.carousel-item {
-			min-height: 580px;
-			padding: 180px 0 130px 0;
+			min-height: 620px;
+			padding: 190px 0 140px 0;
+			background-size: cover;
+			background-position: center;
 		}
 
 		.carousel-item-1 {
@@ -143,157 +181,209 @@
 			background-image: url('images/blog-1.jpg');
 		}
 
-		.carousel-caption-custom h1 {
-			font-weight: 800;
-			color: #e8d5a3;
-			text-shadow: 0 2px 15px rgba(0,0,0,0.5);
+		.carousel-caption-custom {
+			position: relative;
+			z-index: 2;
 		}
 
-		.carousel-caption-custom h2 {
-			font-weight: 400;
-			color: #f0ece0;
-			text-shadow: 0 2px 10px rgba(0,0,0,0.4);
-		}
-
-		.carousel-caption-custom p {
-			color: #d4d0c0;
-			font-size: 1.1rem;
-		}
-
-			.carousel-caption-custom p i {
-				color: #c9a96e;
-				width: 28px;
+			.carousel-caption-custom .badge-gold {
+				background: var(--gold);
+				color: var(--primary-green);
+				padding: 6px 20px;
+				border-radius: 30px;
+				font-size: 13px;
+				font-weight: 600;
+				display: inline-block;
+				margin-bottom: 15px;
+				letter-spacing: 1px;
 			}
 
-		/* BUTTONS */
-		.btn-success {
-			background: #c9a96e;
-			border-color: #b8944a;
-			color: #1a2b1a;
-			font-weight: 600;
-			padding: 12px 35px;
-			border-radius: 40px;
+			.carousel-caption-custom h1 {
+				font-weight: 800;
+				color: var(--gold-light);
+				text-shadow: 0 2px 15px rgba(0,0,0,0.5);
+				font-size: 3.5rem;
+			}
+
+			.carousel-caption-custom h2 {
+				font-weight: 400;
+				color: #f0ece0;
+				text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+				font-size: 1.6rem;
+				margin-bottom: 25px;
+			}
+
+			.carousel-caption-custom p {
+				color: #d4d0c0;
+				font-size: 1.05rem;
+				margin-bottom: 8px;
+			}
+
+				.carousel-caption-custom p i {
+					color: var(--gold);
+					width: 28px;
+				}
+
+		.carousel-control-prev-icon,
+		.carousel-control-next-icon {
+			background-color: rgba(201,169,110,0.3);
+			border-radius: 50%;
+			padding: 20px;
+		}
+
+		/* ============================================
+		   BUTTONS
+		   ============================================ */
+		.btn-gold {
+			background: var(--gold);
+			border-color: var(--gold-dark);
+			color: var(--primary-green);
+			font-weight: 700;
+			padding: 14px 40px;
+			border-radius: 50px;
 			letter-spacing: 0.5px;
 			transition: 0.3s;
+			text-transform: uppercase;
+			font-size: 14px;
 		}
 
-			.btn-success:hover {
-				background: #dbb97a;
-				border-color: #c9a96e;
+			.btn-gold:hover {
+				background: var(--gold-light);
+				border-color: var(--gold);
 				color: #0f1f0f;
-				transform: translateY(-2px);
-				box-shadow: 0 8px 25px rgba(201,169,110,0.3);
+				transform: translateY(-3px);
+				box-shadow: 0 8px 30px rgba(201,169,110,0.4);
 			}
 
-		.btn-primary {
-			background: #c9a96e;
-			border-color: #b8944a;
-			color: #1a2b1a;
+		.btn-gold-outline {
+			background: transparent;
+			border: 2px solid var(--gold);
+			color: var(--gold);
 			font-weight: 600;
 			padding: 12px 35px;
-			border-radius: 40px;
+			border-radius: 50px;
 			transition: 0.3s;
+			text-transform: uppercase;
+			font-size: 13px;
 		}
 
-			.btn-primary:hover {
-				background: #dbb97a;
-				border-color: #c9a96e;
-				color: #0f1f0f;
-				transform: translateY(-2px);
-				box-shadow: 0 8px 25px rgba(201,169,110,0.3);
+			.btn-gold-outline:hover {
+				background: var(--gold);
+				color: var(--primary-green);
+				transform: translateY(-3px);
+				box-shadow: 0 8px 30px rgba(201,169,110,0.3);
 			}
 
-		.btn-warning {
-			background: #c9a96e;
-			border-color: #b8944a;
-			color: #1a2b1a;
+		.btn-dark-gold {
+			background: var(--primary-green);
+			border: 2px solid var(--gold);
+			color: var(--gold);
 			font-weight: 600;
 			padding: 12px 35px;
-			border-radius: 40px;
+			border-radius: 50px;
 			transition: 0.3s;
 		}
 
-			.btn-warning:hover {
-				background: #dbb97a;
-				border-color: #c9a96e;
-				color: #0f1f0f;
-				transform: translateY(-2px);
+			.btn-dark-gold:hover {
+				background: var(--gold);
+				color: var(--primary-green);
+				transform: translateY(-3px);
+				box-shadow: 0 8px 30px rgba(201,169,110,0.3);
 			}
 
-		.btn-secondary {
-			background: transparent;
-			border: 2px solid #c9a96e;
-			color: #e8d5a3;
-			font-weight: 600;
-			padding: 10px 30px;
-			border-radius: 40px;
-			transition: 0.3s;
+		/* ============================================
+		   SECTION COMMON STYLES
+		   ============================================ */
+		.section-padding {
+			padding: 80px 0;
 		}
 
-			.btn-secondary:hover {
-				background: #c9a96e;
-				color: #1a2b1a;
-				border-color: #c9a96e;
-			}
-
-		.btn-outline-gold {
-			background: transparent;
-			border: 2px solid #c9a96e;
-			color: #c9a96e;
-			font-weight: 600;
-			padding: 10px 25px;
-			border-radius: 40px;
-			transition: 0.3s;
+		.section-title {
+			color: var(--primary-green);
+			font-weight: 700;
+			font-size: 2.5rem;
+			margin-bottom: 10px;
 		}
 
-			.btn-outline-gold:hover {
-				background: #c9a96e;
-				color: #1a2b1a;
-				transform: translateY(-2px);
-				box-shadow: 0 8px 25px rgba(201,169,110,0.3);
-			}
+		.section-subtitle {
+			color: #6b7f5a;
+			font-size: 1.1rem;
+			font-weight: 400;
+		}
 
-		/* ABOUT SECTION */
+		.section-divider {
+			width: 60px;
+			height: 3px;
+			background: linear-gradient(to right, var(--gold), var(--primary-green));
+			margin: 15px auto;
+			border-radius: 10px;
+		}
+
+		/* ============================================
+		   ABOUT SECTION
+		   ============================================ */
 		.about {
-			background: #f7f3eb;
-			padding: 70px 0 60px;
+			background: var(--cream);
+			padding: 80px 0 70px;
 		}
 
-			.about .heading h2 {
-				color: #1a2b1a;
-				font-weight: 700;
+			.about .about-text {
+				color: #3a4a3a;
+				font-size: 1.05rem;
+				line-height: 1.9;
 			}
 
-			.about .heading h3 {
-				color: #6b7f5a;
+			.about .about-image {
+				border-radius: 15px;
+				overflow: hidden;
+				box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 			}
 
-		.circle .gradient {
-			background: linear-gradient(145deg, #1a2b1a, #2d4a2d);
-		}
+				.about .about-image img {
+					width: 100%;
+					height: auto;
+					transition: 0.5s;
+				}
 
-		.circle__content h4 a {
-			color: #e8d5a3;
-		}
+					.about .about-image img:hover {
+						transform: scale(1.03);
+					}
 
-			.circle__content h4 a:hover {
-				color: #f0e8c0;
+			.about .stat-box {
+				text-align: center;
+				padding: 25px 15px;
+				background: #fff;
+				border-radius: 12px;
+				box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+				transition: 0.3s;
+				border: 1px solid #eae8e0;
 			}
 
-		.circle__content p a {
-			color: #d4d0c0;
-		}
+				.about .stat-box:hover {
+					transform: translateY(-5px);
+					box-shadow: 0 10px 35px rgba(0,0,0,0.1);
+				}
 
-			.circle__content p a:hover {
-				color: #e8d5a3;
-			}
+				.about .stat-box .number {
+					font-size: 2.5rem;
+					font-weight: 800;
+					color: var(--gold-dark);
+				}
 
-		/* ===== HERO SECTION - FIXED ===== */
+				.about .stat-box .label {
+					color: #6b7f5a;
+					font-size: 14px;
+					font-weight: 500;
+				}
+
+		/* ============================================
+		   HERO / SERVICES SECTION
+		   ============================================ */
 		.hero-section {
-			background: #1a2b1a;
-			padding: 50px 0 40px;
-			border-top: 3px solid #c9a96e;
-			border-bottom: 3px solid #c9a96e;
+			background: var(--primary-green);
+			padding: 70px 0 60px;
+			border-top: 3px solid var(--gold);
+			border-bottom: 3px solid var(--gold);
 			position: relative;
 			overflow: hidden;
 		}
@@ -306,7 +396,7 @@
 				right: 0;
 				bottom: 0;
 				background: url('images/services-bg.jpg') no-repeat center center/cover;
-				opacity: 0.15;
+				opacity: 0.08;
 				z-index: 0;
 			}
 
@@ -316,58 +406,58 @@
 			}
 
 			.hero-section .hero-title {
-				color: #e8d5a3;
+				color: var(--gold-light);
 				font-weight: 700;
-				font-size: 2.5rem;
+				font-size: 2.8rem;
 				margin-bottom: 10px;
 			}
 
 			.hero-section .hero-subtitle {
 				color: #b8c4a8;
 				font-size: 1.2rem;
-				margin-bottom: 30px;
+				margin-bottom: 25px;
 			}
 
 			.hero-section .hero-text {
 				color: #d4d0c0;
-				font-size: 1.1rem;
-				line-height: 1.8;
-				max-width: 700px;
+				font-size: 1.05rem;
+				line-height: 1.9;
+				max-width: 750px;
 			}
 
 			.hero-section .hero-features {
 				display: flex;
 				flex-wrap: wrap;
-				gap: 20px;
-				margin-top: 25px;
+				gap: 15px;
+				margin-top: 30px;
 			}
 
 			.hero-section .hero-feature-item {
 				background: rgba(255,255,255,0.05);
-				border: 1px solid rgba(201,169,110,0.3);
+				border: 1px solid rgba(201,169,110,0.25);
 				border-radius: 12px;
-				padding: 15px 25px;
+				padding: 18px 25px;
 				text-align: center;
-				min-width: 160px;
+				min-width: 150px;
 				flex: 1;
 				transition: 0.3s;
 			}
 
 				.hero-section .hero-feature-item:hover {
 					background: rgba(201,169,110,0.1);
-					border-color: #c9a96e;
-					transform: translateY(-3px);
+					border-color: var(--gold);
+					transform: translateY(-5px);
 				}
 
 				.hero-section .hero-feature-item i {
-					color: #c9a96e;
-					font-size: 28px;
+					color: var(--gold);
+					font-size: 30px;
 					display: block;
 					margin-bottom: 8px;
 				}
 
 				.hero-section .hero-feature-item span {
-					color: #e8d5a3;
+					color: var(--gold-light);
 					font-weight: 600;
 					font-size: 14px;
 					display: block;
@@ -378,134 +468,223 @@
 					font-size: 12px;
 				}
 
-			.hero-section .btn-hero {
-				margin-top: 30px;
-			}
-
-		/* SERVICES */
-		.services {
-			background: #f7f3eb;
-			padding: 60px 0;
-		}
-
-			.services .heading h2 {
-				color: #1a2b1a;
-				font-weight: 700;
-			}
-
-			.services .heading h3 {
-				color: #6b7f5a;
-			}
-
-		/* QUICK LINKS */
+		/* ============================================
+		   QUICK LINKS SECTION
+		   ============================================ */
 		.quick-links {
-			background: #f7f3eb;
-			padding: 70px 0 60px;
+			background: var(--cream);
+			padding: 80px 0 70px;
 		}
-
-			.quick-links .heading h2 {
-				color: #1a2b1a;
-				font-weight: 700;
-			}
-
-			.quick-links .heading h3 {
-				color: #6b7f5a;
-			}
 
 			.quick-links .link-card {
-				background: #1a2b1a;
-				border: 1px solid #2d4a2d;
+				background: #fff;
+				border: 1px solid #eae8e0;
 				border-radius: 15px;
-				padding: 30px 20px;
+				padding: 30px 20px 25px;
 				text-align: center;
-				transition: 0.3s;
+				transition: 0.4s;
 				height: 100%;
 				text-decoration: none;
 				display: block;
-				color: #d4d0c0;
+				color: var(--dark-text);
+				box-shadow: 0 4px 15px rgba(0,0,0,0.04);
 			}
 
 				.quick-links .link-card:hover {
 					transform: translateY(-8px);
-					border-color: #c9a96e;
-					box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+					border-color: var(--gold);
+					box-shadow: 0 15px 45px rgba(201,169,110,0.15);
 				}
 
-				.quick-links .link-card i {
-					font-size: 40px;
-					color: #c9a96e;
-					margin-bottom: 15px;
-					display: block;
+				.quick-links .link-card .icon-wrapper {
+					width: 70px;
+					height: 70px;
+					background: rgba(201,169,110,0.1);
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					margin: 0 auto 15px;
+					transition: 0.3s;
+				}
+
+				.quick-links .link-card:hover .icon-wrapper {
+					background: var(--gold);
+				}
+
+				.quick-links .link-card .icon-wrapper i {
+					font-size: 30px;
+					color: var(--gold-dark);
+					transition: 0.3s;
+				}
+
+				.quick-links .link-card:hover .icon-wrapper i {
+					color: var(--primary-green);
 				}
 
 				.quick-links .link-card h5 {
-					color: #e8d5a3;
+					color: var(--primary-green);
 					font-weight: 600;
+					font-size: 16px;
 				}
 
 				.quick-links .link-card p {
-					color: #b8b8a8;
-					font-size: 14px;
+					color: #6b7f5a;
+					font-size: 13px;
 					margin-bottom: 0;
 				}
 
 				.quick-links .link-card .arrow {
-					color: #c9a96e;
-					margin-top: 10px;
+					color: var(--gold);
+					margin-top: 12px;
 					display: inline-block;
 					transition: 0.3s;
+					font-size: 14px;
 				}
 
 				.quick-links .link-card:hover .arrow {
 					transform: translateX(5px);
 				}
 
-		/* SECTION-4 */
+		/* ============================================
+		   GALLERY / SECTION-4
+		   ============================================ */
 		.section-4 {
-			background: #f7f3eb;
-			padding: 60px 0;
+			background: var(--primary-green);
+			padding: 70px 0 60px;
+			border-top: 3px solid var(--gold);
 		}
 
 			.section-4 .heading h2 {
-				color: #1a2b1a;
+				color: var(--gold-light);
 				font-weight: 700;
+				font-size: 2.5rem;
 			}
 
 			.section-4 .heading h3 {
-				color: #6b7f5a;
+				color: #b8c4a8;
 			}
 
 			.section-4 p {
-				color: #3a4a3a;
+				color: #d4d0c0;
+				font-size: 1.05rem;
+				line-height: 1.9;
 			}
 
-		/* FOOTER */
+			.section-4 .gallery-grid img {
+				border-radius: 12px;
+				width: 100%;
+				height: 200px;
+				object-fit: cover;
+				transition: 0.4s;
+				border: 2px solid rgba(201,169,110,0.2);
+			}
+
+				.section-4 .gallery-grid img:hover {
+					transform: scale(1.05);
+					border-color: var(--gold);
+					box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+				}
+
+		/* ============================================
+		   TESTIMONIALS
+		   ============================================ */
+		.testimonials {
+			background: var(--cream);
+			padding: 70px 0 60px;
+		}
+
+			.testimonials .testimonial-card {
+				background: #fff;
+				border-radius: 15px;
+				padding: 30px 25px;
+				box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+				border: 1px solid #eae8e0;
+				height: 100%;
+				transition: 0.3s;
+			}
+
+				.testimonials .testimonial-card:hover {
+					transform: translateY(-5px);
+					box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+				}
+
+				.testimonials .testimonial-card .stars {
+					color: var(--gold);
+					margin-bottom: 10px;
+				}
+
+				.testimonials .testimonial-card p {
+					color: #3a4a3a;
+					font-size: 0.95rem;
+					line-height: 1.8;
+					font-style: italic;
+				}
+
+				.testimonials .testimonial-card .author {
+					display: flex;
+					align-items: center;
+					margin-top: 15px;
+				}
+
+					.testimonials .testimonial-card .author .avatar {
+						width: 50px;
+						height: 50px;
+						border-radius: 50%;
+						background: var(--gold);
+						color: var(--primary-green);
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						font-weight: 700;
+						font-size: 18px;
+						margin-right: 12px;
+					}
+
+					.testimonials .testimonial-card .author .name {
+						font-weight: 600;
+						color: var(--primary-green);
+					}
+
+					.testimonials .testimonial-card .author .role {
+						font-size: 13px;
+						color: #6b7f5a;
+					}
+
+		/* ============================================
+		   FOOTER
+		   ============================================ */
 		footer.contact {
-			background: #122012;
+			background: #0d1a0d;
 			color: #d4d0c0;
 		}
 
 			footer.contact .gradient {
-				background: linear-gradient(to right, #122012, #1a2b1a);
+				background: linear-gradient(to right, #0d1a0d, #1a2b1a);
 			}
 
 			footer.contact h2 {
-				color: #e8d5a3;
+				color: var(--gold-light);
 				font-weight: 600;
+				font-size: 1.5rem;
+				margin-bottom: 20px;
 			}
 
 			footer.contact address p {
 				color: #b8b8a8;
+				margin-bottom: 5px;
 			}
 
 				footer.contact address p span {
-					color: #c9a96e;
+					color: var(--gold);
 				}
 
 			footer.contact .form-control {
-				background: #1f331f;
-				border: 1px solid #3a553a;
-				color: #e8e0d0;
+				background: #1a2b1a;
+				border: 1px solid #2a402a;
+				color: var(--light-text);
+				border-radius: 10px;
+				padding: 12px 15px;
 			}
 
 				footer.contact .form-control::placeholder {
@@ -513,38 +692,51 @@
 				}
 
 				footer.contact .form-control:focus {
-					border-color: #c9a96e;
+					border-color: var(--gold);
 					box-shadow: 0 0 0 0.2rem rgba(201,169,110,0.25);
 				}
 
 		.copyright {
-			background: #0d1a0d;
-			border-top: 2px solid #2a402a;
+			background: #0a150a;
+			border-top: 2px solid #1a2b1a;
 			padding: 30px 0 20px;
 			color: #a8b898;
 		}
 
-			.copyright ul li a {
-				color: #b8b8a8;
+			.copyright ul li {
+				display: inline-block;
 			}
 
-				.copyright ul li a:hover {
-					color: #e8d5a3;
-					text-decoration: none;
+				.copyright ul li a {
+					color: #b8b8a8;
+					font-size: 14px;
+					padding: 0 8px;
 				}
 
-				.copyright ul li a.active {
-					color: #c9a96e;
-				}
+					.copyright ul li a:hover {
+						color: var(--gold-light);
+						text-decoration: none;
+					}
 
+					.copyright ul li a.active {
+						color: var(--gold);
+					}
+
+					.copyright ul li a.hidden-xs {
+						color: #2a402a;
+					}
+
+		/* ============================================
+		   RETURN TO TOP
+		   ============================================ */
 		#return-to-top {
-			background: #c9a96e;
-			color: #1a2b1a;
+			background: var(--gold);
+			color: var(--primary-green);
 			bottom: 30px;
 			right: 30px;
-			width: 48px;
-			height: 48px;
-			line-height: 48px;
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
 			font-size: 22px;
 			border-radius: 50%;
 			text-align: center;
@@ -553,24 +745,50 @@
 			display: none;
 			box-shadow: 0 6px 25px rgba(201,169,110,0.4);
 			transition: 0.3s;
+			cursor: pointer;
 		}
 
 			#return-to-top:hover {
-				background: #dbb97a;
+				background: var(--gold-light);
 				color: #0f1f0f;
 				transform: translateY(-3px);
+				box-shadow: 0 10px 35px rgba(201,169,110,0.5);
 			}
 
+		/* ============================================
+		   BORDER IMG
+		   ============================================ */
 		.border-img img {
 			width: 100%;
 			display: block;
 		}
 
-		/* RESPONSIVE */
+		/* ============================================
+		   RESPONSIVE
+		   ============================================ */
+		@media (max-width: 992px) {
+			.carousel-item {
+				min-height: 500px;
+				padding: 140px 0 100px 0;
+			}
+
+			.carousel-caption-custom h1 {
+				font-size: 2.5rem;
+			}
+
+			.hero-section .hero-title {
+				font-size: 2.2rem;
+			}
+
+			.section-title {
+				font-size: 2rem;
+			}
+		}
+
 		@media (max-width: 768px) {
 			.carousel-item {
 				min-height: 400px;
-				padding: 120px 0 80px 0;
+				padding: 100px 0 70px 0;
 			}
 
 			.carousel-caption-custom h1 {
@@ -578,7 +796,7 @@
 			}
 
 			.carousel-caption-custom h2 {
-				font-size: 1.2rem;
+				font-size: 1.1rem;
 			}
 
 			.hero-section .hero-title {
@@ -593,27 +811,12 @@
 				min-width: auto;
 			}
 
-			.copyright .right-part {
-				text-align: center;
+			.section-title {
+				font-size: 1.6rem;
 			}
 
-			.copyright ul {
-				justify-content: center;
-			}
-
-				.copyright ul li a.hidden-xs {
-					display: none;
-				}
-
-			.quick-links .link-card {
-				margin-bottom: 20px;
-			}
-		}
-
-		@media (max-width: 576px) {
-			.carousel-item {
-				min-height: 350px;
-				padding: 100px 0 60px 0;
+			.section-4 .gallery-grid img {
+				height: 150px;
 			}
 
 			#navbar .left-side span {
@@ -624,34 +827,77 @@
 			.nav-logo {
 				max-height: 40px;
 			}
+
+			.copyright ul {
+				text-align: center;
+				padding-left: 0;
+			}
+
+				.copyright ul li {
+					display: inline-block;
+					margin: 3px 0;
+				}
+		}
+
+		@media (max-width: 576px) {
+			.carousel-item {
+				min-height: 350px;
+				padding: 80px 0 50px 0;
+			}
+
+			.carousel-caption-custom h1 {
+				font-size: 1.4rem;
+			}
+
+			.carousel-caption-custom h2 {
+				font-size: 0.95rem;
+			}
+
+			.hero-section .hero-title {
+				font-size: 1.5rem;
+			}
+
+			.section-title {
+				font-size: 1.4rem;
+			}
+
+			.btn-gold {
+				padding: 10px 25px;
+				font-size: 12px;
+			}
 		}
 	</style>
 </head>
 
 <body>
-	<!-- Header section Start -->
+
+	<!-- ============================================
+	HEADER
+	============================================ -->
 	<header class="top">
-		<!-- SIDENAV - OPENS FROM RIGHT -->
+		<!-- SIDENAV -->
 		<div id="mySidenav" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<a href="index.html" class="active">Home</a>
 			<a href="about.html">About Yogi</a>
 			<a href="about-gurunathar.html">About Gurunathar</a>
+			<div class="sidenav-divider"></div>
 			<a href="vasi-programs.html">Vasi Yoga Programs</a>
 			<a href="foundation-plan.html">Plan of the Foundation</a>
 			<a href="register.html">Become a Member</a>
 			<a href="scan.html">Class Entry (Scanner)</a>
+			<div class="sidenav-divider"></div>
 			<a href="gallery.html">Gallery</a>
 			<a href="videos.html">Videos</a>
 			<a href="login.html">Admin Login</a>
 		</div>
 
-		<!-- Nav section Start -->
+		<!-- NAVBAR -->
 		<nav id="navbar">
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-lg-4 col-md-4 col-12 align-self-center left-side">
-						<p>Awaken Inner Light, Realize the Truth <span>Call: +91 63804 19470</span></p>
+						<p><i class="fa fa-phone" style="color:var(--gold);"></i> <span>Call: +91 63804 19470</span></p>
 					</div>
 					<div class="col-lg-4 col-md-4 col-4 align-self-center text-center">
 						<a href="index.html">
@@ -672,11 +918,12 @@
 				</div>
 			</div>
 		</nav>
-		<!-- Nav section Ended -->
 		<img class="border-img" src="images/border.png" width="100%" alt="">
 	</header>
-	<!-- Header section Ended-->
-	<!-- BANNER / CAROUSEL SLIDER -->
+
+	<!-- ============================================
+	BANNER CAROUSEL
+	============================================ -->
 	<section id="homeBannerSlider" class="carousel slide banner-home" data-ride="carousel" data-interval="5000">
 		<ol class="carousel-indicators">
 			<li data-target="#homeBannerSlider" data-slide-to="0" class="active"></li>
@@ -688,37 +935,39 @@
 			<div class="carousel-item carousel-item-1 active">
 				<div class="gradient"></div>
 				<div class="container carousel-caption-custom">
+					<div class="badge-gold">SIDDHAR YOGA</div>
 					<h1 data-aos="fade-left">Aga Oli Meignana Yogam</h1>
 					<h2 data-aos="fade-left" data-aos-delay="100">The Secret Wisdom of the Siddhars for Eternal Transformation</h2>
 					<p data-aos="fade-left" data-aos-delay="200"><i class="fa fa-clock-o" aria-hidden="true"></i><span>Inquiries Open: 9:00 AM - 1:30 PM</span></p>
 					<p data-aos="fade-left" data-aos-delay="300"><i class="fa fa-phone-square" aria-hidden="true"></i><span>Call: +91 63804 19470, +91 73972 83252</span></p>
 					<p data-aos="fade-left" data-aos-delay="400"><i class="fa fa-envelope" aria-hidden="true"></i><span>info@athimagayogi.com</span></p>
-					<a data-aos="fade-left" data-aos-delay="500" class="btn btn-success" href="register.html" role="button">Join Foundation</a>
+					<a data-aos="fade-left" data-aos-delay="500" class="btn btn-gold mt-3" href="register.html" role="button"><i class="fa fa-hand-o-right"></i> Join Foundation</a>
 				</div>
 			</div>
 			<!-- Slide 2 -->
 			<div class="carousel-item carousel-item-2">
 				<div class="gradient"></div>
 				<div class="container carousel-caption-custom">
+					<div class="badge-gold">VASI YOGA</div>
 					<h1>Vasi Yoga Initiation</h1>
 					<h2>Learn the Secret Art of Breath Science from Gurunathar</h2>
 					<p><i class="fa fa-envelope" aria-hidden="true"></i><span>info@athimagayogi.com</span></p>
 					<p><i class="fa fa-map-marker" aria-hidden="true"></i><span>Arcot, Tamil Nadu, India</span></p>
-					<a class="btn btn-primary" href="register.html" role="button">Register Now</a>
+					<a class="btn btn-gold mt-3" href="register.html" role="button"><i class="fa fa-user-plus"></i> Register Now</a>
 				</div>
 			</div>
 			<!-- Slide 3 -->
 			<div class="carousel-item carousel-item-3">
 				<div class="gradient"></div>
 				<div class="container carousel-caption-custom">
+					<div class="badge-gold">WELLNESS</div>
 					<h1>Disease-Free Body & Mind</h1>
 					<h2>Experience Permanent Happiness and Core Biological Vitality Alignment</h2>
 					<p><i class="fa fa-check-circle" aria-hidden="true"></i><span>Free Admission for Registered Seekers</span></p>
-					<a class="btn btn-warning" href="register.html" role="button">Become a Member</a>
+					<a class="btn btn-gold mt-3" href="register.html" role="button"><i class="fa fa-id-card"></i> Become a Member</a>
 				</div>
 			</div>
 		</div>
-		<!-- Slider Controls -->
 		<a class="carousel-control-prev" href="#homeBannerSlider" role="button" data-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 			<span class="sr-only">Previous</span>
@@ -728,62 +977,73 @@
 			<span class="sr-only">Next</span>
 		</a>
 	</section>
-	<!-- Banner section Ended -->
-	<!-- About section start -->
-	<section class="about">
+
+	<!-- ============================================
+	ABOUT SECTION
+	============================================ -->
+	<section class="about section-padding">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12 col-12 heading">
-					<img src="images/leaf.png" alt="">
-					<h2>Yoga as a Lifestyle: Body, Mind & Soul</h2>
-					<h3>Divine insights from Thavasilar Thiru Athimagayogi</h3>
+			<div class="row align-items-center">
+				<div class="col-lg-6">
+					<div class="about-image">
+						<img src="images/section-4-bg.jpg" alt="Athimagayogi" class="img-fluid">
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="pl-lg-4">
+						<img src="images/leaf.png" alt="">
+						<h2 class="section-title">Yoga as a Lifestyle</h2>
+						<h3 class="section-subtitle">Body, Mind & Soul</h3>
+						<div class="section-divider" style="margin-left:0;"></div>
+						<p class="about-text">
+							<strong>Divine insights from Thavasilar Thiru Athimagayogi</strong>
+						</p>
+						<p class="about-text">
+							Control the wandering mind and experience the boundless supreme divine power inside you.
+							Learn how to transform the roaring sea of thoughts into a profound ocean of silence.
+						</p>
+						<p class="about-text">
+							In devotion, there is a humble surrender; in madness, an earnest yearning.
+							In the state of Siddha, there is a divine search; and in clarity, there is true wisdom.
+						</p>
+						<a href="about.html" class="btn btn-gold mt-3"><i class="fa fa-user-circle"></i> Know More About Yogi</a>
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-4 col-sm-12 col-12 box-1" data-aos="fade-right" data-aos-duration="400">
-					<div class="circle">
-						<div class="gradient"></div>
-						<div class="circle__inner">
-							<div class="circle__wrapper">
-								<div class="circle__content">
-									<h4><a href="products.html">Get Clear <span>Mind</span></a></h4>
-									<p><a href="products.html">Still your restless thoughts, manage stress effectively, and awaken your consciousness to realize true peace through internal focus.</a></p>
-								</div>
-							</div>
-						</div>
+
+			<!-- Stats -->
+			<div class="row mt-5">
+				<div class="col-md-3 col-6">
+					<div class="stat-box">
+						<div class="number">12+</div>
+						<div class="label">Years of Wisdom</div>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-12 col-12 box-2" data-aos="fade-up" data-aos-duration="400">
-					<div class="circle">
-						<div class="gradient"></div>
-						<div class="circle__inner">
-							<div class="circle__wrapper">
-								<div class="circle__content">
-									<h4><a href="products.html">Increase <span>Wealth</span></a></h4>
-									<p><a href="products.html">Achieve a disease-free body and permanent happiness. True prosperity begins with structural wellness and physical abundance.</a></p>
-								</div>
-							</div>
-						</div>
+				<div class="col-md-3 col-6">
+					<div class="stat-box">
+						<div class="number">500+</div>
+						<div class="label">Members Registered</div>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-12 col-12 box-3" data-aos="fade-left" data-aos-duration="400">
-					<div class="circle">
-						<div class="gradient"></div>
-						<div class="circle__inner">
-							<div class="circle__wrapper">
-								<div class="circle__content">
-									<h4><a href="products.html">Grow <span>Vitality</span></a></h4>
-									<p><a href="products.html">Master the science of breath activation (Vasi Yoga) to slow down biological aging, recharge life force, and extend true longevity.</a></p>
-								</div>
-							</div>
-						</div>
+				<div class="col-md-3 col-6">
+					<div class="stat-box">
+						<div class="number">50+</div>
+						<div class="label">Spiritual Camps</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-6">
+					<div class="stat-box">
+						<div class="number">100%</div>
+						<div class="label">Transformation Guarantee</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- About section Ended -->
-	<!-- ===== HERO SECTION - FIXED CLEAN VERSION ===== -->
+
+	<!-- ============================================
+	HERO / SERVICES SECTION
+	============================================ -->
 	<section class="hero-section">
 		<div class="container hero-content">
 			<div class="row">
@@ -791,8 +1051,9 @@
 					<h2 class="hero-title">The Ultimate Yoga for Inner Realization</h2>
 					<h3 class="hero-subtitle">Siddhars' rare secret practices open to all men and women</h3>
 					<p class="hero-text">
-						Control the wandering mind and experience the boundless supreme divine power inside you.
-						Learn how to transform the roaring sea of thoughts into a profound ocean of silence.
+						Still your restless thoughts, manage stress effectively, and awaken your consciousness
+						to realize true peace through internal focus. Master the science of breath activation
+						to slow down biological aging and recharge your life force.
 					</p>
 				</div>
 			</div>
@@ -822,29 +1083,32 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row mt-4">
 				<div class="col-lg-12">
-					<a href="register.html" class="btn btn-success btn-hero"><i class="fa fa-hand-o-right"></i> Join Foundation</a>
-					<a href="about.html" class="btn btn-outline-gold btn-hero" style="margin-left:15px;">Learn More</a>
+					<a href="register.html" class="btn btn-gold"><i class="fa fa-hand-o-right"></i> Join Foundation</a>
+					<a href="about.html" class="btn btn-gold-outline ml-3">Learn More</a>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- QUICK LINKS / PAGES SECTION -->
-	<section class="quick-links">
+	<!-- ============================================
+	QUICK LINKS
+	============================================ -->
+	<section class="quick-links section-padding">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12 heading text-center">
+			<div class="row text-center">
+				<div class="col-md-12">
 					<img src="images/leaf.png" alt="">
-					<h2>Explore Our Services & Programs</h2>
-					<h3>Discover the path to inner light and spiritual transformation</h3>
+					<h2 class="section-title">Explore Our Services & Programs</h2>
+					<h3 class="section-subtitle">Discover the path to inner light and spiritual transformation</h3>
+					<div class="section-divider"></div>
 				</div>
 			</div>
 			<div class="row mt-4">
 				<div class="col-lg-3 col-md-6 col-12 mb-3">
 					<a href="about.html" class="link-card">
-						<i class="fa fa-user-circle"></i>
+						<div class="icon-wrapper"><i class="fa fa-user-circle"></i></div>
 						<h5>About Yogi</h5>
 						<p>Know about the divine master Thavasilar Thiru Athimagayogi</p>
 						<span class="arrow"><i class="fa fa-arrow-right"></i></span>
@@ -852,7 +1116,7 @@
 				</div>
 				<div class="col-lg-3 col-md-6 col-12 mb-3">
 					<a href="about-gurunathar.html" class="link-card">
-						<i class="fa fa-graduation-cap"></i>
+						<div class="icon-wrapper"><i class="fa fa-graduation-cap"></i></div>
 						<h5>About Gurunathar</h5>
 						<p>Learn about the Siddhar lineage and Gurunathar's teachings</p>
 						<span class="arrow"><i class="fa fa-arrow-right"></i></span>
@@ -860,7 +1124,7 @@
 				</div>
 				<div class="col-lg-3 col-md-6 col-12 mb-3">
 					<a href="vasi-programs.html" class="link-card">
-						<i class="fa fa-bolt"></i>
+						<div class="icon-wrapper"><i class="fa fa-bolt"></i></div>
 						<h5>Vasi Yoga Programs</h5>
 						<p>Master the secret art of breath science and energy control</p>
 						<span class="arrow"><i class="fa fa-arrow-right"></i></span>
@@ -868,7 +1132,7 @@
 				</div>
 				<div class="col-lg-3 col-md-6 col-12 mb-3">
 					<a href="foundation-plan.html" class="link-card">
-						<i class="fa fa-building"></i>
+						<div class="icon-wrapper"><i class="fa fa-building"></i></div>
 						<h5>Plan of Foundation</h5>
 						<p>Understand the vision and mission of Aga Oli Foundation</p>
 						<span class="arrow"><i class="fa fa-arrow-right"></i></span>
@@ -876,7 +1140,7 @@
 				</div>
 				<div class="col-lg-3 col-md-6 col-12 mb-3">
 					<a href="register.html" class="link-card">
-						<i class="fa fa-id-card"></i>
+						<div class="icon-wrapper"><i class="fa fa-id-card"></i></div>
 						<h5>Become a Member</h5>
 						<p>Register now and get your unique QR code for class entry</p>
 						<span class="arrow"><i class="fa fa-arrow-right"></i></span>
@@ -884,7 +1148,7 @@
 				</div>
 				<div class="col-lg-3 col-md-6 col-12 mb-3">
 					<a href="scan.html" class="link-card">
-						<i class="fa fa-qrcode"></i>
+						<div class="icon-wrapper"><i class="fa fa-qrcode"></i></div>
 						<h5>Class Entry Scanner</h5>
 						<p>Scan your QR code and mark attendance instantly</p>
 						<span class="arrow"><i class="fa fa-arrow-right"></i></span>
@@ -892,7 +1156,7 @@
 				</div>
 				<div class="col-lg-3 col-md-6 col-12 mb-3">
 					<a href="gallery.html" class="link-card">
-						<i class="fa fa-image"></i>
+						<div class="icon-wrapper"><i class="fa fa-image"></i></div>
 						<h5>Gallery</h5>
 						<p>View photos from our spiritual camps and programs</p>
 						<span class="arrow"><i class="fa fa-arrow-right"></i></span>
@@ -900,7 +1164,7 @@
 				</div>
 				<div class="col-lg-3 col-md-6 col-12 mb-3">
 					<a href="videos.html" class="link-card">
-						<i class="fa fa-video-camera"></i>
+						<div class="icon-wrapper"><i class="fa fa-video-camera"></i></div>
 						<h5>Videos</h5>
 						<p>Watch divine teachings and Vasi Yoga demonstrations</p>
 						<span class="arrow"><i class="fa fa-arrow-right"></i></span>
@@ -910,7 +1174,9 @@
 		</div>
 	</section>
 
-	<!-- Section-4 section start -->
+	<!-- ============================================
+	GALLERY SECTION
+	============================================ -->
 	<section class="section-4">
 		<div class="container-fluid">
 			<div class="row" data-aos="fade-up" data-aos-duration="400">
@@ -921,56 +1187,133 @@
 							<h3>"Love is everything - see all living earthly beings as your own soul"</h3>
 						</div>
 						<div class="col-md-12">
-							<div class="row">
+							<div class="row gallery-grid">
 								<div class="col-md-3 col-6">
-									<figure><img src="images/services-bg.jpg" alt="Meditation" class="img-fluid w-100"></figure>
+									<img src="images/services-bg.jpg" alt="Meditation">
 								</div>
 								<div class="col-md-3 col-6">
-									<figure><img src="images/blog-1.jpg" alt="Vasi Yoga" class="img-fluid w-100"></figure>
+									<img src="images/blog-1.jpg" alt="Vasi Yoga">
 								</div>
 								<div class="col-md-3 col-6">
-									<figure><img src="images/blog-2.jpg" alt="Siddhar Teachings" class="img-fluid w-100"></figure>
+									<img src="images/blog-2.jpg" alt="Siddhar Teachings">
 								</div>
 								<div class="col-md-3 col-6">
-									<figure><img src="images/blog-3.jpg" alt="Spiritual Camp" class="img-fluid w-100"></figure>
+									<img src="images/blog-3.jpg" alt="Spiritual Camp">
 								</div>
 							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-12 mt-4">
 							<p>In devotion, there is a humble surrender; in madness, an earnest yearning. In the state of Siddha, there is a divine search; and in clarity, there is true wisdom. Understand the path your soul has taken when love and wisdom go missing.</p>
 							<p>Our camps offer direct spiritual insights, dynamic wisdom, and practical energy keys. Free admission is available for registered spiritual seekers across our regional centers.</p>
-							<a href="gallery.html" class="btn btn-primary btn-lg active" role="button">Our Gallery</a>
-							<a href="register.html" class="btn btn-secondary btn-lg active" role="button" style="color:#1a2b1a; background:#c9a96e; border-color:#c9a96e;">Book Free Seat</a>
+							<a href="gallery.html" class="btn btn-gold mt-2"><i class="fa fa-image"></i> View Gallery</a>
+							<a href="register.html" class="btn btn-dark-gold mt-2 ml-2"><i class="fa fa-ticket"></i> Book Free Seat</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-3">
 					<figure>
-						<img src="images/section-4-bg.jpg" alt="Athimagayogi" class="img-fluid w-100">
+						<img src="images/section-4-bg.jpg" alt="Athimagayogi" class="img-fluid w-100" style="border-radius:15px;">
 					</figure>
-					<div class="gradient"></div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- Section-4 section Ended -->
-	<!-- Footer section start -->
+
+	<!-- ============================================
+	TESTIMONIALS
+	============================================ -->
+	<section class="testimonials section-padding">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col-md-12">
+					<img src="images/leaf.png" alt="">
+					<h2 class="section-title">What Our Members Say</h2>
+					<h3 class="section-subtitle">Real experiences from real people</h3>
+					<div class="section-divider"></div>
+				</div>
+			</div>
+			<div class="row mt-4">
+				<div class="col-lg-4 col-md-6 mb-3">
+					<div class="testimonial-card">
+						<div class="stars">
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+						</div>
+						<p>"Vasi Yoga has transformed my life completely. The breath science techniques taught by Gurunathar are truly divine. I feel more energetic and peaceful than ever before."</p>
+						<div class="author">
+							<div class="avatar">R</div>
+							<div>
+								<div class="name">Rajesh Kumar</div>
+								<div class="role">Member since 2024</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 mb-3">
+					<div class="testimonial-card">
+						<div class="stars">
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+						</div>
+						<p>"The Aga Oli Meignana Yogam program helped me find inner peace and clarity. The teachings of Athimagayogi are profound and life-changing. Highly recommended!"</p>
+						<div class="author">
+							<div class="avatar">P</div>
+							<div>
+								<div class="name">Priya Sharma</div>
+								<div class="role">Member since 2023</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 mb-3">
+					<div class="testimonial-card">
+						<div class="stars">
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+						</div>
+						<p>"I have attended many spiritual programs, but nothing compares to the wisdom shared here. The Pancha Bhoota attunement is a unique experience that everyone should try."</p>
+						<div class="author">
+							<div class="avatar">S</div>
+							<div>
+								<div class="name">Suresh Babu</div>
+								<div class="role">Member since 2024</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	FOOTER
+	============================================ -->
 	<footer class="contact">
 		<div class="gradient"></div>
 		<div class="container">
 			<div class="row" data-aos="fade-up" data-aos-duration="400">
 				<div class="col-lg-6 col-md-12 col-12 columns-1">
-					<h2>Our Center Address</h2>
+					<h2><i class="fa fa-map-marker" style="color:var(--gold);"></i> Our Center Address</h2>
 					<address>
 						<p>Kanesa Vijayalakshmi Marriage Hall,</p>
 						<p>Vellore Main Road, Arcot, Tamil Nadu, India</p>
-						<p>Inquiry Hours : Daily 9:00 AM - 1:30 PM</p>
-						<p>Call for Pre-Registration : <span>+91 63804 19470 / 73972 83252</span></p>
+						<p><i class="fa fa-clock-o" style="color:var(--gold);"></i> Inquiry Hours : Daily 9:00 AM - 1:30 PM</p>
+						<p><i class="fa fa-phone" style="color:var(--gold);"></i> Call for Pre-Registration : <span>+91 63804 19470 / 73972 83252</span></p>
+						<p><i class="fa fa-envelope" style="color:var(--gold);"></i> <span>info@athimagayogi.com</span></p>
 					</address>
 				</div>
 				<div class="col-lg-1 col-md-12 col-12"></div>
 				<div class="col-lg-5 col-md-12 col-12 columns-2">
-					<h2>Quick Contact</h2>
+					<h2><i class="fa fa-envelope" style="color:var(--gold);"></i> Quick Contact</h2>
 					<form class="row form-inline">
 						<div class="col-md-6 form-group">
 							<input type="text" class="form-control" placeholder="Your Name" required />
@@ -982,12 +1325,13 @@
 							<textarea class="form-control" placeholder="Message" rows="5" cols="70"></textarea>
 						</div>
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-primary">Submit Form</button>
+							<button type="submit" class="btn btn-gold"><i class="fa fa-paper-plane"></i> Submit Form</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
+
 		<div class="copyright">
 			<div class="container">
 				<div class="row border-img">
@@ -1003,43 +1347,45 @@
 					</div>
 					<div class="col-lg-9 col-md-12 right-part">
 						<ul class="ml-auto">
-							<li class="nav-item active">
-								<a class="nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
-							</li>
-							<li><a class="hidden-xs">~</a></li>
+							<li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+							<li><a class="hidden-xs">|</a></li>
 							<li class="nav-item"><a class="nav-link" href="about.html">About Yogi</a></li>
-							<li><a class="hidden-xs">~</a></li>
-							<li class="nav-item"><a class="nav-link" href="about-gurunathar.html">About Gurunathar</a></li>
-							<li><a class="hidden-xs">~</a></li>
+							<li><a class="hidden-xs">|</a></li>
+							<li class="nav-item"><a class="nav-link" href="about-gurunathar.html">Gurunathar</a></li>
+							<li><a class="hidden-xs">|</a></li>
 							<li class="nav-item"><a class="nav-link" href="vasi-programs.html">Vasi Yoga</a></li>
-							<li><a class="hidden-xs">~</a></li>
+							<li><a class="hidden-xs">|</a></li>
 							<li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
-							<li><a class="hidden-xs">~</a></li>
+							<li><a class="hidden-xs">|</a></li>
 							<li class="nav-item"><a class="nav-link" href="scan.html">Scanner</a></li>
-							<li><a class="hidden-xs">~</a></li>
+							<li><a class="hidden-xs">|</a></li>
 							<li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-							<li><a class="hidden-xs">~</a></li>
+							<li><a class="hidden-xs">|</a></li>
 							<li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
 						</ul>
-						<p>(C) 2026 All Rights Reserved. Designed for Athimagayogi Spreads.</p>
+						<p class="mt-2">(C) 2026 All Rights Reserved. Designed for Athimagayogi Spreads.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</footer>
-	<!-- Footer section Ended -->
-	<!-- Return to Top -->
+
+	<!-- ============================================
+	RETURN TO TOP
+	============================================ -->
 	<a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 
-	<!-- jQuery, Popper.js, Bootstrap JS -->
+	<!-- ============================================
+	SCRIPTS
+	============================================ -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<!-- Custom JavaScript -->
 	<script src="js/animate.js"></script>
 	<script src="js/custom.js"></script>
 
 	<script>
+		// SIDENAV
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "280px";
 		}
@@ -1048,7 +1394,7 @@
 			document.getElementById("mySidenav").style.width = "0";
 		}
 
-		// Return to Top
+		// RETURN TO TOP
 		$(window).scroll(function () {
 			if ($(this).scrollTop() > 300) {
 				$('#return-to-top').fadeIn(300);
@@ -1056,11 +1402,24 @@
 				$('#return-to-top').fadeOut(300);
 			}
 		});
+
 		$('#return-to-top').click(function () {
 			$('html, body').animate({ scrollTop: 0 }, 400);
 			return false;
 		});
+
+		// SMOOTH SCROLL FOR NAV LINKS
+		$('a[href^="#"]').on('click', function (event) {
+			var target = $(this.getAttribute('href'));
+			if (target.length) {
+				event.preventDefault();
+				$('html, body').stop().animate({
+					scrollTop: target.offset().top - 70
+				}, 1000);
+			}
+		});
 	</script>
+
 </body>
 
 </html>
