@@ -30,6 +30,7 @@
 			--light-text: #e8e0d0;
 			--dark-text: #1a2b1a;
 			--muted-text: #8a9a7a;
+			--whatsapp: #25D366;
 		}
 
 		* {
@@ -727,33 +728,80 @@
 					}
 
 		/* ============================================
-		   RETURN TO TOP
+		   WHATSAPP FLOATING BUTTON - BLINKING
 		   ============================================ */
-		#return-to-top {
-			background: var(--gold);
-			color: var(--primary-green);
+		.whatsapp-float {
+			position: fixed;
 			bottom: 30px;
 			right: 30px;
-			width: 50px;
-			height: 50px;
-			line-height: 50px;
-			font-size: 22px;
+			z-index: 999;
+			background: var(--whatsapp);
+			color: #fff;
+			width: 60px;
+			height: 60px;
 			border-radius: 50%;
 			text-align: center;
-			position: fixed;
-			z-index: 999;
-			display: none;
-			box-shadow: 0 6px 25px rgba(201,169,110,0.4);
+			font-size: 35px;
+			line-height: 60px;
+			box-shadow: 0 6px 30px rgba(37, 211, 102, 0.4);
 			transition: 0.3s;
-			cursor: pointer;
+			text-decoration: none;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			animation: whatsappPulse 2s infinite;
 		}
 
-			#return-to-top:hover {
-				background: var(--gold-light);
-				color: #0f1f0f;
-				transform: translateY(-3px);
-				box-shadow: 0 10px 35px rgba(201,169,110,0.5);
+			.whatsapp-float:hover {
+				transform: scale(1.1);
+				box-shadow: 0 10px 40px rgba(37, 211, 102, 0.5);
+				color: #fff;
 			}
+
+		@keyframes whatsappPulse {
+			0% {
+				box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+			}
+
+			70% {
+				box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+			}
+
+			100% {
+				box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+			}
+		}
+
+		.whatsapp-float .tooltip-text {
+			position: absolute;
+			right: 70px;
+			background: #1a2b1a;
+			color: var(--gold-light);
+			padding: 8px 15px;
+			border-radius: 8px;
+			font-size: 13px;
+			font-weight: 500;
+			white-space: nowrap;
+			opacity: 0;
+			transition: 0.3s;
+			pointer-events: none;
+			border: 1px solid var(--gold);
+		}
+
+		.whatsapp-float:hover .tooltip-text {
+			opacity: 1;
+		}
+
+		.whatsapp-float .tooltip-text::after {
+			content: '';
+			position: absolute;
+			right: -8px;
+			top: 50%;
+			transform: translateY(-50%);
+			border-left: 8px solid #1a2b1a;
+			border-top: 8px solid transparent;
+			border-bottom: 8px solid transparent;
+		}
 
 		/* ============================================
 		   BORDER IMG
@@ -836,6 +884,19 @@
 				.copyright ul li {
 					display: inline-block;
 					margin: 3px 0;
+				}
+
+			.whatsapp-float {
+				width: 50px;
+				height: 50px;
+				font-size: 28px;
+				line-height: 50px;
+				bottom: 20px;
+				right: 20px;
+			}
+
+				.whatsapp-float .tooltip-text {
+					display: none;
 				}
 		}
 
@@ -991,7 +1052,7 @@
 				</div>
 				<div class="col-lg-6">
 					<div class="pl-lg-4">
-						<!--<img src="images/leaf.png" alt="">-->
+						<img src="images/leaf.png" alt="">
 						<h2 class="section-title">Yoga as a Lifestyle</h2>
 						<h3 class="section-subtitle">Body, Mind & Soul</h3>
 						<div class="section-divider" style="margin-left:0;"></div>
@@ -1313,19 +1374,19 @@
 				</div>
 				<div class="col-lg-1 col-md-12 col-12"></div>
 				<div class="col-lg-5 col-md-12 col-12 columns-2">
-					<h2><i class="fa fa-envelope" style="color:var(--gold);"></i> Quick Contact</h2>
-					<form class="row form-inline">
+					<h2><i class="fa fa-whatsapp" style="color:#25D366;"></i> Quick Contact</h2>
+					<form class="row form-inline" id="contactForm">
 						<div class="col-md-6 form-group">
-							<input type="text" class="form-control" placeholder="Your Name" required />
+							<input type="text" class="form-control" id="contactName" placeholder="Your Name" required />
 						</div>
 						<div class="col-md-6 form-group">
-							<input type="email" class="form-control" placeholder="Your Email" required />
+							<input type="email" class="form-control" id="contactEmail" placeholder="Your Email" required />
 						</div>
 						<div class="col-md-12 form-group">
-							<textarea class="form-control" placeholder="Message" rows="5" cols="70"></textarea>
+							<textarea class="form-control" id="contactMessage" placeholder="Message" rows="5" cols="70" required></textarea>
 						</div>
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-gold"><i class="fa fa-paper-plane"></i> Submit Form</button>
+							<button type="submit" class="btn btn-gold" id="whatsappSubmit"><i class="fa fa-whatsapp"></i> Send via WhatsApp</button>
 						</div>
 					</form>
 				</div>
@@ -1371,9 +1432,16 @@
 	</footer>
 
 	<!-- ============================================
-	RETURN TO TOP
+	WHATSAPP FLOATING BUTTON - BLINKING
 	============================================ -->
-	<a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+	<a href="https://wa.me/916380419470?text=Hi%20Athimagayogi%2C%20I%20want%20to%20know%20more%20about%20Aga%20Oli%20Meignana%20Yogam"
+	   class="whatsapp-float"
+	   target="_blank"
+	   rel="noopener noreferrer"
+	   aria-label="Chat on WhatsApp">
+		<i class="fa fa-whatsapp"></i>
+		<span class="tooltip-text">Chat with us on WhatsApp</span>
+	</a>
 
 	<!-- ============================================
 	SCRIPTS
@@ -1394,18 +1462,31 @@
 			document.getElementById("mySidenav").style.width = "0";
 		}
 
-		// RETURN TO TOP
-		$(window).scroll(function () {
-			if ($(this).scrollTop() > 300) {
-				$('#return-to-top').fadeIn(300);
-			} else {
-				$('#return-to-top').fadeOut(300);
-			}
-		});
+		// WHATSAPP CONTACT FORM
+		document.getElementById('contactForm').addEventListener('submit', function (e) {
+			e.preventDefault();
 
-		$('#return-to-top').click(function () {
-			$('html, body').animate({ scrollTop: 0 }, 400);
-			return false;
+			var name = document.getElementById('contactName').value.trim();
+			var email = document.getElementById('contactEmail').value.trim();
+			var message = document.getElementById('contactMessage').value.trim();
+
+			if (!name || !email || !message) {
+				alert('Please fill all fields.');
+				return;
+			}
+
+			var whatsappNumber = '916380419470';
+			var whatsappMessage = 'Hi Athimagayogi,%0A%0A' +
+				'Name: ' + encodeURIComponent(name) + '%0A' +
+				'Email: ' + encodeURIComponent(email) + '%0A' +
+				'Message: ' + encodeURIComponent(message) + '%0A%0A' +
+				'Thank you!';
+
+			var whatsappURL = 'https://wa.me/' + whatsappNumber + '?text=' + whatsappMessage;
+			window.open(whatsappURL, '_blank');
+
+			// Reset form
+			document.getElementById('contactForm').reset();
 		});
 
 		// SMOOTH SCROLL FOR NAV LINKS
