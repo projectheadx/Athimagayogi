@@ -183,22 +183,6 @@
 				box-shadow: 0 8px 25px rgba(201, 169, 110, 0.3);
 			}
 
-		.btn-secondary {
-			background: #6b7f6a;
-			border-color: #5a6f5a;
-			color: #fff;
-			font-weight: 600;
-			border-radius: 40px;
-			transition: 0.3s;
-		}
-
-			.btn-secondary:hover {
-				background: #7b8f7a;
-				border-color: #6b7f6a;
-				color: #fff;
-				transform: translateY(-2px);
-			}
-
 		.btn-sm {
 			padding: 6px 18px;
 			font-size: 13px;
@@ -279,15 +263,6 @@
 				border: 1px solid #ffeeba;
 			}
 
-		/* URL HIGHLIGHT */
-		.url-highlight {
-			background: #f7f3eb;
-			border: 2px solid #c9a96e;
-			padding: 15px;
-			border-radius: 10px;
-			margin: 10px 0;
-		}
-
 		/* FOOTER */
 		.footer {
 			background: #122012;
@@ -300,6 +275,27 @@
 
 			.footer i.fa-heart {
 				color: #c9a96e;
+			}
+
+		/* STATUS INDICATOR */
+		.status-dot {
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			margin-right: 8px;
+		}
+
+			.status-dot.green {
+				background: #27ae60;
+			}
+
+			.status-dot.red {
+				background: #e74c3c;
+			}
+
+			.status-dot.yellow {
+				background: #f1c40f;
 			}
 
 		/* RESPONSIVE */
@@ -366,11 +362,12 @@
 		<img class="border-img" src="images/border.png" width="100%" alt="">
 	</header>
 
-	<!-- ===== REGISTRATION PAGE - FULL WIDTH ===== -->
+	<!-- ===== REGISTRATION PAGE ===== -->
 	<div class="register-page">
 		<div class="container">
 			<!-- Google Sheets Status -->
 			<div id="syncStatus" class="sync-status info">
+				<span class="status-dot yellow"></span>
 				<i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...
 			</div>
 
@@ -379,29 +376,11 @@
 					<div class="card">
 						<div class="card-header"><i class="fa fa-user-plus"></i> Become a Member</div>
 						<div class="card-body">
-							<!-- URL Setup - Compact -->
-							<div class="url-highlight">
-								<div class="row">
-									<div class="col-md-8">
-										<label><i class="fa fa-link"></i> Google Sheets Web App URL</label>
-										<div class="input-group">
-											<input type="text" class="form-control" id="sheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
-											<div class="input-group-append">
-												<button class="btn btn-primary" onclick="updateSheetUrl()"><i class="fa fa-save"></i> Save</button>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<label>&nbsp;</label>
-										<div>
-											<button class="btn btn-info btn-sm" onclick="testConnection()"><i class="fa fa-plug"></i> Test</button>
-											<button class="btn btn-success btn-sm" onclick="syncToGoogleSheets()"><i class="fa fa-upload"></i> Sync</button>
-										</div>
-									</div>
-								</div>
-								<div class="mt-2 small text-muted">
-									Current URL: <span id="currentSheetUrl" style="font-family: monospace; word-break: break-all;">Not set</span>
-								</div>
+
+							<!-- Google Sheets Connection Status -->
+							<div class="alert alert-info">
+								<i class="fa fa-check-circle"></i>
+								<strong>Google Sheets Connected</strong> - Your data will be saved automatically to the cloud.
 							</div>
 
 							<form id="registerForm">
@@ -464,7 +443,7 @@
 											<p><strong>Member ID:</strong> <span id="displayMemberId2"></span></p>
 											<p><strong>Name:</strong> <span id="displayName"></span></p>
 											<p><strong>Mobile:</strong> <span id="displayMobile"></span></p>
-											<p>Data saved to Google Sheets.</p>
+											<p>✅ Data saved to Google Sheets</p>
 											<button class="btn btn-success btn-sm" onclick="resetForm()">
 												<i class="fa fa-plus"></i> Register Another
 											</button>
@@ -492,6 +471,16 @@
 
 	<script>
 		// ============================================================
+		// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+		// ========== PASTE YOUR GOOGLE SHEETS URL HERE ==========
+		// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+		// ============================================================
+		const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxuk82IftFT4Wsut7loMQXfBbvqImpufopVfYA9n8iELOGhRTo8t06Cu8VskOkP63dw/exec';
+		// ============================================================
+		// 🔴🔴🔴 Replace YOUR_SCRIPT_ID_HERE with your actual ID 🔴🔴🔴
+		// ============================================================
+
+		// ============================================================
 		// SIDENAV FUNCTIONS
 		// ============================================================
 		function openNav() {
@@ -500,28 +489,6 @@
 
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
-		}
-
-		// ============================================================
-		// GOOGLE SHEETS URL
-		// ============================================================
-		let GOOGLE_SHEET_URL = localStorage.getItem('registerSheetUrl') || '';
-
-		function updateSheetUrl() {
-			const url = document.getElementById('sheetUrlInput').value.trim();
-			if (url) {
-				if (!url.startsWith('https://script.google.com/macros/s/')) {
-					showSyncStatus('⚠️ Invalid URL format. Must start with: https://script.google.com/macros/s/', 'error');
-					return;
-				}
-				GOOGLE_SHEET_URL = url;
-				localStorage.setItem('registerSheetUrl', url);
-				document.getElementById('currentSheetUrl').textContent = url;
-				showSyncStatus('✅ URL updated successfully!', 'success');
-				setTimeout(testConnection, 1000);
-			} else {
-				showSyncStatus('⚠️ Please enter a valid URL', 'error');
-			}
 		}
 
 		// ============================================================
@@ -538,12 +505,14 @@
 		// ============================================================
 		function callGoogleSheets(params) {
 			return new Promise((resolve, reject) => {
-				if (!GOOGLE_SHEET_URL) {
-					reject(new Error('Google Sheets URL not configured.'));
+				if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+					reject(new Error('❌ Please set your Google Sheets URL in the code.'));
 					return;
 				}
 				const url = new URL(GOOGLE_SHEET_URL);
 				Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+				console.log('📡 Calling:', url.toString());
+
 				fetch(url.toString())
 					.then(response => {
 						if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
@@ -558,37 +527,22 @@
 		}
 
 		// ============================================================
-		// TEST CONNECTION
+		// TEST & LOAD
 		// ============================================================
-		function testConnection() {
-			if (!GOOGLE_SHEET_URL) {
-				showSyncStatus('⚠️ Please configure URL first', 'error');
+		function testAndLoad() {
+			if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+				showSyncStatus('⚠️ Please set your Google Sheets URL in the code', 'error');
 				return;
 			}
-			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Testing connection...', 'info');
+
+			showSyncStatus('<span class="status-dot yellow"></span> <i class="fa fa-spinner fa-spin"></i> Connecting to Google Sheets...', 'info');
+
 			callGoogleSheets({ action: 'getMembers' })
 				.then(data => {
-					showSyncStatus('✅ Connected to Google Sheets successfully!', 'success');
-					loadFromGoogleSheets();
-				})
-				.catch(error => {
-					showSyncStatus('❌ Connection failed: ' + error.message, 'error');
-				});
-		}
-
-		// ============================================================
-		// LOAD FROM GOOGLE SHEETS
-		// ============================================================
-		function loadFromGoogleSheets() {
-			if (!GOOGLE_SHEET_URL) {
-				showSyncStatus('⚠️ Please configure URL first', 'error');
-				return;
-			}
-			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Loading data...', 'info');
-			callGoogleSheets({ action: 'getMembers' })
-				.then(memberData => {
-					if (memberData.success) {
-						members = memberData.data.map(m => ({
+					showSyncStatus('<span class="status-dot green"></span> ✅ Connected to Google Sheets successfully!', 'success');
+					console.log('✅ Connection successful');
+					if (data.data) {
+						members = data.data.map(m => ({
 							id: m.memberId,
 							name: m.name,
 							mobile: m.mobile,
@@ -598,54 +552,12 @@
 							registered: m.registered
 						}));
 						saveMembers();
-						showSyncStatus(`✅ Loaded ${members.length} members from Google Sheets`, 'success');
-					} else {
-						throw new Error('Failed to load members');
+						console.log(`✅ Loaded ${members.length} members`);
 					}
 				})
 				.catch(error => {
-					showSyncStatus('❌ Load failed: ' + error.message, 'error');
-				});
-		}
-
-		// ============================================================
-		// SYNC ALL DATA TO GOOGLE SHEETS
-		// ============================================================
-		function syncToGoogleSheets() {
-			if (!GOOGLE_SHEET_URL) {
-				showSyncStatus('⚠️ Please configure URL first', 'error');
-				return;
-			}
-			if (members.length === 0) {
-				showSyncStatus('⚠️ No members to sync', 'warning');
-				return;
-			}
-
-			showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Syncing...', 'info');
-			const promises = [];
-
-			members.forEach(member => {
-				promises.push(
-					callGoogleSheets({
-						action: 'register',
-						memberId: member.id,
-						name: member.name,
-						mobile: member.mobile,
-						age: member.age,
-						state: member.state,
-						district: member.district
-					}).catch(err => {
-						console.log(`⚠️ ${member.id} failed: ${err.message}`);
-					})
-				);
-			});
-
-			Promise.all(promises)
-				.then(() => {
-					showSyncStatus(`✅ Synced ${members.length} members to Google Sheets`, 'success');
-				})
-				.catch(error => {
-					showSyncStatus('❌ Sync failed: ' + error.message, 'error');
+					showSyncStatus(`<span class="status-dot red"></span> ❌ Connection failed: ${error.message}`, 'error');
+					console.error('❌ Connection failed:', error.message);
 				});
 		}
 
@@ -670,9 +582,9 @@
 		document.getElementById('registerForm').addEventListener('submit', async function (e) {
 			e.preventDefault();
 
-			if (!GOOGLE_SHEET_URL) {
-				alert('⚠️ Please configure Google Sheets URL first!');
-				showSyncStatus('⚠️ Please configure Google Sheets URL first', 'error');
+			if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+				alert('⚠️ Please set your Google Sheets URL in the code first!');
+				showSyncStatus('⚠️ Google Sheets URL not configured in code', 'error');
 				return;
 			}
 
@@ -695,7 +607,7 @@
 			const newMember = { id: memberId, name, mobile, age, state, district, registered: new Date().toISOString() };
 
 			try {
-				showSyncStatus('<i class="fa fa-spinner fa-spin"></i> Saving to Google Sheets...', 'info');
+				showSyncStatus('<span class="status-dot yellow"></span> <i class="fa fa-spinner fa-spin"></i> Saving to Google Sheets...', 'info');
 
 				await callGoogleSheets({
 					action: 'register',
@@ -725,11 +637,11 @@
 				// Scroll to QR result
 				document.getElementById('qrResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-				showSyncStatus(`✅ Member ${name} registered successfully!`, 'success');
+				showSyncStatus(`<span class="status-dot green"></span> ✅ Member ${name} registered successfully!`, 'success');
 
 			} catch (error) {
 				alert('Registration failed: ' + error.message);
-				showSyncStatus('❌ Registration failed: ' + error.message, 'error');
+				showSyncStatus(`<span class="status-dot red"></span> ❌ Registration failed: ${error.message}`, 'error');
 			}
 		});
 
@@ -755,17 +667,16 @@
 		// INIT
 		// ============================================================
 		function init() {
-			if (GOOGLE_SHEET_URL) {
-				document.getElementById('currentSheetUrl').textContent = GOOGLE_SHEET_URL;
-				document.getElementById('sheetUrlInput').value = GOOGLE_SHEET_URL;
-				showSyncStatus('✅ URL configured. Testing connection...', 'info');
-				setTimeout(testConnection, 1000);
+			if (GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+				console.log('✅ Google Sheets URL configured:', GOOGLE_SHEET_URL);
+				setTimeout(testAndLoad, 500);
 			} else {
-				showSyncStatus('⚠️ Please configure Google Sheets URL above', 'warning');
+				showSyncStatus('⚠️ Please set your Google Sheets URL in the code (GOOGLE_SHEET_URL variable)', 'error');
+				console.error('⚠️ Google Sheets URL not configured!');
 			}
 
-			console.log('Registration System Loaded.');
-			console.log('Members:', members.length);
+			console.log('📋 Registration System Loaded.');
+			console.log('📊 Members:', members.length);
 		}
 
 		init();
